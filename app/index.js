@@ -11,6 +11,7 @@ function main()
 
     goBt.addEventListener("click",(e)=>{
         _gameWindow=new BrowserWindow({width:800,height:600});
-        _gameWindow.loadURL(urlBox.value);
+
+        _gameWindow.loadURL(urlBox.value);    
     });
 }
