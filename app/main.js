@@ -13,6 +13,11 @@ function main()
         protocol:"file:",
         slashes:true
     }));
+
+    session.defaultSession.webRequest.onCompleted({urls:["https://electron.atom.io/*"]},(detail)=>{
+        console.log(detail.responseBody);
+
+    });    
 }
 
 app.on("ready",main);
