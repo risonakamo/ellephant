@@ -1,0 +1,181 @@
+<link rel="import" href="polymer/polymer/polymer-element.html">
+
+<dom-module id="exp-fleet">
+  <template>
+    <style>
+      :host
+      {
+        display: inline-block;
+        width: 250px;
+        height: 140px;
+        padding: 10px;
+        box-sizing: border-box;
+        background-color: rgba(255,255,255,.05);        
+      }
+
+      #slide-box
+      {
+        width: 230px;
+        height: 50px;
+        overflow: hidden;
+      }
+
+      #timer
+      {
+        font-size: 40px;
+      }
+
+      #info
+      {
+        font-size: 40px;
+      }
+
+      #inner-slide
+      {
+        transition: transform .5s;
+      }
+
+      .slideup
+      {
+        transform: translateY(-50px);
+      }
+
+      #expedition-name
+      {
+        font-size: 20px;
+        font-family: var(--font-light);
+        color: #744b77;
+      }
+    </style>
+
+    <!--<div id="status">
+      No Expedition
+    </div>-->
+
+    <div id="slide-box">
+      <div id="inner-slide">
+        <div id="timer">
+          [[hour]]:[[min]]:[[sec]]
+        </div>
+        
+        <div id="info">
+          hello
+        </div>
+      </div>
+    </div>
+
+
+    <div id="expedition-name">
+      [[expNum]]
+    </div>
+
+  </template>
+
+  <script>
+    class expFleet extends Polymer.Element
+    {
+      static get is()
+      {
+        return "exp-fleet";
+      }
+
+      static get properties()
+      {
+        return {
+          loadTime: {type:Number,observer:"setTime"},
+
+          hour: Number,
+          min: Number,
+          sec: Number,
+          expNum: Number
+        };
+      }
+
+      ready()
+      {
+        super.ready();
+
+        this.hour=0;
+        this.min=0;
+        this.sec=5;
+        this.expNum=37;
+        
+        this.formatTime();
+        this.timer=setInterval(()=>{this.updateTime()},1000);
+      }
+
+      setTime()
+      {
+        
+      }
+
+      complete()
+      {        
+        clearTimeout(this.timer);
+
+        this.$["inner-slide"].classList.add("slideup");
+      }
+
+      updateTime()
+      {
+        if (this.sec==0)
+        {
+          if (this.min==0)
+          {
+            if (this.hour==0)
+            {
+              this.complete();
+              return;
+            }
+
+            this.hour--;
+            this.min=59;
+
+            if (this.hour<10)
+            {
+              this.hour="0"+this.hour;
+            }
+
+            return;
+          }
+
+          this.min--;
+          this.sec=59;
+
+          if (this.min<10)
+          {
+            this.min="0"+this.min;
+          }
+
+          return;
+        }
+
+        this.sec--;   
+        if (this.sec<10)
+        {
+          this.sec="0"+this.sec;
+        }        
+      }
+
+      formatTime()
+      {
+        if (this.sec<10)
+        {
+          this.sec="0"+this.sec;
+        }
+
+        if (this.min<10)
+        {
+          this.min="0"+this.min;
+        }
+
+        if (this.hour<10)
+        {
+          this.hour="0"+this.hour;
+        }        
+      }
+    }
+
+    customElements.define(expFleet.is,expFleet);
+  </script>
+</dom-module>

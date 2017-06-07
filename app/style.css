@@ -1,5 +1,17 @@
 @charset "UTF-8";
 
+@font-face
+{
+    font-family: "futurabook";
+    src: url("fonts/futuraBook.otf") format("opentype");
+}
+
+@font-face
+{
+    font-family: "futuralight";
+    src: url("fonts/futuraLight.otf") format("opentype");
+}
+
 body
 {
     margin: 0;
@@ -46,7 +58,67 @@ body
     border-bottom-width: 2px;
 }
 
+.viewer
+{
+    font-size: 0;
+}
+
+.viewer div
+{
+    display: inline-block;
+    vertical-align: top;
+}
+
 .button:hover
 {
     background-color: #3d81a7;
+}
+
+.expedition
+{
+    width: 250px;
+    height: 420px;
+    /*background-color: #e7e7e5;*/
+}
+
+.exp-fleet
+{
+    background-color: blue;
+    width: 250px;
+    height: 140px;
+}
+
+exp-fleet
+{
+    font-family: "futurabook";
+    --font-light: "futuralight";
+}
+
+.fleet
+{
+    width: 540px;
+    height: 220px;
+    background-color: red;
+}
+
+.fleet-entry
+{
+    width: 150px;
+    height: 220px;
+    background-color: green;
+}
+
+.tabs
+{
+    width: 100%;
+    height: 40px;    
+    border-bottom: 1px solid #798988;
+}
+
+.collapse
+{
+    display: none;
+    height: 0;
+    width: 0;
+    overflow: hidden;
 }

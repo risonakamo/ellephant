@@ -7,14 +7,30 @@
 
     <link rel="stylesheet" type="text/css" href="style.css">
 
+    <link rel="import" href="expfleet.html">
+
     <script src="index.js"></script>
 
   </head>
   
   <body>
-    <div class="input-wrap">
+    <div class="input-wrap collapse">
       <input type="text" class="url-box" autofocus>
       <div class="button go-bt">go</div>
+    </div>
+
+    <div class="viewer">
+      <div class="tabs">
+
+      </div>
+
+      <div class="expedition">
+        <exp-fleet></exp-fleet>
+      </div>
+
+      <div class="fleet">
+        <div class="fleet-entry"></div>        
+      </div>
     </div>
   </body>
   
