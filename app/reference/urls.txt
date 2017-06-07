@@ -1,1 +1,3 @@
+http://203.104.209.39/kcs/mainD2.swf?api_token=e178668ee7da9efbf67963ff89b2eebc7d25306a&api_starttime=1496856573591
+
 http://203.104.209.39/kcsapi/api_port/port

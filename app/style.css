@@ -8,6 +8,13 @@ body
     color: white;
 }
 
+.input-wrap
+{
+    width: 100%;   
+    margin-top: 40vh; 
+    text-align: center;
+}
+
 .button
 {
     display: inline-block;
@@ -16,6 +23,27 @@ body
     border: 1px solid #22252a;
     cursor: pointer;
     user-select: none;
+}
+
+.url-box
+{
+    display: block;
+    margin: auto;
+    height: 30px;
+    width: 600px;
+    color: white;
+    font-size: 18px;
+    background-color: rgba(0,0,0,0);
+    border-style: none;    
+    border-bottom: 1px solid white;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+.url-box:focus
+{
+    outline: none;
+    border-bottom-width: 2px;
 }
 
 .button:hover
