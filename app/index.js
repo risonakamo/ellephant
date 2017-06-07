@@ -1,6 +1,4 @@
-const {BrowserWindow}=require("electron").remote;
-
-var _gameWindow;
+const {ipcRenderer}=require("electron");
 
 window.onload=main;
 
@@ -10,8 +8,11 @@ function main()
     var urlBox=document.querySelector(".url-box");
 
     goBt.addEventListener("click",(e)=>{
-        _gameWindow=new BrowserWindow({width:800,height:600});
+        ipcRenderer.send("requestWindow",urlBox.value);
+    });
 
-        _gameWindow.loadURL(urlBox.value);    
+    var land=document.querySelector(".land");
+    ipcRenderer.on("portinfo",(err,res)=>{
+        land.innerHTML=res;
     });
 }
