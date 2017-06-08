@@ -1,0 +1,78 @@
+<link rel="import" href="polymer/polymer/polymer-element.html">
+
+<dom-module id="fleet-ship">
+  <template>
+    <style>
+      :host
+      {
+        display: inline-block;
+        width: 200px;
+        height: 110px;
+        /*background-color: #e5e5e7;*/
+        background-color: rgba(255,255,255,.02);
+      }
+
+      #face
+      {
+        width: 100px;
+        height: 80px;
+        background-color: #e5e5e7;
+      }
+
+      #face img
+      {
+        width: 100%;
+      }
+
+      #health
+      {
+        font-size: 20px;
+      }
+
+      .side
+      {
+        display: inline-block;
+        vertical-align: top;
+        width: 100px;
+        height: 110px;
+      }
+
+      .slash
+      {
+        font-size: 10px;
+      }
+    </style>
+
+    <div class="side">
+      <div id="face">
+        <img src="test2.png">
+      </div>
+    </div>
+
+    <div class="side">
+      <div id="health">
+        30<span class="slash">/</span>30
+      </div>
+    </div>
+
+  </template>
+
+  <script>
+    class fleetShip extends Polymer.Element
+    {
+      static get is()
+      {
+        return "fleet-ship";
+      }
+
+      static get properties()
+      {
+        return {
+
+        };
+      }
+    }
+
+    customElements.define(fleetShip.is,fleetShip);
+  </script>
+</dom-module>
