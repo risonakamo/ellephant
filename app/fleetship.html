@@ -102,9 +102,58 @@
 
       .stat-icons
       {
-        width: 40px;
+        width: 85px;
         height: 60px;
         vertical-align: top;
+      }
+
+      .morale
+      {
+        width: 100%;
+        height: 30px;
+        line-height: 30px;
+        font-size: 25px;
+        color: #f4e1a5;
+        text-align: center;
+      }
+
+      .morale.low
+      {
+        color: #ec8a34;
+        background-color: rgba(49,8,8,.5);
+      }
+
+      .morale.high
+      {
+        background-color: rgba(242,244,188,.1);
+      }
+
+      .resource
+      {
+        width: 100%;
+        height: 30px;
+        text-align: center;
+      }
+
+      .res-bar
+      {
+        width: 65%;
+        height: 13px;
+        text-align: left;
+        border-bottom: 1px solid #83b254;
+        box-sizing: border-box;
+      }
+
+      .res-bar.top
+      {
+        height: 8px;
+        border-bottom-color: #967844;
+      }
+
+      .res-bar-fill
+      {
+        border-bottom-color: #83b254;
+        border-bottom-width: 3px;        
       }
 
       .hp-bar
@@ -147,27 +196,35 @@
 
     <div class="side left">
       <div id="face">
-        <img src="test2.png">
+        <img src="[[face]]">
       </div>
 
       <div class="detail">
-        DD Lv99
+        [[shipClass]] Lv[[level]]
       </div>
     </div>
 
     <div class="side right">
       <div class="health">
-        <div id="health-top" class="health-slot">2</div>
+        <div id="health-top" class="health-slot">[[curHp]]</div>
         <div class="border"></div>
-        <div id="health-bot" class="health-slot">32</div>
+        <div id="health-bot" class="health-slot">[[maxHp]]</div>
       </div>
 
       <div class="stat-icons">
-
+        <div class="morale low">44</div>
+        <div class="resource">
+          <div class="res-bar top">
+            <div class="res-bar res-bar-fill top" style="width:20%"></div>
+          </div>
+          <div class="res-bar">
+            <div class="res-bar res-bar-fill" style="width:56%"></div>
+          </div>
+        </div>
       </div>
 
       <div class="hp-bar hp-bar-back">
-        <div class="hp-bar hp-bar-fill" style="width:30%"></div>
+        <div class="hp-bar hp-bar-fill" style="width:[[hpPercent]]%"></div>
       </div>
 
       <div class="equipment">
@@ -200,6 +257,19 @@
       {
         super.ready();
       }
+
+      loadShip(data)
+      {
+        this.maxHp=data.maxHp
+        this.curHp=data.curHp      
+        this.hpPercent=(this.curHp/this.maxHp)*100;
+
+        this.level=data.level;
+        this.shipClass=data.shipClass;
+        this.face=data.face;
+
+
+      }      
     }
 
     customElements.define(fleetShip.is,fleetShip);

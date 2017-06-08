@@ -3,6 +3,7 @@ const {ipcRenderer}=require("electron");
 window.onload=main;
 
 var _expFleets;
+var _fleetShips;
 
 function main()
 {
@@ -10,6 +11,7 @@ function main()
     ipcReceivers();
 
     _expFleets=document.querySelectorAll("exp-fleet");
+    _fleetShips=document.querySelectorAll("fleet-ship");
 }
 
 function setupInput()
