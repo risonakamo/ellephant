@@ -2,10 +2,14 @@ const {ipcRenderer}=require("electron");
 
 window.onload=main;
 
+var _expFleets;
+
 function main()
 {
     setupInput();
     ipcReceivers();
+
+    _expFleets=document.querySelectorAll("exp-fleet");
 }
 
 function setupInput()
@@ -41,17 +45,15 @@ function ipcReceivers()
 
 function portUpdate(port)
 {
-    var expFleets=document.querySelectorAll("exp-fleet");
-    
     for (var x=1;x<=3;x++)
     {
         if (port.api_data.api_deck_port[x].api_mission[0]==0)
         {
-            expFleets[x-1].clearExpedition();
+            _expFleets[x-1].clearExpedition();
             continue;
         }
 
-        expFleets[x-1].loadExp({
+        _expFleets[x-1].loadExp({
             expNum:port.api_data.api_deck_port[x].api_mission[1],
             timeComplete:port.api_data.api_deck_port[x].api_mission[2]
         });
