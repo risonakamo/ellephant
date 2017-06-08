@@ -96,15 +96,15 @@ exp-fleet
 
 .fleet
 {
-    width: 540px;
-    height: 220px;
+    width: 400px;
+    height: 330px;
     background-color: red;
 }
 
 .fleet-entry
 {
-    width: 150px;
-    height: 220px;
+    width: 200px;
+    height: 110px;
     background-color: green;
 }
 

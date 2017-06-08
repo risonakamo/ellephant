@@ -61,6 +61,11 @@
         color: #744b77;
       }
 
+      #expedition-name.no-expedition
+      {
+        color: #660000;
+      }
+
       #border
       {        
         width: 80%;
@@ -135,6 +140,7 @@
 
         this.loaded=1;
         this.$["info"].classList.remove("completed","no-expedition");
+        this.$["expedition-name"].classList.remove("no-expedition");
         this.$["inner-slide"].classList.remove("slideup");
 
         this.expNum=`EXPEDITION ${data.expNum}`;
@@ -161,6 +167,7 @@
 
         this.infoMessage="Completed";
         this.$["info"].classList.remove("no-expedition");
+        this.$["expedition-name"].classList.remove("no-expedition");
         this.$["info"].classList.add("completed");
         this.$["inner-slide"].classList.add("slideup");
       }
@@ -174,6 +181,7 @@
         this.expNum="NO EXPEDITION";
         this.$["info"].classList.remove("completed");
         this.$["info"].classList.add("no-expedition");
+        this.$["expedition-name"].classList.add("no-expedition");
         this.$["inner-slide"].classList.add("slideup");
       }
 
