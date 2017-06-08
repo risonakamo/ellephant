@@ -6,9 +6,11 @@
       :host
       {
         display: inline-block;
+        position: relative;
         width: 250px;
         height: 100px;
         padding: 10px;
+        padding-left: 13px;
         box-sizing: border-box;
         /*background-color: rgba(255,255,255,.05);        */
         user-select: none;
@@ -60,16 +62,25 @@
       }
 
       #border
-      {
-        height: 0;
+      {        
         width: 80%;
-        border-bottom: 1px solid #e7e7e5;
+        /*border-bottom: 1px solid #e7e7e5;*/
+        border-bottom: 1px solid #736f6c;
+      }
+
+      #border2
+      {
+        width: 40%;
+        border-bottom: 2px solid red;
+      }
+
+      .borders
+      {
+        position: absolute;
+        bottom: 0;
+        height: 0;
       }
     </style>
-
-    <!--<div id="status">
-      No Expedition
-    </div>-->
 
     <div id="slide-box">
       <div id="inner-slide">
@@ -88,9 +99,8 @@
       [[expNum]]
     </div>
 
-    <div id="border">
-
-    </div>
+    <div id="border" class="borders"></div>
+    <!--<div id="border2" class="borders"></div>-->
   </template>
 
   <script>
