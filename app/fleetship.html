@@ -41,19 +41,21 @@
 
       .right
       {
-        padding: 3px 0 0 5px;
+        /*padding: 3px 0 0 5px;*/
         box-sizing: border-box;
       }
 
-      #health
+      .health
       {            
         width: 50px;
         height: 60px;
         color: #c5c5c5;
         font-size: 0;
+        text-align: center;
+        margin: 3px 0 0 5px;
       }
 
-      #health div
+      .health div
       {
         display: inline-block;
         vertical-align: top;
@@ -74,9 +76,53 @@
 
       .border
       {
-        width: 100%;
+        width: 70%;
         height: 0;
         border-bottom: 1px solid #c5c5c5;
+      }
+
+      .stat-icons
+      {
+        width: 40px;
+        height: 60px;
+        vertical-align: top;
+      }
+
+      .hp-bar
+      {
+        width: 80px;
+        height: 0;
+        border-bottom: 8px solid #192325;
+      }
+
+      .hp-bar-fill
+      {
+        border-bottom-color: #5b757e;
+      }
+
+      .hp-bar-back
+      {
+        margin-left: 9px;
+        margin-top: 4px;
+      }
+
+      .equipment
+      {
+        width: 120px;
+        height: 35px;
+        /*background-color: #e5e5e7;*/
+      }
+
+      .equipment-slot
+      {
+        width: 35px;
+        height: 35px;
+        background-color: white;
+      }
+
+      .equipment-slot img
+      {
+        
       }
 
     </style>
@@ -88,11 +134,27 @@
     </div>
 
     <div class="side right">
-      <div id="health">
+      <div class="health">
         <div id="health-top" class="health-slot">2</div>
         <div class="border"></div>
         <div id="health-bot" class="health-slot">32</div>
       </div>
+
+      <div class="stat-icons">
+
+      </div>
+
+      <div class="hp-bar hp-bar-back">
+        <div class="hp-bar hp-bar-fill" style="width:30%"></div>
+      </div>
+
+      <div class="equipment">
+        <div class="equipment-slot"><img src="test3.png"></div>
+        <div class="equipment-slot"><img src="test3.png"></div>
+        <div class="equipment-slot"><img src="test3.png"></div>
+        <div class="equipment-slot"><img src="test3.png"></div>
+      </div>
+      
     </div>
 
   </template>
@@ -110,6 +172,11 @@
         return {
 
         };
+      }
+
+      ready()
+      {
+        super.ready();
       }
     }
 
