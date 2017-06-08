@@ -94,12 +94,7 @@
       static get properties()
       {
         return {
-          loadExpedition: {type:Object,observer:"loadExp"},
-
-          hour: Number,
-          min: Number,
-          sec: Number,
-          expNum: Number
+          
         };
       }
 
@@ -107,18 +102,31 @@
       {
         super.ready();
 
-        this.hour=0;
-        this.min=0;
-        this.sec=5;
-        this.expNum=37;
-        
-        this.formatTime();
-        this.timer=setInterval(()=>{this.updateTime()},1000);
+        this.clearExpedition();
       }
 
-      loadExp()
+      //obj data {expNum: number of expedition,timeComplete: completion time from api}
+      loadExp(data)
       {
+        this.$["info"].classList.remove("completed","no-expedition");
+        this.$["inner-slide"].classList.remove("slideup");
+
+        this.expNum=`EXPEDITION ${data.expNum}`;
         
+        var timeleft=data.timeComplete-new Date().getTime()-60000;
+
+        if (timeleft<0)
+        {
+          this.complete();
+          return;
+        }
+
+        this.sec=Math.floor((timeleft/1000)%60);
+        this.min=Math.floor((timeleft/(1000*60))%60);
+        this.hour=Math.floor((timeleft/(1000*60*60))%24);
+        this.formatTime();
+
+        this.timer=setInterval(()=>{this.updateTime()},1000);
       }
 
       complete()
