@@ -168,6 +168,36 @@
         border-bottom-color: #5b757e;
       }
 
+      .hp-bar.red
+      {
+        border-color: #450000;
+      }
+
+      .hp-bar.red .hp-bar-fill
+      {
+        border-color: #e50014;
+      }
+
+      .hp-bar.yellow
+      {
+        border-color: #564f19;
+      }
+
+      .hp-bar.yellow .hp-bar-fill
+      {
+        border-color: #ffd73f;
+      }
+
+      .hp-bar.orange
+      {
+        border-color: #461101;
+      }
+
+      .hp-bar.orange .hp-bar-fill
+      {
+        border-color: #f16c2b;
+      }
+
       .hp-bar-back
       {
         margin-left: 15px;
@@ -212,7 +242,7 @@
       </div>
 
       <div class="stat-icons">
-        <div class="morale low">44</div>
+        <div class="morale">44</div>
         <div class="resource">
           <div class="res-bar top">
             <div class="res-bar res-bar-fill top" style="width:20%"></div>
@@ -256,6 +286,10 @@
       ready()
       {
         super.ready();
+
+        this.curHp=10;
+        this.maxHp=30;
+        this.hpPercent=(this.curHp/this.maxHp)*100;
       }
 
       loadShip(data)
