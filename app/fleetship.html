@@ -109,7 +109,7 @@
         vertical-align: top;
       }
 
-      .morale
+      #morale
       {
         width: 100%;
         height: 30px;
@@ -119,13 +119,13 @@
         text-align: center;
       }
 
-      .morale.low
+      #morale.low
       {
         color: #ec8a34;
         background-color: rgba(49,8,8,.5);
       }
 
-      .morale.high
+      #morale.high
       {
         background-color: rgba(242,244,188,.1);
       }
@@ -244,7 +244,7 @@
       </div>
 
       <div class="stat-icons">
-        <div class="morale">[[morale]]</div>
+        <div id="morale" class="morale">[[morale]]</div>
         <div class="resource">
           <div class="res-bar top">
             <div class="res-bar res-bar-fill top" style="width:[[ammoPercent]]%"></div>
@@ -259,7 +259,7 @@
         <div class="hp-bar hp-bar-fill" style="width:[[hpPercent]]%"></div>
       </div>
 
-      <div class="equipment">
+      <div id="equipment" class="equipment">
         <div class="equipment-slot"><img src=""></div>
         <div class="equipment-slot"><img src=""></div>
         <div class="equipment-slot"><img src=""></div>
@@ -288,24 +288,80 @@
       ready()
       {
         super.ready();
+
+        this.equipmentSlots=this.$["equipment"].querySelectorAll(".equipment-slot img");
       }
 
+      //load data object into fleetship
+      /*
+        fields:
+        maxHp
+        curHp
+        level
+        shipClass
+        face
+        morale
+        curAmmo
+        maxAmmo
+        curGas
+        maxGas
+      */
       loadShip(data)
       {
-        this.maxHp=data.maxHp
-        this.curHp=data.curHp      
+        for (var x in data)
+        {
+          this[x]=data[x];
+        }
+
+        // this.maxHp=data.maxHp
+        // this.curHp=data.curHp      
         this.hpPercent=(this.curHp/this.maxHp)*100;
 
-        this.level=data.level;
-        this.shipClass=data.shipClass;
-        this.face=data.face;
+        // this.level=data.level;
+        // this.shipClass=data.shipClass;
+        // this.face=data.face;
 
-        this.morale=data.morale;
+        // this.morale=data.morale;
+        
+        // this.curAmmo=data.curAmmo;
+        // this.maxAmmo=data.maxAmmo;
+        this.ammoPercent=(this.curAmmo/this.maxAmmo)*100;
+
+        // this.curGas=data.curGas;
+        // this.maxGas=data.maxGas;
+        this.gasPercent=(this.curGas/this.maxGas)*100;
+
+        this.loadEquipment(data.equipment);
+
+        this.applyColour();
       }      
+
+      loadEquipment(data)
+      {
+        for (var x=0;x<data.length;x++)
+        {
+          this.equipmentSlots[x].src=data[x];
+        }
+      }
 
       applyColour()
       {
-        
+        if (this.morale>49)
+        {
+          this.$["morale"].classList.remove("low");
+          this.$["morale"].classList.add("high");
+        }
+
+        else if (this.morale<40)
+        {
+          this.$["morale"].classList.remove("high");
+          this.$["morale"].classList.add("low");
+        }
+
+        else
+        {
+          this.$["morale"].classList.remove("low","high");
+        }        
       }
     }
 

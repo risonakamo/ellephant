@@ -5,9 +5,12 @@ window.onload=main;
 var _expFleets;
 var _fleetShips;
 
-var _apiShip;
-var _apirequire;
-var _apistart;
+var _apiShip; //ships of player
+var _apiEquip; //equipment of player
+// var _apirequire;
+// var _apistart;
+var _apiAllShip;
+var _apiAllEquip;
 
 function main()
 {
@@ -55,11 +58,27 @@ function ipcReceivers()
     });
 
     ipcRenderer.on("requireinfo",(err,res)=>{
-        _apirequire=res.api_data;
+        _apiEquip={};
+        for (var x=0,l=res.api_data.api_slot_item.length;x<l;x++)
+        {
+            _apiEquip[res.api_data.api_slot_item[x].api_id]=res.api_data.api_slot_item[x];
+        }
     });    
 
     ipcRenderer.on("apistart",(err,res)=>{
-        _apistart=res.api_data;
+        // _apistart=res.api_data;
+
+        _apiAllShip={};
+        for (var x=0;x<=465;x++)
+        {
+            _apiAllShip[res.api_data.api_mst_ship[x].api_sortno]=res.api_data.api_mst_ship[x];
+        }
+
+        _apiAllEquip={};
+        for (var x=0;x<=228;x++)
+        {
+            _apiAllEquip[res.api_data.api_mst_slotitem[x].api_sortno]=res.api_data.api_mst_slotitem[x];
+        }
     });    
 }
 
@@ -90,7 +109,7 @@ function processApiShip(apiship)
 //ships is array of 6 from fleet
 function updateFleetShip(ships)
 {
-    if (_apiShip==undefined)
+    if (_apiShip==undefined || _apiAllShip==undefined)
     {
         setTimeout(()=>{updateFleetShip(ships)},500);
         return;
@@ -108,9 +127,31 @@ function updateFleetShip(ships)
             curHp:ships[x].api_nowhp,
             level:ships[x].api_lv,
             face:`face/${ships[x].api_ship_id}.png`,
-            morale:ships[x].api_cond
+            morale:ships[x].api_cond,
+            curAmmo:ships[x].api_bull,
+            curGas:ships[x].api_fuel,
+            maxAmmo:_apiAllShip[ships[x].api_sortno].api_bull_max,
+            maxGas:_apiAllShip[ships[x].api_sortno].api_fuel_max,
+            equipment:genEquip(ships[x].api_slot)                        
         });
     }
+}
+
+//give array of equipment ids of a ship, returns string form
+function genEquip(apishipEquip)
+{
+    var stringequip=[];
+    for (var x=0;x<5;x++)
+    {
+        if (apishipEquip[x]<0)
+        {
+            return stringequip;
+        }
+
+        stringequip.push(`equipment/${_apiAllEquip[_apiEquip[apishipEquip[x]].api_slotitem_id].api_type[3]}.png`);
+    }
+
+    return stringequip;
 }
 
 //needs to be given api_deck_port from the port object, an array
