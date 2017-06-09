@@ -4,6 +4,7 @@ window.onload=main;
 
 var _expFleets;
 var _fleetShips;
+var _apiShip;
 
 function main()
 {
@@ -52,6 +53,43 @@ function ipcReceivers()
 function portUpdate(port)
 {
     expeditionUpdate(port.api_data.api_deck_port);
+
+    if (_apiShip==undefined)
+    {
+        processApiShip(port.api_data.api_ship);
+    }
+
+    updateFleetShip(port.api_data.api_deck_port[0].api_ship);
+}
+
+function processApiShip(apiship)
+{
+    _apiShip={};
+
+    for (var x=0,l=apiship.length;x<l;x++)
+    {
+        _apiShip[apiship[x].api_id]=apiship[x];
+    }
+}
+
+//ships is array of 6 from fleet
+function updateFleetShip(ships)
+{
+    for (var x=0;x<6;x++)
+    {
+        ships[x]=_apiShip[ships[x]];
+    }
+
+    for (var x=0;x<6;x++)
+    {
+        _fleetShips[x].loadShip({
+            maxHp:ships[x].api_maxhp,
+            curHp:ships[x].api_nowhp,
+            level:ships[x].api_lv,
+            face:`face/${ships[x].api_ship_id}.png`,
+            morale:ships[x].api_cond
+        });
+    }
 }
 
 //needs to be given api_deck_port from the port object, an array

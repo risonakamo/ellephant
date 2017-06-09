@@ -24,8 +24,9 @@
       {
         width: 100px;
         height: 90px;
-        background-color: #e5e5e7;
+        /*background-color: #e5e5e7;*/
         overflow: hidden;
+        text-align: center;
       }
 
       #face img
@@ -41,12 +42,13 @@
         font-size: 19px;
         color: #020200;
         /*color: #d2d4d1;*/
+        background-color: #d2d4d1;
         text-align: center;
       }
 
       .left
       {
-        background-color: #d2d4d1;
+        /*background-color: #d2d4d1;*/
       }
 
       .side
@@ -242,13 +244,13 @@
       </div>
 
       <div class="stat-icons">
-        <div class="morale">44</div>
+        <div class="morale">[[morale]]</div>
         <div class="resource">
           <div class="res-bar top">
-            <div class="res-bar res-bar-fill top" style="width:20%"></div>
+            <div class="res-bar res-bar-fill top" style="width:[[ammoPercent]]%"></div>
           </div>
           <div class="res-bar">
-            <div class="res-bar res-bar-fill" style="width:56%"></div>
+            <div class="res-bar res-bar-fill" style="width:[[gasPercent]]%"></div>
           </div>
         </div>
       </div>
@@ -258,10 +260,10 @@
       </div>
 
       <div class="equipment">
-        <div class="equipment-slot"><img src="test3.png"></div>
-        <div class="equipment-slot"><img src="test3.png"></div>
-        <div class="equipment-slot"><img src="test3.png"></div>
-        <div class="equipment-slot"><img src="test3.png"></div>
+        <div class="equipment-slot"><img src=""></div>
+        <div class="equipment-slot"><img src=""></div>
+        <div class="equipment-slot"><img src=""></div>
+        <div class="equipment-slot"><img src=""></div>
       </div>
       
     </div>
@@ -286,10 +288,6 @@
       ready()
       {
         super.ready();
-
-        this.curHp=10;
-        this.maxHp=30;
-        this.hpPercent=(this.curHp/this.maxHp)*100;
       }
 
       loadShip(data)
@@ -302,8 +300,13 @@
         this.shipClass=data.shipClass;
         this.face=data.face;
 
-
+        this.morale=data.morale;
       }      
+
+      applyColour()
+      {
+        
+      }
     }
 
     customElements.define(fleetShip.is,fleetShip);
