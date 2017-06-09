@@ -226,48 +226,53 @@
 
     </style>
 
-    <div class="side left">
-      <div id="face">
-        <img src="[[face]]">
-      </div>
-
-      <div class="detail">
-        [[shipClass]] Lv[[level]]
-      </div>
-    </div>
-
-    <div class="side right">
-      <div class="health">
-        <div id="health-top" class="health-slot">[[curHp]]</div>
-        <div class="border"></div>
-        <div id="health-bot" class="health-slot">[[maxHp]]</div>
-      </div>
-
-      <div class="stat-icons">
-        <div id="morale" class="morale">[[morale]]</div>
-        <div class="resource">
-          <div class="res-bar top">
-            <div class="res-bar res-bar-fill top" style="width:[[ammoPercent]]%"></div>
-          </div>
-          <div class="res-bar">
-            <div class="res-bar res-bar-fill" style="width:[[gasPercent]]%"></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="hp-bar hp-bar-back">
-        <div class="hp-bar hp-bar-fill" style="width:[[hpPercent]]%"></div>
-      </div>
-
-      <div id="equipment" class="equipment">
-        <div class="equipment-slot"><img src=""></div>
-        <div class="equipment-slot"><img src=""></div>
-        <div class="equipment-slot"><img src=""></div>
-        <div class="equipment-slot"><img src=""></div>
-      </div>
+    <div id="no-data">
       
     </div>
 
+    <div id="loaded">
+      <div class="side left">
+        <div id="face">
+          <img src="[[face]]">
+        </div>
+
+        <div class="detail">
+          [[shipClass]] Lv[[level]]
+        </div>
+      </div>
+
+      <div class="side right">
+        <div class="health">
+          <div id="health-top" class="health-slot">[[curHp]]</div>
+          <div class="border"></div>
+          <div id="health-bot" class="health-slot">[[maxHp]]</div>
+        </div>
+
+        <div class="stat-icons">
+          <div id="morale" class="morale">[[morale]]</div>
+          <div class="resource">
+            <div class="res-bar top">
+              <div class="res-bar res-bar-fill top" style="width:[[ammoPercent]]%"></div>
+            </div>
+            <div class="res-bar">
+              <div class="res-bar res-bar-fill" style="width:[[gasPercent]]%"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hp-bar hp-bar-back">
+          <div class="hp-bar hp-bar-fill" style="width:[[hpPercent]]%"></div>
+        </div>
+
+        <div id="equipment" class="equipment">
+          <div class="equipment-slot"><img src=""></div>
+          <div class="equipment-slot"><img src=""></div>
+          <div class="equipment-slot"><img src=""></div>
+          <div class="equipment-slot"><img src=""></div>
+        </div>
+        
+      </div>      
+    </div>
   </template>
 
   <script>
@@ -338,7 +343,7 @@
 
       loadEquipment(data)
       {
-        for (var x=0;x<data.length;x++)
+        for (var x=0;x<4;x++)
         {
           this.equipmentSlots[x].src=data[x];
         }

@@ -141,11 +141,12 @@ function updateFleetShip(ships)
 function genEquip(apishipEquip)
 {
     var stringequip=[];
-    for (var x=0;x<5;x++)
+    for (var x=0;x<4;x++)
     {
         if (apishipEquip[x]<0)
         {
-            return stringequip;
+            stringequip.push("");
+            continue;
         }
 
         stringequip.push(`equipment/${_apiAllEquip[_apiEquip[apishipEquip[x]].api_slotitem_id].api_type[3]}.png`);
