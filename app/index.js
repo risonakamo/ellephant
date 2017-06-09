@@ -4,7 +4,10 @@ window.onload=main;
 
 var _expFleets;
 var _fleetShips;
+
 var _apiShip;
+var _apirequire;
+var _apistart;
 
 function main()
 {
@@ -15,6 +18,7 @@ function main()
     _fleetShips=document.querySelectorAll("fleet-ship");
 }
 
+//setup for inital input screen
 function setupInput()
 {
     var goBt=document.querySelector(".go-bt");
@@ -39,6 +43,7 @@ function setupInput()
     });
 }
 
+//receives from main process
 function ipcReceivers()
 {
     ipcRenderer.on("portinfo",(err,res)=>{
@@ -48,8 +53,17 @@ function ipcReceivers()
     ipcRenderer.on("deckinfo",(err,res)=>{
         expeditionUpdate(res.api_data);
     });
+
+    ipcRenderer.on("requireinfo",(err,res)=>{
+        _apirequire=res.api_data;
+    });    
+
+    ipcRenderer.on("apistart",(err,res)=>{
+        _apistart=res.api_data;
+    });    
 }
 
+//main port update function to handle port requests
 function portUpdate(port)
 {
     expeditionUpdate(port.api_data.api_deck_port);
@@ -62,6 +76,7 @@ function portUpdate(port)
     updateFleetShip(port.api_data.api_deck_port[0].api_ship);
 }
 
+//parse array of raw api_ships into api ship object, where keys are ship id
 function processApiShip(apiship)
 {
     _apiShip={};
@@ -75,6 +90,12 @@ function processApiShip(apiship)
 //ships is array of 6 from fleet
 function updateFleetShip(ships)
 {
+    if (_apiShip==undefined)
+    {
+        setTimeout(()=>{updateFleetShip(ships)},500);
+        return;
+    }
+
     for (var x=0;x<6;x++)
     {
         ships[x]=_apiShip[ships[x]];

@@ -49,6 +49,16 @@ function ipcs()
                 {
                     setTimeout(()=>{receiveArb(par,"deckinfo")},500);
                 }
+
+                if (par.response.url=="http://203.104.209.39/kcsapi/api_get_member/require_info")
+                {
+                    setTimeout(()=>{receiveArb(par,"requireinfo")},500);
+                }
+
+                if (par.response.url=="http://203.104.209.39/kcsapi/api_start2")
+                {
+                    setTimeout(()=>{receiveArb(par,"apistart")},500);
+                }
             }
         });
 
