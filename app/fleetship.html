@@ -154,9 +154,19 @@
         background-color: rgba(49,8,8,.5);
       }
 
+      #morale.low::before
+      {
+        content:"✖";
+      }
+
       #morale.high
       {
         background-color: rgba(242,244,188,.1);
+      }
+
+      #morale.high::before
+      {
+        content:"✦";
       }
 
       .resource
