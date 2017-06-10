@@ -92,7 +92,7 @@ function ipcReceivers()
 
         _apiAllExpedition=res.api_data.api_mst_mission;
 
-        _apistart_ready=1;
+        setTimeout(()=>{_apistart_ready=1;},0);
     });    
 }
 
