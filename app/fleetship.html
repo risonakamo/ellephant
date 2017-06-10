@@ -8,10 +8,11 @@
         display: inline-block;
         width: 240px;
         height: 110px;
-        margin: 0 5px 5px 0;
+        margin: 0 10px 10px 0;
         overflow: hidden;
         /*background-color: #e5e5e7;*/
         /*background-color: rgba(255,255,255,.02);*/
+        background-color: rgba(50,51,43,.4);
         user-select: none;
         cursor: default;
       }
@@ -249,7 +250,7 @@
 
       .equipment-slot img
       {
-        
+        width: 100%;
       }
 
     </style>
@@ -293,10 +294,10 @@
         </div>
 
         <div id="equipment" class="equipment">
-          <div class="equipment-slot"><img src=""></div>
-          <div class="equipment-slot"><img src=""></div>
-          <div class="equipment-slot"><img src=""></div>
-          <div class="equipment-slot"><img src=""></div>
+          <div class="equipment-slot"></div>
+          <div class="equipment-slot"></div>
+          <div class="equipment-slot"></div>
+          <div class="equipment-slot"></div>
         </div>
         
       </div>      
@@ -322,7 +323,7 @@
       {
         super.ready();
 
-        this.equipmentSlots=this.$["equipment"].querySelectorAll(".equipment-slot img");
+        this.equipmentSlots=this.$["equipment"].querySelectorAll(".equipment-slot");
       }
 
       //load data object into fleetship
@@ -376,7 +377,15 @@
       {
         for (var x=0;x<4;x++)
         {
-          this.equipmentSlots[x].src=data[x];
+          if (data[x]=="")
+          {
+            this.equipmentSlots[x].innerHTML="";
+          }
+
+          else
+          {
+            this.equipmentSlots[x].innerHTML=`<img src="${data[x]}">`;
+          }
         }
       }
 

@@ -32,6 +32,7 @@
       #info
       {
         font-size: 40px;
+        transition: color .4s;
       }
 
       .completed
@@ -59,6 +60,7 @@
         font-size: 20px;
         font-family: var(--font-light);
         color: #744b77;
+        transition: color .4s;
       }
 
       #expedition-name.no-expedition
@@ -75,8 +77,8 @@
 
       #border2
       {
-        width: 40%;
-        border-bottom: 2px solid red;
+        border-bottom: 2px solid #6d4d72;
+        transition: width .5s;
       }
 
       .borders
@@ -104,8 +106,9 @@
       [[expNum]]
     </div>
 
-    <div id="border" class="borders"></div>
-    <!--<div id="border2" class="borders"></div>-->
+    <div id="border" class="borders">
+      <div id="border2" class="borders" style="width:[[barPercent]]%"></div>
+    </div>    
   </template>
 
   <script>
@@ -126,7 +129,7 @@
       ready()
       {
         super.ready();
-
+        
         this.clearExpedition();
       }
 
@@ -144,7 +147,8 @@
         this.$["inner-slide"].classList.remove("slideup");
 
         this.expNum=`EXPEDITION ${data.expNum}`;
-        
+        this.maxTime=data.maxTime;
+
         var timeleft=data.timeComplete-new Date().getTime()-60000;
 
         if (timeleft<0)
@@ -157,6 +161,8 @@
         this.min=Math.floor((timeleft/(1000*60))%60);
         this.hour=Math.floor((timeleft/(1000*60*60))%24);
         this.formatTime();
+
+        this.updateBar();
 
         this.timer=setInterval(()=>{this.updateTime()},1000);
       }
@@ -179,6 +185,7 @@
 
         this.infoMessage="No Expedition";
         this.expNum="NO EXPEDITION";
+        this.barPercent=0;
         this.$["info"].classList.remove("completed");
         this.$["info"].classList.add("no-expedition");
         this.$["expedition-name"].classList.add("no-expedition");
@@ -194,6 +201,7 @@
             if (this.hour==0)
             {
               this.complete();
+              this.updateBar();
               return;
             }
 
@@ -205,6 +213,7 @@
               this.hour="0"+this.hour;
             }
 
+            this.updateBar();
             return;
           }
 
@@ -216,6 +225,7 @@
             this.min="0"+this.min;
           }
 
+          this.updateBar();
           return;
         }
 
@@ -242,6 +252,11 @@
         {
           this.hour="0"+this.hour;
         }        
+      }
+
+      updateBar()
+      {
+        this.barPercent=100-((((this.hour*60)+this.min)/this.maxTime)*100);
       }
     }
 
