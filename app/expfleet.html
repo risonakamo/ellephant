@@ -256,7 +256,7 @@
 
       updateBar()
       {
-        this.barPercent=100-((((this.hour*60)+this.min)/this.maxTime)*100);
+        this.barPercent=100-((((parseInt(this.hour)*60)+parseInt(this.min))/this.maxTime)*100);
       }
     }
 
