@@ -117,11 +117,22 @@ function updateFleetShip(ships)
 
     for (var x=0;x<6;x++)
     {
+        if (ships[x]==-1)
+        {
+            continue;
+        }
+
         ships[x]=_apiShip[ships[x]];
     }
 
     for (var x=0;x<6;x++)
     {
+        if (ships[x]==-1)
+        {
+            _fleetShips[x].unload();
+            continue;
+        }
+
         _fleetShips[x].loadShip({
             maxHp:ships[x].api_maxhp,
             curHp:ships[x].api_nowhp,
