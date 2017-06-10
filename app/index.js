@@ -183,3 +183,12 @@ function expeditionUpdate(data)
         });
     }    
 }
+
+//needs array of ship data to be updated
+function updateShipdata(update)
+{
+    for (var x=0;x<update.length;x++)
+    {
+        _apiShip[update[x].api_id]=update[x];
+    }
+}
