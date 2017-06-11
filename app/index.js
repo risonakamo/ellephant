@@ -163,7 +163,9 @@ function updateFleetShip(ships,fleetContain)
                 curGas:ships[x].api_fuel,
                 maxAmmo:_apiAllShip[ships[x].api_sortno].api_bull_max,
                 maxGas:_apiAllShip[ships[x].api_sortno].api_fuel_max,
-                equipment:genEquip(ships[x].api_slot)                        
+                equipment:genEquip(ships[x].api_slot),
+                curExp:ships[x].api_exp[1],
+                maxExp:_expPerLv[ships[x].api_lv-1]
             });
         }
         
