@@ -264,6 +264,7 @@
 
       .equipment-slot
       {
+        position: relative;
         width: 35px;
         height: 35px;
       }
@@ -271,6 +272,14 @@
       .equipment-slot img
       {
         width: 100%;
+      }
+
+      .plane-count
+      {
+        position: absolute;
+        font-size: 20px;
+        bottom: 0;
+        left: 0;
       }
 
     </style>
@@ -363,6 +372,7 @@
         equipment (array of strings)
         maxExp
         curExp
+        planeCount (array of numbers direct from api)
       */
       loadShip(data)
       {
@@ -403,15 +413,24 @@
       {
         for (var x=0;x<4;x++)
         {
+          var html;
+
           if (data[x]=="")
           {
-            this.equipmentSlots[x].innerHTML="";
+            html="";
           }
 
           else
           {
-            this.equipmentSlots[x].innerHTML=`<img src="${data[x]}">`;
+            html=`<img src="${data[x]}">`;
+
+            if (this.planeCount[x]>0)
+            {
+              html+=`<div class="plane-count">${this.planeCount[x]}</div>`;
+            }
           }
+
+          this.equipmentSlots[x].innerHTML=html;
         }
       }
 

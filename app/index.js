@@ -7,6 +7,7 @@ var _fleetShips;
 
 //player api from require info
 var _apiShip; //ships of player
+var _apiShip_ready;
 var _apiEquip; //equipment of player
 
 //api Alls (from api start)
@@ -99,35 +100,40 @@ function ipcReceivers()
 //main port update function to handle port requests
 function portUpdate(port)
 {
+    if (_apistart_ready!=1)
+    {
+        setTimeout(()=>{portUpdate(port)},500);
+        return;
+    }
+
     expeditionUpdate(port.api_data.api_deck_port);
 
-    if (_apiShip==undefined)
-    {
-        processApiShip(port.api_data.api_ship);
-    }
+    processApiShip(port.api_data.api_ship);
 
     for (var x=0;x<4;x++)
     {
         updateFleetShip(port.api_data.api_deck_port[x].api_ship,x);
     }
-
 }
 
 //parse array of raw api_ships into api ship object, where keys are ship id
 function processApiShip(apiship)
 {
+    _apiShip_ready=0;
     _apiShip={};
 
     for (var x=0,l=apiship.length;x<l;x++)
     {
         _apiShip[apiship[x].api_id]=apiship[x];
     }
+
+    _apiShip_ready=1;
 }
 
 //ships is array of 6 from fleet
 function updateFleetShip(ships,fleetContain)
 {
-    if (_apiShip==undefined || _apiAllShip==undefined)
+    if (_apiShip!=1)
     {
         setTimeout(()=>{updateFleetShip(ships)},500);
         return;
@@ -165,7 +171,8 @@ function updateFleetShip(ships,fleetContain)
                 maxGas:_apiAllShip[ships[x].api_sortno].api_fuel_max,
                 equipment:genEquip(ships[x].api_slot),
                 curExp:ships[x].api_exp[1],
-                maxExp:_expPerLv[ships[x].api_lv-1]
+                maxExp:_expPerLv[ships[x].api_lv-1],
+                planeCount:ships[x].api_onslot
             });
         }
         
