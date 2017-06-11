@@ -30,6 +30,8 @@ function main()
 
     _expFleets=document.querySelectorAll("exp-fleet");
     _fleetShips=document.querySelectorAll("fleet-ship");
+
+    expBoxEvents();
 }
 
 //setup for inital input screen
@@ -133,9 +135,9 @@ function processApiShip(apiship)
 //ships is array of 6 from fleet
 function updateFleetShip(ships,fleetContain)
 {
-    if (_apiShip!=1)
+    if (_apiShip_ready!=1)
     {
-        setTimeout(()=>{updateFleetShip(ships)},500);
+        setTimeout(()=>{updateFleetShip(ships,fleetContain)},100);
         return;
     }
 
@@ -201,11 +203,11 @@ function genEquip(apishipEquip)
 //needs to be given api_deck_port from the port object, an array
 function expeditionUpdate(data)
 {
-    if (_apistart_ready!=1)
-    {
-        setTimeout(()=>{expeditionUpdate(data)},100);
-        return;
-    }
+    // if (_apistart_ready!=1)
+    // {
+    //     setTimeout(()=>{expeditionUpdate(data)},100);
+    //     return;
+    // }
 
     for (var x=1;x<=3;x++)
     {
@@ -230,4 +232,22 @@ function updateShipdata(update)
     {
         _apiShip[update[x].api_id]=update[x];
     }
+}
+
+function expBoxEvents()
+{
+    var slider=document.querySelector(".fleet-slider");
+
+    _expFleets.forEach((x,i)=>{
+        x.addEventListener("click",(e)=>{
+            slider.style.transform=`translateY(-${(360*i)+360}px)`;
+        });        
+    });
+
+    // for (var x=0;x<3;x++)
+    // {
+    //     _expFleets[x].addEventListener("click",(e)=>{
+    //         slider.style.transform=`translateY(-${350*x}px)`;
+    //     });
+    // }
 }
