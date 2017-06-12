@@ -151,6 +151,11 @@ function updateFleetShip(ships,fleetContain)
         ships[x]=_apiShip[ships[x]];
     }
 
+    if (fleetContain!=0)
+    {
+        _expFleets[fleetContain-1].face=`face/${ships[0].api_ship_id}.png`;
+    }
+
     fleetContain*=6;
     for (var x=0;x<6;x++)
     {
@@ -240,7 +245,22 @@ function expBoxEvents()
 
     _expFleets.forEach((x,i)=>{
         x.addEventListener("click",(e)=>{
+            if (x.classList.contains("selected"))
+            {
+                return;
+            }
+
             slider.style.transform=`translateY(-${(360*i)+360}px)`;
+
+            x.classList.add("selected");
+
+            for (var y=0;y<3;y++)
+            {
+                if (y!=i)
+                {
+                    _expFleets[y].classList.remove("selected");
+                }                
+            }
         });        
     });
 

@@ -87,6 +87,16 @@
         bottom: 0;
         height: 0;
       }
+
+      .face
+      {
+        position: absolute;
+        height: 100%;
+        bottom: 0;
+        right: 0;
+        z-index: -5;
+        opacity: .2;
+      }
     </style>
 
     <div id="slide-box">
@@ -108,7 +118,9 @@
 
     <div id="border" class="borders">
       <div id="border2" class="borders" style="width:[[barPercent]]%"></div>
-    </div>    
+    </div> 
+
+    <img class="face" src="[[face]]">
   </template>
 
   <script>
@@ -190,7 +202,7 @@
         this.$["info"].classList.add("no-expedition");
         this.$["expedition-name"].classList.add("no-expedition");
         this.$["inner-slide"].classList.add("slideup");
-      }
+      }      
 
       updateTime()
       {

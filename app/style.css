@@ -78,6 +78,7 @@ body
 {
     width: 250px;
     height: 420px;
+    margin-top: 10px;
     /*background-color: #e7e7e5;*/
 }
 
@@ -85,13 +86,26 @@ body
 {
     background-color: blue;
     width: 250px;
-    height: 140px;
+    height: 140px;    
 }
 
 exp-fleet
 {
     font-family: "futurabook";
     --font-light: "futuralight";
+    transition: background-color .4s;
+}
+
+exp-fleet:hover
+{
+    cursor: pointer;
+    border-right: 2px solid #c9dee3;
+}
+
+exp-fleet.selected
+{
+    border-right: 2px solid #6c8d96;
+    background-color: rgba(107,135,139,.05);
 }
 
 .fleet
@@ -100,6 +114,7 @@ exp-fleet
     width: 500px;
     height: 350px;
     margin-top: 10px;
+    margin-left: 10px;
     overflow: hidden;
     /*background-color: rgba(255,255,255,.05);*/
 }
