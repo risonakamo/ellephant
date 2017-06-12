@@ -2,8 +2,10 @@ const {ipcRenderer}=require("electron");
 
 window.onload=main;
 
+//html element globals
 var _expFleets;
 var _fleetShips;
+var _mainFace;
 
 //player api from require info
 var _apiShip; //ships of player
@@ -30,6 +32,7 @@ function main()
 
     _expFleets=document.querySelectorAll("exp-fleet");
     _fleetShips=document.querySelectorAll("fleet-ship");
+    _mainFace=document.querySelector(".main-face");
 
     expBoxEvents();
 }
@@ -151,7 +154,12 @@ function updateFleetShip(ships,fleetContain)
         ships[x]=_apiShip[ships[x]];
     }
 
-    if (fleetContain!=0)
+    if (fleetContain==0)
+    {
+        _mainFace.src=`face/${ships[0].api_ship_id}.png`;
+    }
+
+    else
     {
         _expFleets[fleetContain-1].face=`face/${ships[0].api_ship_id}.png`;
     }
@@ -242,6 +250,7 @@ function updateShipdata(update)
 function expBoxEvents()
 {
     var slider=document.querySelector(".fleet-slider");
+    var mainfleet=document.querySelector(".main-fleet");
 
     _expFleets.forEach((x,i)=>{
         x.addEventListener("click",(e)=>{
@@ -254,6 +263,7 @@ function expBoxEvents()
 
             x.classList.add("selected");
 
+            mainfleet.classList.remove("selected");
             for (var y=0;y<3;y++)
             {
                 if (y!=i)
@@ -261,7 +271,23 @@ function expBoxEvents()
                     _expFleets[y].classList.remove("selected");
                 }                
             }
-        });        
+        });                
+    });
+
+    mainfleet.addEventListener("click",(e)=>{
+        if (mainfleet.classList.contains("selected"))
+        {
+            return;
+        }
+
+        slider.style.transform=`translateY(0px)`;
+
+        mainfleet.classList.add("selected");
+
+        for (var x=0;x<3;x++)
+        {
+            _expFleets[x].classList.remove("selected");
+        }
     });
 
     // for (var x=0;x<3;x++)
