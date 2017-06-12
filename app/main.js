@@ -11,7 +11,7 @@ var _apiLink;
 function main()
 {
     ipcs();
-    _win=new BrowserWindow({width:830,height:530,webPreferences:{plugins:true}});
+    _win=new BrowserWindow({width:776,height:620});
 
     _win.loadURL(`file://${__dirname}/index.html`);
 }
