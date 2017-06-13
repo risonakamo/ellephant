@@ -9,10 +9,12 @@
         position: relative;
         width: 250px;
         height: 50px;
-        padding-left: 10px;
-        background-color: rgba(107,135,139,.05);
+        padding-left: 13px;
+        /*background-color: rgba(107,135,139,.05);*/
         box-sizing: border-box;
         overflow: hidden;
+        user-select: none;
+        cursor: default;
       }
 
       .timer
@@ -32,6 +34,7 @@
       .border-fill
       {
         border-bottom: 2px solid #89abac;
+        transition: width .4s;
       }
 
       .face
@@ -43,14 +46,45 @@
         top: -50%;
         -webkit-mask-image: linear-gradient(to right, rgba(0,0,0,0) 0%,rgba(0,0,0,0.66) 14%,rgba(0,0,0,1) 30%);
       }
+
+      .no-ship
+      {
+        width: 100%;
+        height: 48px;
+        line-height: 48px;
+        font-size: 20px;
+        text-align: center;
+        color: #45747a;
+      }
+
+      .slide-contain
+      {
+        width: 100%;
+        height: 47px;
+        overflow: hidden;
+      }
+
+      #slider
+      {
+        transition: transform .4s;        
+      }
+
+      .loaded
+      {
+        transform: translateY(-48px);
+      }
     </style>
 
-    <div class="no-ship">
+    <div class="slide-contain">
+      <div id="slider">
+        <div class="no-ship">
+          NO SHIP
+        </div>
 
-    </div>
-
-    <div class="timer">
-      [[hour]]:[[min]]:[[sec]]
+        <div class="timer">
+          [[hour]]:[[min]]:[[sec]]
+        </div>
+      </div>
     </div>
 
     <div class="border">
@@ -69,11 +103,142 @@
         return "repair-box";
       }
 
+      /*private variables:
+        hour
+        min
+        sec
+        maxTime
+        percent: progress bar percent
+        face: src link for image
+        loaded: if 1 already loaded, dont do update
+        timer: holds timeout function to update clock*/
       static get properties()
       {
         return {
 
         };
+      }
+
+      ready()
+      {
+        super.ready();
+
+        this.clearDock();
+      }
+
+      /*data requires:
+      timeComplete: direct from api completion time
+      face: facce src url
+      maxTime: direct from api length of repair time*/
+      loadShip(data)
+      {
+        if (this.loaded==1)
+        {
+          return;
+        }
+
+        this.loaded=1;
+        this.$["slider"].classList.add("loaded");
+
+        var timeleft=data.timeComplete-new Date().getTime()-60000;
+        this.face=data.face;
+        this.maxTime=data.maxTime/(1000*60);
+
+        if (timeleft<=0)
+        {
+          this.complete();
+          return;
+        }
+
+        this.sec=Math.floor((timeleft/1000)%60);
+        this.min=Math.floor((timeleft/(1000*60))%60);
+        this.hour=Math.floor((timeleft/(1000*60*60))%24);
+        this.formatTime();
+
+        this.updateBar();
+
+        this.timer=setInterval(()=>{this.updateTime()},1000);
+      }
+
+      updateTime()
+      {
+        if (this.sec==0)
+        {
+          if (this.min==0)
+          {
+            if (this.hour==0)
+            {
+              this.complete();
+              this.updateBar();
+              return;
+            }
+
+            this.hour--;
+            this.min=59;
+
+            if (this.hour<10)
+            {
+              this.hour="0"+this.hour;
+            }
+
+            this.updateBar();
+            return;
+          }
+
+          this.min--;
+          this.sec=59;
+
+          if (this.min<10)
+          {
+            this.min="0"+this.min;
+          }
+
+          this.updateBar();
+          return;
+        }
+
+        this.sec--;   
+        if (this.sec<10)
+        {
+          this.sec="0"+this.sec;
+        }        
+      }
+
+      formatTime()
+      {
+        if (this.sec<10)
+        {
+          this.sec="0"+this.sec;
+        }
+
+        if (this.min<10)
+        {
+          this.min="0"+this.min;
+        }
+
+        if (this.hour<10)
+        {
+          this.hour="0"+this.hour;
+        }        
+      }
+
+      updateBar()
+      {
+        this.percent=100-((((parseInt(this.hour)*60)+parseInt(this.min))/this.maxTime)*100);
+      }
+
+      complete()
+      {
+
+      }
+
+      clearDock()
+      {
+        clearTimeout(this.timer);
+
+        this.loaded=0;
+        this.percent=0;
+        this.$["slider"].classList.remove("loaded");
       }
     }
 

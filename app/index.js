@@ -6,6 +6,7 @@ window.onload=main;
 var _expFleets;
 var _fleetShips;
 var _mainFace;
+var _rDocks;
 
 //player api from require info
 var _apiShip; //ships of player
@@ -33,6 +34,7 @@ function main()
     _expFleets=document.querySelectorAll("exp-fleet");
     _fleetShips=document.querySelectorAll("fleet-ship");
     _mainFace=document.querySelector(".main-face");
+    _rDocks=document.querySelectorAll("repair-box");
 
     expBoxEvents();
 }
@@ -119,6 +121,8 @@ function portUpdate(port)
     {
         updateFleetShip(port.api_data.api_deck_port[x].api_ship,x);
     }
+
+    rDockUpdate(port.api_data.api_ndock);
 }
 
 //parse array of raw api_ships into api ship object, where keys are ship id
@@ -296,4 +300,28 @@ function expBoxEvents()
     //         slider.style.transform=`translateY(-${350*x}px)`;
     //     });
     // }
+}
+
+//requires api ndock (array) directly from port api
+function rDockUpdate(data)
+{
+    if (_apiShip_ready!=1)
+    {
+        setTimeout(()=>{rDockUpdate(data)},100);
+        return;
+    }
+
+    for (var x=0;x<2;x++)
+    {
+        if (data[x].api_state<=0 || _rDocks[x].loaded==1)
+        {
+            continue;
+        }
+
+        _rDocks[x].loadShip({
+            face:`face/${_apiShip[data[x].api_ship_id].api_ship_id}.png`,
+            timeComplete:data[x].api_complete_time,
+            maxTime:_apiShip[data[x].api_ship_id].api_ndock_time
+        });
+    }
 }

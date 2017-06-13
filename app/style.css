@@ -155,3 +155,9 @@ exp-fleet:hover,.main-fleet:hover
     width: 0;
     overflow: hidden;
 }
+
+.repair
+{
+    width: 250px;
+    height: 100px;
+}
