@@ -79,6 +79,10 @@ function ipcReceivers()
         chargeUpdate(res);
     });
 
+    ipcRenderer.on("change",(err,res)=>{
+        console.log(res);
+    });
+
     ipcRenderer.once("requireinfo",(err,res)=>{
         _apiEquip={};
         for (var x=0,l=res.api_data.api_slot_item.length;x<l;x++)

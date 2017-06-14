@@ -70,9 +70,7 @@ function ipcs()
             {
                 if (par.request.url=="http://203.104.209.39/kcsapi/api_req_hensei/change")
                 {
-                    // setTimeout(()=>{
-                    //     console.log(par.request.postData);
-                    // },500);
+                    _win.webContents.send("change",decodeURIComponent(par.request.postData));
                 }
             }
         });
