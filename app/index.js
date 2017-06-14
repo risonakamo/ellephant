@@ -8,7 +8,10 @@ var _fleetShips; //array
 var _mainFace;
 var _rDocks;
 
-//player api from require info
+//array of arrays of ids of currently loaded fleetships
+var _fleetShipIds;
+
+//player api (from require info)
 var _apiShip; //ships of player
 var _apiShip_ready;
 var _apiEquip; //equipment of player
@@ -80,7 +83,17 @@ function ipcReceivers()
     });
 
     ipcRenderer.on("change",(err,res)=>{
-        console.log(res);
+        res=res.split("&");
+        var data={};
+        var t;
+
+        for (var x=0;x<res.length;x++)
+        {
+            t=res[x].split("=");
+            data[t[0]]=t[1];
+        }
+
+        changeUpdate(data);
     });
 
     ipcRenderer.once("requireinfo",(err,res)=>{
@@ -112,6 +125,11 @@ function ipcReceivers()
     });    
 }
 
+function changeUpdate(data)
+{
+
+}
+
 //main port update function to handle port requests
 function portUpdate(port)
 {
@@ -125,12 +143,28 @@ function portUpdate(port)
 
     processApiShip(port.api_data.api_ship);
 
+    _fleetShipIds=[];
     for (var x=0;x<4;x++)
     {
+        _fleetShipIds.push(port.api_data.api_deck_port[x].api_ship);
         updateFleetShip(port.api_data.api_deck_port[x].api_ship,x);
     }
 
     rDockUpdate(port.api_data.api_ndock);
+}
+
+function saveFleetShipIds(ships)
+{
+    var newfleet={};
+    for (var x=0;x<ships.length;x++)
+    {
+        if (ships[x]>=0)
+        {
+            newfleet[ships[x]]=0;
+        }
+    }
+
+    _fleetShipIds.push(newfleet);
 }
 
 //parse array of raw api_ships into api ship object, where keys are ship id
@@ -145,6 +179,20 @@ function processApiShip(apiship)
     }
 
     _apiShip_ready=1;
+}
+
+//give face image id and fleet INDEX number (0-3)
+function updateExpFace(fleet)
+{
+    if (fleet==0)
+    {
+        _mainFace.src=_fleetShips[0].face;
+    }
+
+    else
+    {
+        _expFleets[fleet-1].face=_fleetShips[fleet*6].face;
+    }
 }
 
 //ships is array of 6 from fleet
@@ -166,16 +214,17 @@ function updateFleetShip(ships,fleetContain)
         ships[x]=_apiShip[ships[x]];
     }
 
-    if (fleetContain==0)
-    {
-        _mainFace.src=`face/${ships[0].api_ship_id}.png`;
-    }
+    // if (fleetContain==0)
+    // {
+    //     _mainFace.src=`face/${ships[0].api_ship_id}.png`;
+    // }
 
-    else
-    {
-        _expFleets[fleetContain-1].face=`face/${ships[0].api_ship_id}.png`;
-    }
+    // else
+    // {
+    //     _expFleets[fleetContain-1].face=`face/${ships[0].api_ship_id}.png`;
+    // }
 
+    var fleetNumber=fleetContain;
     fleetContain*=6;
     for (var x=0;x<6;x++)
     {
@@ -206,6 +255,8 @@ function updateFleetShip(ships,fleetContain)
         
         fleetContain++;
     }
+
+    updateExpFace(fleetNumber);
 }
 
 //give array of equipment ids of a ship, returns string form
