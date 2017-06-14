@@ -127,7 +127,7 @@ function ipcReceivers()
 
 function changeUpdate(data)
 {
-
+    console.log(data);
 }
 
 //main port update function to handle port requests
@@ -235,28 +235,35 @@ function updateFleetShip(ships,fleetContain)
 
         else
         {
-            _fleetShips[fleetContain].loadShip({
-                maxHp:ships[x].api_maxhp,
-                curHp:ships[x].api_nowhp,
-                level:ships[x].api_lv,
-                face:`face/${ships[x].api_ship_id}.png`,
-                morale:ships[x].api_cond,
-                curAmmo:ships[x].api_bull,
-                curGas:ships[x].api_fuel,
-                maxAmmo:_apiAllShip[ships[x].api_sortno].api_bull_max,
-                maxGas:_apiAllShip[ships[x].api_sortno].api_fuel_max,
-                equipment:genEquip(ships[x].api_slot),
-                curExp:ships[x].api_exp[1],
-                maxExp:_expPerLv[ships[x].api_lv-1],
-                planeCount:ships[x].api_onslot,
-                shipId:ships[x].api_id
-            });
+            _fleetShips[fleetContain].loadShip(genLoadableShip(ships[x]));
         }
         
         fleetContain++;
     }
 
     updateExpFace(fleetNumber);
+}
+
+//gen object for use with fleetship loadship
+//requires ship object from player ship list
+function genLoadableShip(ship)
+{
+    return {
+        maxHp:ship.api_maxhp,
+        curHp:ship.api_nowhp,
+        level:ship.api_lv,
+        face:`face/${ship.api_ship_id}.png`,
+        morale:ship.api_cond,
+        curAmmo:ship.api_bull,
+        curGas:ship.api_fuel,
+        maxAmmo:_apiAllShip[ship.api_sortno].api_bull_max,
+        maxGas:_apiAllShip[ship.api_sortno].api_fuel_max,
+        equipment:genEquip(ship.api_slot),
+        curExp:ship.api_exp[1],
+        maxExp:_expPerLv[ship.api_lv-1],
+        planeCount:ship.api_onslot,
+        shipId:ship.api_id
+    };
 }
 
 //give array of equipment ids of a ship, returns string form
