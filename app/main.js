@@ -45,19 +45,34 @@ function ipcs()
                     setTimeout(()=>{receiveArb(par,"portinfo")},500);
                 }
 
-                if (par.response.url=="http://203.104.209.39/kcsapi/api_get_member/deck")
+                else if (par.response.url=="http://203.104.209.39/kcsapi/api_get_member/deck")
                 {
                     setTimeout(()=>{receiveArb(par,"deckinfo")},500);
                 }
 
-                if (par.response.url=="http://203.104.209.39/kcsapi/api_get_member/require_info")
+                else if (par.response.url=="http://203.104.209.39/kcsapi/api_get_member/require_info")
                 {
                     setTimeout(()=>{receiveArb(par,"requireinfo")},500);
                 }
 
-                if (par.response.url=="http://203.104.209.39/kcsapi/api_start2")
+                else if (par.response.url=="http://203.104.209.39/kcsapi/api_start2")
                 {
                     setTimeout(()=>{receiveArb(par,"apistart")},500);
+                }
+
+                else if (par.response.url=="http://203.104.209.39/kcsapi/api_req_hokyu/charge")
+                {
+                    setTimeout(()=>{receiveArb(par,"charge")},500);
+                }
+            }
+
+            else if (method=="Network.requestWillBeSent")
+            {
+                if (par.request.url=="http://203.104.209.39/kcsapi/api_req_hensei/change")
+                {
+                    // setTimeout(()=>{
+                    //     console.log(par.request.postData);
+                    // },500);
                 }
             }
         });

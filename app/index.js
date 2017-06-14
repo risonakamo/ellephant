@@ -3,8 +3,8 @@ const {ipcRenderer}=require("electron");
 window.onload=main;
 
 //html element globals
-var _expFleets;
-var _fleetShips;
+var _expFleets; //array
+var _fleetShips; //array
 var _mainFace;
 var _rDocks;
 
@@ -73,6 +73,10 @@ function ipcReceivers()
 
     ipcRenderer.on("deckinfo",(err,res)=>{
         expeditionUpdate(res.api_data);
+    });
+
+    ipcRenderer.on("charge",(err,res)=>{
+        chargeUpdate(res);
     });
 
     ipcRenderer.once("requireinfo",(err,res)=>{
@@ -191,7 +195,8 @@ function updateFleetShip(ships,fleetContain)
                 equipment:genEquip(ships[x].api_slot),
                 curExp:ships[x].api_exp[1],
                 maxExp:_expPerLv[ships[x].api_lv-1],
-                planeCount:ships[x].api_onslot
+                planeCount:ships[x].api_onslot,
+                shipId:ships[x].api_id
             });
         }
         
@@ -248,6 +253,37 @@ function updateShipdata(update)
     for (var x=0;x<update.length;x++)
     {
         _apiShip[update[x].api_id]=update[x];
+    }
+}
+
+function chargeUpdate(data)
+{
+    for (var x=0,l=data.api_data.api_ship.length;x<l;x++)
+    {
+        for (var y in data.api_data.api_ship[x])
+        {
+            if (y=="api_id")
+            {
+                continue;
+            }
+
+            _apiShip[data.api_data.api_ship[x].api_id][y]=data.api_data.api_ship[x][y];
+        }
+    }
+
+    var update=[-1,-1,-1,-1,-1,-1];
+    for (var x=0,l=data.api_data.api_ship.length;x<l;x++)
+    {
+        update[x]=data.api_data.api_ship[x].api_id;
+    }
+
+    for (var x=0;x<=24;x+=6)
+    {
+        if (_fleetShips[x].shipId==data.api_data.api_ship[0].api_id)
+        {
+            updateFleetShip(update,x/6);
+            return;
+        }
     }
 }
 
