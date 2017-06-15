@@ -96,6 +96,11 @@ function ipcReceivers()
         changeUpdate(data);
     });
 
+    ipcRenderer.on("presetLoad",(err,res)=>{
+        updateFleetShip(res.api_data.api_ship,res.api_data.api_id-1);
+        _fleetShipIds[res.api_data.api_id-1]=res.api_data.api_ship.slice();
+    });
+
     ipcRenderer.once("requireinfo",(err,res)=>{
         _apiEquip={};
         for (var x=0,l=res.api_data.api_slot_item.length;x<l;x++)

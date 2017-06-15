@@ -6,7 +6,8 @@ void ipcReceivers();
 void expBoxEvents();
 
 /*-- update event handling functions --*/
-void changeUpdate();
+void changeUpdate(object data); //handles change data
+                                //needs to be given formatted data
 void portUpdate(); //handles port object
 void rDockUpdate(object data); //handles repair docks
 void expeditionUpdate(array data); //expedition elements
