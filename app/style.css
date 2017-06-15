@@ -71,6 +71,24 @@ body
     vertical-align: top;
 }
 
+.viewer-page
+{
+    position: absolute;
+    /*width: 760px;
+    height: 460px;    */
+    height: 0;
+    opacity: 0;
+    overflow: hidden;
+    z-index: -10;
+}
+
+.viewer-page.current
+{
+    height: auto;
+    opacity: 1;
+    z-index: 10;
+}
+
 .button:hover
 {
     background-color: #3d81a7;

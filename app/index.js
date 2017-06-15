@@ -33,6 +33,7 @@ function main()
 {
     setupInput();
     ipcReceivers();
+    setupTabs();
 
     _expFleets=document.querySelectorAll("exp-fleet");
     _fleetShips=document.querySelectorAll("fleet-ship");
@@ -478,4 +479,57 @@ function rDockUpdate(data)
             maxTime:_apiShip[data[x].api_ship_id].api_ndock_time
         });
     }
+}
+
+function setupTabs()
+{
+    var tabs=document.querySelectorAll(".tab");
+    var pages=document.querySelectorAll(".viewer-page");
+
+    tabs.forEach((x,i,a)=>{
+        x.addEventListener("click",(e)=>{            
+            if (pages[i].classList.contains("current"))
+            {
+                return;
+            }
+
+            for (var y=0;y<pages.length;y++)
+            {
+                if (y==i)
+                {
+                    pages[i].classList.add("current");
+                    tabs[i].classList.add("selected");
+                }
+
+                else
+                {
+                    pages[y].classList.remove("current");
+                    tabs[y].classList.remove("selected");
+                }
+            }
+        });
+    });
+
+    // for (var x=0,l=tabs.length;x<l;x++)
+    // {        
+    //     tabs[x].addEventListener("click",(e)=>{            
+    //         if (pages[x].classList.contains("current"))
+    //         {
+    //             return;
+    //         }
+
+    //         for (var y=0;y<pages.length;y++)
+    //         {
+    //             if (y==x)
+    //             {
+    //                 pages[x].classList.add("current");
+    //             }
+
+    //             else
+    //             {
+    //                 pages[y].classList.remove("current");
+    //             }
+    //         }
+    //     });
+    // }
 }
