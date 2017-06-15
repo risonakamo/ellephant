@@ -10,18 +10,19 @@
     <link rel="import" href="expfleet.html">
     <link rel="import" href="fleetship.html">
     <link rel="import" href="repairbox.html">
+    <link rel="import" href="pvpfleet.html">
 
     <script src="index.js"></script>
 
   </head>
   
   <body>
-    <div class="input-wrap collapse">
+    <div class="input-wrap">
       <input type="text" class="url-box" autofocus>
       <div class="button go-bt">go</div>
     </div>
 
-    <div class="viewer">
+    <div class="viewer collapse">
       <div class="tabs">
         <div class="tab selected">OVERVIEW</div>
         <div class="tab">PVP</div>
@@ -86,7 +87,11 @@
       </div>
 
       <div class="viewer-page">
-        hello
+        <pvp-fleet></pvp-fleet>
+        <pvp-fleet></pvp-fleet>
+        <pvp-fleet></pvp-fleet>
+        <pvp-fleet></pvp-fleet>
+        <pvp-fleet></pvp-fleet>
       </div>
     </div>
   </body>

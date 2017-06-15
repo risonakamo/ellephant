@@ -7,6 +7,7 @@ var _expFleets; //array
 var _fleetShips; //array
 var _mainFace;
 var _rDocks;
+var _pvpFleets;
 
 //array of arrays of ids of currently loaded fleetships
 var _fleetShipIds;
@@ -39,6 +40,7 @@ function main()
     _fleetShips=document.querySelectorAll("fleet-ship");
     _mainFace=document.querySelector(".main-face");
     _rDocks=document.querySelectorAll("repair-box");
+    _pvpFleets=document.querySelectorAll("pvp-fleet");
 
     expBoxEvents();
 }
@@ -100,6 +102,10 @@ function ipcReceivers()
     ipcRenderer.on("presetLoad",(err,res)=>{
         updateFleetShip(res.api_data.api_ship,res.api_data.api_id-1);
         _fleetShipIds[res.api_data.api_id-1]=res.api_data.api_ship.slice();
+    });
+
+    ipcRenderer.on("pvpUpdate",(err,res)=>{
+        pvpUpdate(res.api_data);
     });
 
     ipcRenderer.once("requireinfo",(err,res)=>{
@@ -508,28 +514,13 @@ function setupTabs()
                 }
             }
         });
-    });
+    });    
+}
 
-    // for (var x=0,l=tabs.length;x<l;x++)
-    // {        
-    //     tabs[x].addEventListener("click",(e)=>{            
-    //         if (pages[x].classList.contains("current"))
-    //         {
-    //             return;
-    //         }
-
-    //         for (var y=0;y<pages.length;y++)
-    //         {
-    //             if (y==x)
-    //             {
-    //                 pages[x].classList.add("current");
-    //             }
-
-    //             else
-    //             {
-    //                 pages[y].classList.remove("current");
-    //             }
-    //         }
-    //     });
-    // }
+function pvpUpdate(data)
+{
+    for (var x=0;x<5;x++)
+    {
+        _pvpFleets[x].initialLoad(data.api_list[x]);
+    }
 }

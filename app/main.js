@@ -69,6 +69,11 @@ function ipcs()
                 {
                     setTimeout(()=>{receiveArb(par,"presetLoad")},500);
                 }
+
+                else if (par.response.url=="http://203.104.209.39/kcsapi/api_get_member/practice")
+                {
+                    setTimeout(()=>{receiveArb(par,"pvpUpdate")},500);
+                }
             }
 
             else if (method=="Network.requestWillBeSent")
