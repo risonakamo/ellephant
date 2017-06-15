@@ -127,7 +127,57 @@ function ipcReceivers()
 
 function changeUpdate(data)
 {
-    console.log(data);
+    var fleet=parseInt(data.api_id)-1;
+    var idx=parseInt(data.api_ship_idx);
+    var newShip=parseInt(data.api_ship_id);
+
+    
+    if (newShip==-1)
+    {
+        for (var x=idx;x<=4;x++)
+        {
+            _fleetShipIds[fleet][x]=_fleetShipIds[fleet][x+1];
+        }
+
+        _fleetShipIds[fleet][5]=-1;        
+    }
+
+    else if (newShip==-2)
+    {
+        for (var x=1;x<6;x++)
+        {
+            _fleetShipIds[fleet][x]=-1;
+        }
+    }
+
+    else
+    {
+        var oldShip=_fleetShipIds[fleet][idx];
+        
+        if (oldShip>=0)
+        {
+            (()=>{
+                for (var x=0;x<4;x++)
+                {
+                    for (var y=0;y<6;y++)
+                    {
+                        if (_fleetShipIds[x][y]==newShip)
+                        {
+                            _fleetShipIds[x][y]=oldShip;
+                            return;
+                        }
+                    }
+                }
+            })();
+        }
+        
+        _fleetShipIds[fleet][idx]=newShip;
+    }
+
+    for (var x=0;x<4;x++)
+    {
+        updateFleetShip(_fleetShipIds[x],x);
+    }
 }
 
 //main port update function to handle port requests
@@ -146,26 +196,26 @@ function portUpdate(port)
     _fleetShipIds=[];
     for (var x=0;x<4;x++)
     {
-        _fleetShipIds.push(port.api_data.api_deck_port[x].api_ship);
+        _fleetShipIds.push(port.api_data.api_deck_port[x].api_ship.slice());
         updateFleetShip(port.api_data.api_deck_port[x].api_ship,x);
     }
 
     rDockUpdate(port.api_data.api_ndock);
 }
 
-function saveFleetShipIds(ships)
-{
-    var newfleet={};
-    for (var x=0;x<ships.length;x++)
-    {
-        if (ships[x]>=0)
-        {
-            newfleet[ships[x]]=0;
-        }
-    }
+// function saveFleetShipIds(ships)
+// {
+//     var newfleet={};
+//     for (var x=0;x<ships.length;x++)
+//     {
+//         if (ships[x]>=0)
+//         {
+//             newfleet[ships[x]]=0;
+//         }
+//     }
 
-    _fleetShipIds.push(newfleet);
-}
+//     _fleetShipIds.push(newfleet);
+// }
 
 //parse array of raw api_ships into api ship object, where keys are ship id
 function processApiShip(apiship)
@@ -204,6 +254,7 @@ function updateFleetShip(ships,fleetContain)
         return;
     }
 
+    ships=ships.slice();
     for (var x=0;x<6;x++)
     {
         if (ships[x]==-1)

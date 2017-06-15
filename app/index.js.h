@@ -13,7 +13,7 @@ void expeditionUpdate(array data); //expedition elements
 void chargeUpdate(object data); //charge object
 
 /*-- helpers --*/
-void saveFleetShipIds(array ships);
+// void saveFleetShipIds(array ships);
 void processApiShip(array apiship);
 void updateExpFace(int fleet);
 void updateFleetShip(array ships,int fleetContain);
