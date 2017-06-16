@@ -5,10 +5,12 @@
     <style>
       :host
       {
+        position: relative;
         display: inline-block;
         width: 700px;        
         height: 100px;
         font-size: 0;
+        overflow: hidden;
         user-select: none;
         cursor: default;
       }
@@ -56,6 +58,7 @@
         width: 90px;
         height: 100px;
         background-color: rgba(50,51,43,.4);
+        transition: transform .4s;
       }
 
       .ship .face-contain
@@ -68,12 +71,9 @@
       .ship img
       {
         height: 100%;
-      }
-
-      .ship img.hidden
-      {
-        opacity: 0;
-      }
+        opacity: 1;
+        transition: opacity .2s;
+      }      
 
       .ship .label
       {        
@@ -84,6 +84,31 @@
         font-size: 19px;
         text-align: center;
         color: #d2d4d1;
+      }
+
+      .ship.unloaded
+      {
+        transform: translateY(100px);
+      }
+
+      #unload-sign
+      {
+        position: absolute;
+        width: 450px;
+        height: 100px;
+        line-height: 100px;
+        color: #1e3717;
+        background-color: rgba(50,51,43,.1);
+        font-size: 30px;
+        text-align: center;        
+        bottom: 0;
+        right: 0;
+        transition: opacity .4s;
+      }
+
+      .hidden
+      {
+        opacity: 0;
       }
     </style>
 
@@ -108,7 +133,7 @@
         <div class="label"></div>
       </div>
 
-      <div class="ship">
+      <div class="ship unloaded">
         <div class="face-contain">
           <img>
         </div>
@@ -116,7 +141,7 @@
         <div class="label"></div>
       </div>
 
-      <div class="ship">
+      <div class="ship unloaded">
         <div class="face-contain">
           <img>
         </div>
@@ -124,7 +149,7 @@
         <div class="label"></div>
       </div>
       
-      <div class="ship">
+      <div class="ship unloaded">
         <div class="face-contain">
           <img>
         </div>
@@ -132,7 +157,7 @@
         <div class="label"></div>
       </div>
 
-      <div class="ship">
+      <div class="ship unloaded">
         <div class="face-contain">
           <img>
         </div>
@@ -140,13 +165,17 @@
         <div class="label"></div>
       </div>
 
-      <div class="ship">
+      <div class="ship unloaded">
         <div class="face-contain">
           <img>
         </div>
 
         <div class="label"></div>
       </div>
+    </div>
+
+    <div id="unload-sign">
+      UNLOADED
     </div>
 
   </template>
@@ -164,6 +193,7 @@
         rank: enemy level
         shipFaces: array of shipface img elements
         shipLabels: array of ship label elements
+        ships: array of ship elements
       */
       static get properties()
       {
@@ -178,6 +208,7 @@
 
         this.shipFaces=this.$["ships"].querySelectorAll(".ship img");
         this.shipLabels=this.$["ships"].querySelectorAll(".label");
+        this.ships=this.$["ships"].querySelectorAll(".ship");
       }
 
       //give it entire enemy object from api list practice api_list
@@ -194,7 +225,7 @@
         {
           if (data[x].api_id<0)
           {
-            return;
+            break;
           }
 
           if (x>0)
@@ -204,6 +235,21 @@
 
           this.shipLabels[x].innerHTML=`${data[x].type} Lv${data[x].api_level}`;
         }
+
+        this.$["unload-sign"].classList.add("hidden");
+        this.animateIn(0);
+      }
+
+      animateIn(index)
+      {
+        this.ships[index].classList.remove("unloaded");
+
+        if (index>=5)
+        {
+          return;
+        }
+
+        setTimeout(()=>{this.animateIn(index+1)},70);
       }
     }
 
