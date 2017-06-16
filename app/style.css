@@ -22,7 +22,7 @@ body
 {
     margin: 0;
     background-color: #020303;
-    font-family: "futurabook";
+    font-family: "futurabook","shingoR";
     color: #e7e7e5;
     overflow: hidden;
 }
@@ -32,7 +32,7 @@ body
     width: 100%;   
     margin-top: 40vh; 
     text-align: center;
-    font-family: "segoe ui";
+    font-family: "segoe ui","shingoR";
 }
 
 .button
