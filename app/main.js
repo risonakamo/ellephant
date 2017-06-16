@@ -74,6 +74,11 @@ function ipcs()
                 {
                     setTimeout(()=>{receiveArb(par,"pvpUpdate")},500);
                 }
+
+                else if (par.response.url=="http://203.104.209.39/kcsapi/api_req_member/get_practice_enemyinfo")
+                {
+                    setTimeout(()=>{receiveArb(par,"pvpFleet")},500);
+                }
             }
 
             else if (method=="Network.requestWillBeSent")

@@ -11,6 +11,7 @@ var _pvpFleets;
 
 //array of arrays of ids of currently loaded fleetships
 var _fleetShipIds;
+var _pvpIds;
 
 //player api (from require info)
 var _apiShip; //ships of player
@@ -106,6 +107,10 @@ function ipcReceivers()
 
     ipcRenderer.on("pvpUpdate",(err,res)=>{
         pvpUpdate(res.api_data);
+    });
+
+    ipcRenderer.on("pvpFleet",(err,res)=>{
+        loadPvpFleet(res.api_data);
     });
 
     ipcRenderer.once("requireinfo",(err,res)=>{
@@ -519,8 +524,15 @@ function setupTabs()
 
 function pvpUpdate(data)
 {
+    _pvpIds={};        
     for (var x=0;x<5;x++)
     {
+        _pvpIds[data.api_list[x].api_enemy_id]=x;
         _pvpFleets[x].initialLoad(data.api_list[x]);
     }
+}
+
+function loadPvpFleet(data)
+{
+    _pvpFleets[_pvpIds[data.api_member_id]].fleetLoad(data.api_deck.api_ships);
 }

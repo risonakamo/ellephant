@@ -13,7 +13,9 @@ void portUpdate(); //handles port object
 void rDockUpdate(object data); //handles repair docks
 void expeditionUpdate(array data); //expedition elements
 void chargeUpdate(object data); //charge object
+
 void pvpUpdate(object data); //api data of api practice object sent in
+void loadPvpFleet(object data); //handle recieve of single enemy fleet
 
 /*-- helpers --*/
 // void saveFleetShipIds(array ships);
