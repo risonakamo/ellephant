@@ -23,6 +23,7 @@ var _apistart_ready;
 var _apiAllShip;
 var _apiAllEquip;
 var _apiAllExpedition;
+var _apiIdtoSort;
 
 //calculated constants
 var _expPerLv=[100,200,300,400,500,600,700,800,900,1000,1100,1200,1300,1400,1500,1600,1700,
@@ -34,6 +35,7 @@ var _expPerLv=[100,200,300,400,500,600,700,800,900,1000,1100,1200,1300,1400,1500
 
 var _sTypes=["DE","DD","CL","CLT","CA","CAV","CVL","BB","BB","BBV","CV","超弩級戦艦","SS","SSV","AO","AV","LHA",
             "CVB","AR","AS","CT","AO"];
+
 
 function main()
 {
@@ -129,9 +131,11 @@ function ipcReceivers()
         // _apistart=res.api_data;
 
         _apiAllShip={};
+        _apiIdtoSort={};
         for (var x=0;x<=465;x++)
         {
             _apiAllShip[res.api_data.api_mst_ship[x].api_sortno]=res.api_data.api_mst_ship[x];
+            _apiIdtoSort[res.api_data.api_mst_ship[x].api_id]=res.api_data.api_mst_ship[x].api_sortno;
         }
 
         _apiAllEquip={};
@@ -538,5 +542,15 @@ function pvpUpdate(data)
 
 function loadPvpFleet(data)
 {
+    for (var x=0;x<6;x++)
+    {
+        if (data.api_deck.api_ships[x].api_id<0)
+        {
+            break;
+        }
+
+        data.api_deck.api_ships[x].type=_sTypes[_apiAllShip[_apiIdtoSort[data.api_deck.api_ships[x].api_ship_id]].api_stype-1];
+    }
+
     _pvpFleets[_pvpIds[data.api_member_id]].fleetLoad(data.api_deck.api_ships);
 }

@@ -209,3 +209,13 @@ exp-fleet:hover,.main-fleet:hover
     width: 250px;
     height: 100px;
 }
+
+.pvp-fleets
+{
+    margin-top: 10px;
+}
+
+pvp-fleet
+{
+    --label-font: "futuralight";
+}
