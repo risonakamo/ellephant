@@ -20,7 +20,7 @@
 
       .info
       {
-        width: 100px;
+        width: 160px;
         height: 100px;
       }
 
@@ -64,13 +64,6 @@
 
     </div>
 
-    <div class="ship">
-      <div class="face-contain">
-        <img src="[[flag]]">
-      </div>
-
-      <div class="label">81</div>
-    </div>
 
     <div id="ships">
       <div class="ship">
@@ -78,7 +71,7 @@
           <img>
         </div>
 
-        <div class="label">81</div>
+        <div class="label"></div>
       </div>
 
       <div class="ship">
@@ -86,7 +79,15 @@
           <img>
         </div>
 
-        <div class="label">81</div>
+        <div class="label"></div>
+      </div>
+
+      <div class="ship">
+        <div class="face-contain">
+          <img>
+        </div>
+
+        <div class="label"></div>
       </div>
       
       <div class="ship">
@@ -94,7 +95,7 @@
           <img>
         </div>
 
-        <div class="label">81</div>
+        <div class="label"></div>
       </div>
 
       <div class="ship">
@@ -102,7 +103,7 @@
           <img>
         </div>
 
-        <div class="label">81</div>
+        <div class="label"></div>
       </div>
 
       <div class="ship">
@@ -110,7 +111,7 @@
           <img>
         </div>
 
-        <div class="label">81</div>
+        <div class="label"></div>
       </div>
     </div>
 
@@ -142,23 +143,32 @@
         super.ready();
 
         this.shipFaces=this.$["ships"].querySelectorAll(".ship img");
+        this.shipLabels=this.$["ships"].querySelectorAll(".label");
       }
 
       //give it entire enemy object from api list practice api_list
       initialLoad(data)
       {
-        this.flag=`face/${data.api_enemy_flag_ship}.png`;
+        this.shipFaces[0].src=`face/${data.api_enemy_flag_ship}.png`;
         this.name=data.api_enemy_name;
         this.lv=data.api_enemy_level;        
       }
 
       fleetLoad(data)
       {
-        for (var x=1;x<6;x++)
+        for (var x=0;x<6;x++)
         {
-          
+          if (data[x].api_id<0)
+          {
+            return;
+          }
 
-          this.shipFaces[x-1].src=`face/${data[x].api_ship_id}.png`;
+          if (x>0)
+          {
+            this.shipFaces[x].src=`face/${data[x].api_ship_id}.png`;
+          }
+
+          this.shipLabels[x].innerHTML=`Lv${data[x].api_level}`;
         }
       }
     }
