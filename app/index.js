@@ -554,3 +554,10 @@ function loadPvpFleet(data)
 
     _pvpFleets[_pvpIds[data.api_member_id]].fleetLoad(data.api_deck.api_ships);
 }
+
+function keyControl()
+{
+    document.addEventListener("keypress",(e)=>{
+        
+    });
+}

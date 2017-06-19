@@ -7,7 +7,7 @@
       {
         position: relative;
         display: inline-block;
-        width: 700px;        
+        width: 720px;        
         height: 100px;
         font-size: 0;
         overflow: hidden;
@@ -57,8 +57,14 @@
       {        
         width: 90px;
         height: 100px;
+        margin-right: 4px;
         background-color: rgba(50,51,43,.4);
         transition: transform .4s;
+      }
+
+      .ship.last
+      {
+        margin-right: 0;
       }
 
       .ship .face-contain
@@ -91,10 +97,15 @@
         transform: translateY(100px);
       }
 
+      #ships
+      {
+        position: relative;
+      }
+
       #unload-sign
       {
         position: absolute;
-        width: 450px;
+        width: 100%;
         height: 100px;
         line-height: 100px;
         color: #1e3717;
@@ -110,72 +121,84 @@
       {
         opacity: 0;
       }
+
+      .s-rank
+      {
+        background-color: rgba(11,63,1,.3);
+      }
+
+      .s-rank #unload-sign
+      {
+        color: #2f9c1f;
+      }
     </style>
 
-    <div class="info">
-      <div class="name">
-        [[name]]
-      </div>
-
-      <div class="rank">
-        [[rank]]
-      </div>
-
-      <div class="border"></div>        
-    </div>    
-
-    <div id="ships">
-      <div class="ship">
-        <div class="face-contain">
-          <img>
+    <div id="host">
+      <div class="info">
+        <div class="name">
+          [[name]]
         </div>
 
-        <div class="label"></div>
-      </div>
-
-      <div class="ship unloaded">
-        <div class="face-contain">
-          <img>
+        <div class="rank">
+          [[rank]]
         </div>
 
-        <div class="label"></div>
-      </div>
+        <div class="border"></div>        
+      </div>    
 
-      <div class="ship unloaded">
-        <div class="face-contain">
-          <img>
+      <div id="ships">
+        <div class="ship">
+          <div class="face-contain">
+            <img>
+          </div>
+
+          <div class="label"></div>
         </div>
 
-        <div class="label"></div>
-      </div>
-      
-      <div class="ship unloaded">
-        <div class="face-contain">
-          <img>
+        <div class="ship unloaded">
+          <div class="face-contain">
+            <img>
+          </div>
+
+          <div class="label"></div>
         </div>
 
-        <div class="label"></div>
-      </div>
+        <div class="ship unloaded">
+          <div class="face-contain">
+            <img>
+          </div>
 
-      <div class="ship unloaded">
-        <div class="face-contain">
-          <img>
+          <div class="label"></div>
+        </div>
+        
+        <div class="ship unloaded">
+          <div class="face-contain">
+            <img>
+          </div>
+
+          <div class="label"></div>
         </div>
 
-        <div class="label"></div>
-      </div>
+        <div class="ship unloaded">
+          <div class="face-contain">
+            <img>
+          </div>
 
-      <div class="ship unloaded">
-        <div class="face-contain">
-          <img>
+          <div class="label"></div>
         </div>
 
-        <div class="label"></div>
-      </div>
-    </div>
+        <div class="ship last unloaded">
+          <div class="face-contain">
+            <img>
+          </div>
 
-    <div id="unload-sign">
-      UNLOADED
+          <div class="label"></div>
+        </div>
+
+        <div id="unload-sign">
+          [[unloadText]]
+        </div>
+      </div>
     </div>
 
   </template>
@@ -194,6 +217,7 @@
         shipFaces: array of shipface img elements
         shipLabels: array of ship label elements
         ships: array of ship elements
+        unloadText: text in unload box
       */
       static get properties()
       {
@@ -209,6 +233,7 @@
         this.shipFaces=this.$["ships"].querySelectorAll(".ship img");
         this.shipLabels=this.$["ships"].querySelectorAll(".label");
         this.ships=this.$["ships"].querySelectorAll(".ship");
+        this.unloadText="UNLOADED";
       }
 
       //give it entire enemy object from api list practice api_list
@@ -216,7 +241,9 @@
       {
         this.shipFaces[0].src=`face/${data.api_enemy_flag_ship}.png`;
         this.name=data.api_enemy_name;
-        this.rank=data.api_enemy_level;        
+        this.rank=data.api_enemy_level;
+
+        this.setState(data.api_state);
       }
 
       fleetLoad(data)
@@ -250,6 +277,20 @@
         }
 
         setTimeout(()=>{this.animateIn(index+1)},70);
+      }
+
+      setState(state)
+      {
+        switch(state)
+        {
+          case 0:
+          return;
+
+          case 6:
+          this.$["host"].classList.add("s-rank");
+          this.unloadText="S RANKED";
+          break;
+        }
       }
     }
 

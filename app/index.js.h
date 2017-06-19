@@ -5,6 +5,7 @@ void setupInput();
 void ipcReceivers();
 void expBoxEvents();
 void setupTabs();
+void keyControl();
 
 /*-- update event handling functions --*/
 void changeUpdate(object data); //handles change data
