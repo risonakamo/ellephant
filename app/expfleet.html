@@ -1,5 +1,10 @@
 <link rel="import" href="polymer/polymer/polymer-element.html">
 
+<!--
+  #wrap class states: no-expedition, completed, resupply
+
+-->
+
 <dom-module id="exp-fleet">
   <template>
     <style>
@@ -8,13 +13,17 @@
         display: inline-block;
         position: relative;
         width: 250px;
-        height: 100px;
-        padding: 10px;
-        padding-left: 13px;
+        height: 100px;        
         box-sizing: border-box;
         /*background-color: rgba(255,255,255,.05);        */
         user-select: none;
         cursor: default;
+      }
+
+      #wrap
+      {
+        padding: 10px;
+        padding-left: 13px;
       }
 
       #slide-box
@@ -35,12 +44,12 @@
         transition: color .4s;
       }
 
-      .completed
+      #wrap.completed #info
       {
         color: #81c15e;
       }
 
-      .no-expedition
+      #wrap.no-expedition #info
       {
         color: #e50018;
       }
@@ -63,7 +72,7 @@
         transition: color .4s;
       }
 
-      #expedition-name.no-expedition
+      #wrap.no-expedition #expedition-name
       {
         color: #660000;
       }
@@ -98,30 +107,43 @@
         opacity: .2;
         -webkit-mask-image: linear-gradient(to right, rgba(0,0,0,0) 0%,rgba(0,0,0,0.66) 14%,rgba(0,0,0,1) 30%);
       }
-    </style>
 
-    <div id="slide-box">
-      <div id="inner-slide">
-        <div id="timer">
-          [[hour]]:[[min]]:[[sec]]
-        </div>
-        
-        <div id="info">
-          [[infoMessage]]
+      #wrap.resupply
+      {
+        background-color: rgba(150,120,68,.08);
+      }
+
+      #wrap.resupply #expedition-name
+      {
+        color: #967844;
+      }
+    </style>
+    
+    <div id="wrap">
+      <div id="slide-box">
+        <div id="inner-slide">
+          <div id="timer">
+            [[hour]]:[[min]]:[[sec]]
+          </div>
+          
+          <div id="info">
+            [[infoMessage]]
+          </div>
         </div>
       </div>
+
+
+      <div id="expedition-name">
+        [[expNum]]
+      </div>
+
+      <div id="border" class="borders">
+        <div id="border2" class="borders" style="width:[[barPercent]]%"></div>
+      </div> 
+
+      <img class="face" src="[[face]]">
     </div>
 
-
-    <div id="expedition-name">
-      [[expNum]]
-    </div>
-
-    <div id="border" class="borders">
-      <div id="border2" class="borders" style="width:[[barPercent]]%"></div>
-    </div> 
-
-    <img class="face" src="[[face]]">
   </template>
 
   <script>
@@ -131,7 +153,7 @@
       {
         return "exp-fleet";
       }
-
+      
       static get properties()
       {
         return {
@@ -142,7 +164,8 @@
       ready()
       {
         super.ready();
-        
+                
+        this.resupply=0;
         this.clearExpedition();
       }
 
@@ -155,8 +178,7 @@
         }
 
         this.loaded=1;
-        this.$["info"].classList.remove("completed","no-expedition");
-        this.$["expedition-name"].classList.remove("no-expedition");
+        this.wrapState("");
         this.$["inner-slide"].classList.remove("slideup");
 
         this.expNum=`EXPEDITION ${data.expNum}`;
@@ -185,9 +207,7 @@
         clearTimeout(this.timer);
 
         this.infoMessage="Completed";
-        this.$["info"].classList.remove("no-expedition");
-        this.$["expedition-name"].classList.remove("no-expedition");
-        this.$["info"].classList.add("completed");
+        this.wrapState("completed");
         this.$["inner-slide"].classList.add("slideup");
       }
 
@@ -197,11 +217,14 @@
         this.loaded=0;
 
         this.infoMessage="No Expedition";
-        this.expNum="NO EXPEDITION";
+
+        if (this.resupply==0)
+        {
+          this.expNum="NO EXPEDITION";
+        }
+
         this.barPercent=0;
-        this.$["info"].classList.remove("completed");
-        this.$["info"].classList.add("no-expedition");
-        this.$["expedition-name"].classList.add("no-expedition");
+        this.wrapState("no-expedition");
         this.$["inner-slide"].classList.add("slideup");
       }      
 
@@ -270,6 +293,38 @@
       updateBar()
       {
         this.barPercent=100-((((parseInt(this.hour)*60)+parseInt(this.min))/this.maxTime)*100);
+      }
+
+      /*set supply warnings
+        0: normal
+        1: requires refuel*/
+      supplyState(state)
+      {
+        if (state==0)
+        {
+          this.resupply=0;
+          this.$["wrap"].classList.remove("resupply");
+        }
+
+        else
+        {
+          this.resupply=1;
+          this.expNum="RESUPPLY REQUIRED";
+          this.$["wrap"].classList.add("resupply");
+        }
+      }
+
+      //change css wrap state
+      wrapState(state)
+      {
+        this.$["wrap"].classList.remove("no-expedition","completed");
+
+        if (state==undefined || state=="")
+        {
+          return;
+        }
+
+        this.$["wrap"].classList.add(state);
       }
     }
 

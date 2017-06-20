@@ -305,6 +305,7 @@ function updateFleetShip(ships,fleetContain)
     // }
 
     var fleetNumber=fleetContain;
+    var resupply=0;
     fleetContain*=6;
     for (var x=0;x<6;x++)
     {
@@ -316,11 +317,19 @@ function updateFleetShip(ships,fleetContain)
         else
         {
             _fleetShips[fleetContain].loadShip(genLoadableShip(ships[x]));
+
+            if ((_fleetShips[fleetContain].curAmmo<_fleetShips[fleetContain].maxAmmo 
+                || _fleetShips[fleetContain].curGas<_fleetShips[fleetContain].maxGas)
+                && fleetNumber!=0 && resupply==0)
+            {
+                resupply=1;
+            }
         }
         
         fleetContain++;
     }
 
+    updateFleetSupply(fleetNumber,resupply);
     updateExpFace(fleetNumber);
 }
 
@@ -615,5 +624,18 @@ function tabPage(page)
             _pages[x].classList.remove("current");
             _tabs[x].classList.remove("selected");
         }
+    }
+}
+
+function updateFleetSupply(fleet,resupply)
+{
+    if (fleet==0)
+    {
+
+    }
+
+    else
+    {
+        _expFleets[fleet-1].supplyState(resupply);
     }
 }

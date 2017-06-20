@@ -3,18 +3,7 @@
   "version": "1.0.0",
   "description": "electron kantai wrapper",
   "main": "main.js",
-  "scripts": {
-    "test": "none"
-  },
-  "repository": {
-    "type": "git",
-    "url": "none"
-  },
-  "keywords": [
-    "kantai"
-  ],
   "author": "risonakamo",
-  "license": "ISC",
   "dependencies": {
     "flash-player-loader": "^1.2.0"
   }

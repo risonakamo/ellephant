@@ -23,6 +23,7 @@ void loadPvpFleet(object data); //handle recieve of single enemy fleet
 void processApiShip(array apiship);
 void updateExpFace(int fleet);
 void updateFleetShip(array ships,int fleetContain);
+void updateFleetSupply(int fleet,int resupply);
 
 /*-- utility --*/
 object genLoadableShip(object ship);

@@ -1,0 +1,7 @@
+0,unloaded
+1,???
+2,D
+3,(presumably C)
+4,B
+5,A
+6,S
