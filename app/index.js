@@ -123,6 +123,10 @@ function ipcReceivers()
         loadPvpFleet(res.api_data);
     });
 
+    ipcRenderer.on("pvpResult",(err,res)=>{
+        
+    });
+
     ipcRenderer.once("requireinfo",(err,res)=>{
         _apiEquip={};
         for (var x=0,l=res.api_data.api_slot_item.length;x<l;x++)

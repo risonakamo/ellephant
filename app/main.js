@@ -79,6 +79,11 @@ function ipcs()
                 {
                     setTimeout(()=>{receiveArb(par,"pvpFleet")},500);
                 }
+
+                else if (par.response.url=="http://203.104.209.39/kcsapi/api_req_practice/battle_result")
+                {
+                    setTimeout(()=>{receiveArb(par,"pvpResult")},500);
+                }                
             }
 
             else if (method=="Network.requestWillBeSent")
