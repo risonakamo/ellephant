@@ -28,3 +28,4 @@ void updateFleetShip(array ships,int fleetContain);
 object genLoadableShip(object ship);
 array genEquip(array apishipEquip);
 void updateShipData(object update);
+void tabPage(int page);

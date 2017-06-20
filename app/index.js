@@ -41,13 +41,16 @@ function main()
 {
     setupInput();
     ipcReceivers();
-    setupTabs();
+    setupTabs();    
 
     _expFleets=document.querySelectorAll("exp-fleet");
     _fleetShips=document.querySelectorAll("fleet-ship");
     _mainFace=document.querySelector(".main-face");
     _rDocks=document.querySelectorAll("repair-box");
     _pvpFleets=document.querySelectorAll("pvp-fleet");
+
+    _tabs=document.querySelectorAll(".tab");
+    _pages=document.querySelectorAll(".viewer-page");
 
     expBoxEvents();
 }
@@ -64,6 +67,7 @@ function setupInput()
         ipcRenderer.send("requestWindow",urlBox.value);
         inputWrap.parentNode.removeChild(inputWrap);
         viewer.classList.remove("collapse");
+        keyControl();
     };
 
     goBt.addEventListener("click",sendWindowRequest);
@@ -507,25 +511,27 @@ function setupTabs()
 
     tabs.forEach((x,i,a)=>{
         x.addEventListener("click",(e)=>{            
-            if (pages[i].classList.contains("current"))
-            {
-                return;
-            }
+            // if (pages[i].classList.contains("current"))
+            // {
+            //     return;
+            // }
 
-            for (var y=0;y<pages.length;y++)
-            {
-                if (y==i)
-                {
-                    pages[i].classList.add("current");
-                    tabs[i].classList.add("selected");
-                }
+            // for (var y=0;y<pages.length;y++)
+            // {
+            //     if (y==i)
+            //     {
+            //         pages[i].classList.add("current");
+            //         tabs[i].classList.add("selected");
+            //     }
 
-                else
-                {
-                    pages[y].classList.remove("current");
-                    tabs[y].classList.remove("selected");
-                }
-            }
+            //     else
+            //     {
+            //         pages[y].classList.remove("current");
+            //         tabs[y].classList.remove("selected");
+            //     }
+            // }
+
+            tabPage(i);
         });
     });    
 }
@@ -558,6 +564,56 @@ function loadPvpFleet(data)
 function keyControl()
 {
     document.addEventListener("keypress",(e)=>{
-        
+        if (e.key=="e")
+        {            
+            var a=_currentTab+1;
+
+            if (a>=_pages.length)
+            {
+                a=0;
+            }
+
+            tabPage(a);
+        }
+
+        else if (e.key=="q")
+        {
+            var a=_currentTab-1;
+
+            if (a<0)
+            {
+                a=_pages.length-1;
+            }
+
+            tabPage(a);
+        }
     });
+}
+
+var _currentTab=0;
+var _tabs;
+var _pages;
+function tabPage(page)
+{    
+    if (page==_currentTab)
+    {
+        return;
+    }
+
+    _currentTab=page;
+
+    for (var x=0;x<_pages.length;x++)
+    {
+        if (x==page)
+        {
+            _pages[x].classList.add("current");
+            _tabs[x].classList.add("selected");
+        }
+
+        else
+        {
+            _pages[x].classList.remove("current");
+            _tabs[x].classList.remove("selected");
+        }
+    }
 }
