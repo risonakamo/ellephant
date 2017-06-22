@@ -115,7 +115,7 @@ function setupGameWindow(args)
 {
     _apiLink=args;
 
-    var winops={width:800,height:530,webPreferences:{plugins:true}};
+    var winops={width:816,height:539,webPreferences:{plugins:true}};
 
     if (_windowLocations.game)
     {
@@ -194,6 +194,10 @@ function setupGameWindow(args)
         window.addEventListener("keypress",(e)=>{
             ipcRenderer.send("gameKey",e.key);
         });
+
+        var flash=document.querySelector("embed");
+        flash.width="800px";
+        flash.height="480px";
     `);
 
     _gamewindow.on("close",(e)=>{
