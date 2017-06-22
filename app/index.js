@@ -8,6 +8,7 @@ var _fleetShips; //array
 var _mainFace;
 var _rDocks;
 var _pvpFleets;
+var _pvpCountBadge;
 
 //array of arrays of ids of currently loaded fleetships and pvp opponents
 var _fleetShipIds;
@@ -27,6 +28,7 @@ var _apiIdtoSort;
 
 //other globals
 var _lastPvp; //element last pvp clicked on
+var _pvpCount; //count of current pvp opponents
 
 //calculated constants
 var _expPerLv=[100,200,300,400,500,600,700,800,900,1000,1100,1200,1300,1400,1500,1600,1700,
@@ -52,6 +54,7 @@ function main()
     _mainFace=document.querySelector(".main-face");
     _rDocks=document.querySelectorAll("repair-box");
     _pvpFleets=document.querySelectorAll("pvp-fleet");
+    _pvpCountBadge=document.querySelector(".pvp-notif");
 
     _tabs=document.querySelectorAll(".tab");
     _pages=document.querySelectorAll(".viewer-page");
@@ -129,10 +132,13 @@ function ipcReceivers()
 
     ipcRenderer.on("pvpResult",(e,res)=>{
         _lastPvp.setState(_pvpRank[res.api_data.api_win_rank]);
+
+        _pvpCount--;
+        _pvpCountBadge.innerHTML=`${_pvpCount}&#9873;`;
     });
 
-    ipcRenderer.on("viewerKey",(e,res)=>{
-        EQswitch(res);
+    ipcRenderer.on("gameKey",(e,res)=>{
+        EQswitch(res);        
     });
 
     ipcRenderer.once("requireinfo",(e,res)=>{
@@ -559,11 +565,24 @@ function setupTabs()
 
 function pvpUpdate(data)
 {
+    var newPvpCount=0;
     _pvpIds={};        
     for (var x=0;x<5;x++)
     {
         _pvpIds[data.api_list[x].api_enemy_id]=x;
+
+        if (!data.api_list[x].api_state)
+        {
+            newPvpCount++;
+        }
+
         _pvpFleets[x].initialLoad(data.api_list[x]);
+    }
+
+    if (newPvpCount!=_pvpCount)
+    {
+        _pvpCount=newPvpCount;
+        _pvpCountBadge.innerHTML=`${_pvpCount}&#9873;`;
     }
 }
 

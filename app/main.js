@@ -102,7 +102,7 @@ function ipcs()
         _gamewindow.webContents.executeJavaScript(`
             const {ipcRenderer}=require("electron");
             window.addEventListener("keypress",(e)=>{
-                ipcRenderer.send("viewerKey",e.key);
+                ipcRenderer.send("gameKey",e.key);
             });
         `);
     });
@@ -111,8 +111,8 @@ function ipcs()
         e.sender.send("requestAPI",_apiLink);
     });
 
-    ipcMain.on("viewerKey",(e,res)=>{
-        _win.webContents.send("viewerKey",res);
+    ipcMain.on("gameKey",(e,res)=>{
+        _win.webContents.send("gameKey",res);
     });
 }
 

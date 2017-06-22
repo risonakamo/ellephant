@@ -24,11 +24,10 @@ void processApiShip(array apiship);
 void updateExpFace(int fleet);
 void updateFleetShip(array ships,int fleetContain);
 void updateFleetSupply(int fleet,int resupply);
+void EQswitch(char key); //performs tab switching given e or q key
 
 /*-- utility --*/
-object genLoadableShip(object ship); //gen fleepship obj for fleetship elements
-                                     //would make more sense for element to do it
-                                     //but requires access to globals
+object genLoadableShip(object ship); //gen fleepship obj for fleetship elements                                     
 array genEquip(array apishipEquip); //helper, gens array of equip ids
 void updateShipData(object update);
 void tabPage(int page); //navigate to specified page

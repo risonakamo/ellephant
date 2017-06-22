@@ -219,3 +219,9 @@ pvp-fleet
 {
     --label-font: "futuralight";
 }
+
+.pvp-notif
+{
+    font-size: 20px;
+    opacity: .5;
+}
