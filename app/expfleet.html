@@ -22,8 +22,7 @@
 
       #wrap
       {
-        padding: 10px;
-        padding-left: 13px;
+        padding: 10px 10px 14px 13px;
       }
 
       #slide-box
@@ -304,7 +303,11 @@
         {
           this.resupply=0;
           this.$["wrap"].classList.remove("resupply");
-          // this.expNum="NO EXPEDITION";
+
+          if (this.barPercent==0)
+          {
+            this.expNum="NO EXPEDITION";
+          }
         }
 
         else
