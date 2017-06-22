@@ -9,7 +9,7 @@ var _mainFace;
 var _rDocks;
 var _pvpFleets;
 
-//array of arrays of ids of currently loaded fleetships
+//array of arrays of ids of currently loaded fleetships and pvp opponents
 var _fleetShipIds;
 var _pvpIds;
 
@@ -25,6 +25,9 @@ var _apiAllEquip;
 var _apiAllExpedition;
 var _apiIdtoSort;
 
+//other globals
+var _lastPvp; //element last pvp clicked on
+
 //calculated constants
 var _expPerLv=[100,200,300,400,500,600,700,800,900,1000,1100,1200,1300,1400,1500,1600,1700,
               1800,1900,2000,2100,2200,2300,2400,2500,2600,2700,2800,2900,3000,3100,3200,3300,
@@ -36,6 +39,7 @@ var _expPerLv=[100,200,300,400,500,600,700,800,900,1000,1100,1200,1300,1400,1500
 var _sTypes=["DE","DD","CL","CLT","CA","CAV","CVL","BB","BB","BBV","CV","超弩級戦艦","SS","SSV","AO","AV","LHA",
             "CVB","AR","AS","CT","AO"];
 
+var _pvpRank={"S":6,"A":5,"B":4,"C":3,"D":2};
 
 function main()
 {
@@ -84,19 +88,19 @@ function setupInput()
 //receives from main process
 function ipcReceivers()
 {
-    ipcRenderer.on("portinfo",(err,res)=>{
+    ipcRenderer.on("portinfo",(e,res)=>{
         portUpdate(res);
     });
 
-    ipcRenderer.on("deckinfo",(err,res)=>{
+    ipcRenderer.on("deckinfo",(e,res)=>{
         expeditionUpdate(res.api_data);
     });
 
-    ipcRenderer.on("charge",(err,res)=>{
+    ipcRenderer.on("charge",(e,res)=>{
         chargeUpdate(res);
     });
 
-    ipcRenderer.on("change",(err,res)=>{
+    ipcRenderer.on("change",(e,res)=>{
         res=res.split("&");
         var data={};
         var t;
@@ -110,24 +114,28 @@ function ipcReceivers()
         changeUpdate(data);
     });
 
-    ipcRenderer.on("presetLoad",(err,res)=>{
+    ipcRenderer.on("presetLoad",(e,res)=>{
         updateFleetShip(res.api_data.api_ship,res.api_data.api_id-1);
         _fleetShipIds[res.api_data.api_id-1]=res.api_data.api_ship.slice();
     });
 
-    ipcRenderer.on("pvpUpdate",(err,res)=>{
+    ipcRenderer.on("pvpUpdate",(e,res)=>{
         pvpUpdate(res.api_data);
     });
 
-    ipcRenderer.on("pvpFleet",(err,res)=>{
+    ipcRenderer.on("pvpFleet",(e,res)=>{
         loadPvpFleet(res.api_data);
     });
 
-    ipcRenderer.on("pvpResult",(err,res)=>{
-        
+    ipcRenderer.on("pvpResult",(e,res)=>{
+        _lastPvp.setState(_pvpRank[res.api_data.api_win_rank]);
     });
 
-    ipcRenderer.once("requireinfo",(err,res)=>{
+    ipcRenderer.on("viewerKey",(e,res)=>{
+        EQswitch(res);
+    });
+
+    ipcRenderer.once("requireinfo",(e,res)=>{
         _apiEquip={};
         for (var x=0,l=res.api_data.api_slot_item.length;x<l;x++)
         {
@@ -135,7 +143,7 @@ function ipcReceivers()
         }
     });    
 
-    ipcRenderer.once("apistart",(err,res)=>{
+    ipcRenderer.once("apistart",(e,res)=>{
         // _apistart=res.api_data;
 
         _apiAllShip={};
@@ -561,6 +569,7 @@ function pvpUpdate(data)
 
 function loadPvpFleet(data)
 {
+    //loop enemy ships and find ship type
     for (var x=0;x<6;x++)
     {
         if (data.api_deck.api_ships[x].api_id<0)
@@ -568,39 +577,46 @@ function loadPvpFleet(data)
             break;
         }
 
+        //getting type of enemy ship
         data.api_deck.api_ships[x].type=_sTypes[_apiAllShip[_apiIdtoSort[data.api_deck.api_ships[x].api_ship_id]].api_stype-1];
     }
 
+    _lastPvp=_pvpFleets[_pvpIds[data.api_member_id]];
     _pvpFleets[_pvpIds[data.api_member_id]].fleetLoad(data.api_deck.api_ships);
 }
 
 function keyControl()
 {
     document.addEventListener("keypress",(e)=>{
-        if (e.key=="e")
-        {            
-            var a=_currentTab+1;
-
-            if (a>=_pages.length)
-            {
-                a=0;
-            }
-
-            tabPage(a);
-        }
-
-        else if (e.key=="q")
-        {
-            var a=_currentTab-1;
-
-            if (a<0)
-            {
-                a=_pages.length-1;
-            }
-
-            tabPage(a);
-        }
+        EQswitch(e.key);
     });
+}
+
+function EQswitch(key)
+{
+    if (key=="e")
+    {            
+        var a=_currentTab+1;
+
+        if (a>=_pages.length)
+        {
+            a=0;
+        }
+
+        tabPage(a);
+    }
+
+    else if (key=="q")
+    {
+        var a=_currentTab-1;
+
+        if (a<0)
+        {
+            a=_pages.length-1;
+        }
+
+        tabPage(a);
+    }
 }
 
 var _currentTab=0;

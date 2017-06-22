@@ -83,7 +83,7 @@ function ipcs()
                 else if (par.response.url=="http://203.104.209.39/kcsapi/api_req_practice/battle_result")
                 {
                     setTimeout(()=>{receiveArb(par,"pvpResult")},500);
-                }                
+                }
             }
 
             else if (method=="Network.requestWillBeSent")
@@ -98,10 +98,21 @@ function ipcs()
         _gamewindow.webContents.debugger.sendCommand("Network.enable");
 
         _gamewindow.loadURL(_apiLink);
+
+        _gamewindow.webContents.executeJavaScript(`
+            const {ipcRenderer}=require("electron");
+            window.addEventListener("keypress",(e)=>{
+                ipcRenderer.send("viewerKey",e.key);
+            });
+        `);
     });
 
     ipcMain.on("requestAPI",(e,args)=>{
         e.sender.send("requestAPI",_apiLink);
+    });
+
+    ipcMain.on("viewerKey",(e,res)=>{
+        _win.webContents.send("viewerKey",res);
     });
 }
 

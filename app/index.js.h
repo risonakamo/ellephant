@@ -26,7 +26,9 @@ void updateFleetShip(array ships,int fleetContain);
 void updateFleetSupply(int fleet,int resupply);
 
 /*-- utility --*/
-object genLoadableShip(object ship);
-array genEquip(array apishipEquip);
+object genLoadableShip(object ship); //gen fleepship obj for fleetship elements
+                                     //would make more sense for element to do it
+                                     //but requires access to globals
+array genEquip(array apishipEquip); //helper, gens array of equip ids
 void updateShipData(object update);
-void tabPage(int page);
+void tabPage(int page); //navigate to specified page
