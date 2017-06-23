@@ -57,6 +57,12 @@
         background-color: rgba(94,102,104,.2);
         overflow: hidden;
         text-align: center;
+        transition: background-color .3s;
+      }
+
+      .left:hover #face
+      {
+        background-color: rgba(94,102,104,.5);
       }
 
       #face img
@@ -79,7 +85,7 @@
         transition: transform .3s;
       }
 
-      #detail-slide.slideup
+      .left:hover #detail-slide
       {
         transform: translateY(-20px);
       }
@@ -318,7 +324,7 @@
     </div>
 
     <div id="loaded" class="unloaded">
-      <div on-mouseenter="showName" on-mouseleave="unshowName" class="side left">
+      <div class="side left">
         <div id="face">
           <img src="[[face]]">
         </div>
@@ -501,16 +507,6 @@
         this.loaded=0;
         this.$["no-data"].classList.remove("loaded");
         this.$["loaded"].classList.add("unloaded");
-      }
-
-      showName()
-      {
-        this.$["detail-slide"].classList.add("slideup");
-      }
-
-      unshowName()
-      {
-        this.$["detail-slide"].classList.remove("slideup");
       }
     }
 
