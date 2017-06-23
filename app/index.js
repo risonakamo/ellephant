@@ -47,7 +47,7 @@ function main()
 {
     setupInput();
     ipcReceivers();
-    setupTabs();    
+    setupTabs();
 
     _expFleets=document.querySelectorAll("exp-fleet");
     _fleetShips=document.querySelectorAll("fleet-ship");
@@ -138,7 +138,7 @@ function ipcReceivers()
     });
 
     ipcRenderer.on("gameKey",(e,res)=>{
-        EQswitch(res);        
+        EQswitch(res);
     });
 
     ipcRenderer.once("requireinfo",(e,res)=>{
@@ -147,7 +147,7 @@ function ipcReceivers()
         {
             _apiEquip[res.api_data.api_slot_item[x].api_id]=res.api_data.api_slot_item[x];
         }
-    });    
+    });
 
     ipcRenderer.once("apistart",(e,res)=>{
         // _apistart=res.api_data;
@@ -169,7 +169,7 @@ function ipcReceivers()
         _apiAllExpedition=res.api_data.api_mst_mission;
 
         _apistart_ready=1;
-    });    
+    });
 }
 
 function changeUpdate(data)
@@ -178,7 +178,7 @@ function changeUpdate(data)
     var idx=parseInt(data.api_ship_idx);
     var newShip=parseInt(data.api_ship_id);
 
-    
+
     if (newShip==-1)
     {
         for (var x=idx;x<=4;x++)
@@ -186,7 +186,7 @@ function changeUpdate(data)
             _fleetShipIds[fleet][x]=_fleetShipIds[fleet][x+1];
         }
 
-        _fleetShipIds[fleet][5]=-1;        
+        _fleetShipIds[fleet][5]=-1;
     }
 
     else if (newShip==-2)
@@ -200,7 +200,7 @@ function changeUpdate(data)
     else
     {
         var oldShip=_fleetShipIds[fleet][idx];
-        
+
         if (oldShip>=0)
         {
             (()=>{
@@ -217,7 +217,7 @@ function changeUpdate(data)
                 }
             })();
         }
-        
+
         _fleetShipIds[fleet][idx]=newShip;
     }
 
@@ -336,14 +336,14 @@ function updateFleetShip(ships,fleetContain)
         {
             _fleetShips[fleetContain].loadShip(genLoadableShip(ships[x]));
 
-            if ((_fleetShips[fleetContain].curAmmo<_fleetShips[fleetContain].maxAmmo 
+            if ((_fleetShips[fleetContain].curAmmo<_fleetShips[fleetContain].maxAmmo
                 || _fleetShips[fleetContain].curGas<_fleetShips[fleetContain].maxGas)
                 && fleetNumber!=0 && resupply==0)
             {
                 resupply=1;
             }
         }
-        
+
         fleetContain++;
     }
 
@@ -370,7 +370,8 @@ function genLoadableShip(ship)
         maxExp:_expPerLv[ship.api_lv-1],
         planeCount:ship.api_onslot,
         shipId:ship.api_id,
-        shipClass:_sTypes[_apiAllShip[ship.api_sortno].api_stype-1]
+        shipClass:_sTypes[_apiAllShip[ship.api_sortno].api_stype-1],
+        shipName: _apiAllShip[ship.api_sortno].api_name
     };
 }
 
@@ -414,7 +415,7 @@ function expeditionUpdate(data)
             timeComplete:data[x].api_mission[2],
             maxTime:_apiAllExpedition[data[x].api_mission[1]-1].api_time
         });
-    }    
+    }
 }
 
 //needs array of ship data to be updated
@@ -479,9 +480,9 @@ function expBoxEvents()
                 if (y!=i)
                 {
                     _expFleets[y].classList.remove("selected");
-                }                
+                }
             }
-        });                
+        });
     });
 
     mainfleet.addEventListener("click",(e)=>{
@@ -538,7 +539,7 @@ function setupTabs()
     var pages=document.querySelectorAll(".viewer-page");
 
     tabs.forEach((x,i,a)=>{
-        x.addEventListener("click",(e)=>{            
+        x.addEventListener("click",(e)=>{
             // if (pages[i].classList.contains("current"))
             // {
             //     return;
@@ -561,13 +562,13 @@ function setupTabs()
 
             tabPage(i);
         });
-    });    
+    });
 }
 
 function pvpUpdate(data)
 {
     var newPvpCount=0;
-    _pvpIds={};        
+    _pvpIds={};
     for (var x=0;x<5;x++)
     {
         _pvpIds[data.api_list[x].api_enemy_id]=x;
@@ -615,7 +616,7 @@ function keyControl()
 function EQswitch(key)
 {
     if (key=="e")
-    {            
+    {
         var a=_currentTab+1;
 
         if (a>=_pages.length)
@@ -643,7 +644,7 @@ var _currentTab=0;
 var _tabs;
 var _pages;
 function tabPage(page)
-{    
+{
     if (page==_currentTab)
     {
         return;

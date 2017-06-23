@@ -37,6 +37,7 @@
       .loaded
       {
         opacity: 0;
+        z-index: -11;
       }
 
       #loaded
@@ -67,13 +68,37 @@
       {
         position: relative;
         width: 100px;
-        height: 20px;        
+        height: 20px;
+        overflow: hidden;
+      }
+
+      #detail-slide
+      {
+        width: 100px;
+        height: 40px;
+        transition: transform .3s;
+      }
+
+      #detail-slide.slideup
+      {
+        transform: translateY(-20px);
+      }
+
+      .detail-slide-inner
+      {
+        width: 100px;
+        height: 20px;
         line-height: 20px;
         font-size: 19px;
-        color: #020200;
+        /*color: #020200;*/
         color: #d2d4d1;
         /*background-color: #d2d4d1;*/
         text-align: center;
+      }
+
+      .detail-slide-inner.jp
+      {
+        font-size: 15px;
       }
 
       .exp-bar
@@ -107,7 +132,7 @@
       }
 
       .health
-      {            
+      {
         width: 50px;
         height: 60px;
         color: #c5c5c5;
@@ -205,7 +230,7 @@
       .res-bar-fill
       {
         border-bottom-color: #83b254;
-        border-bottom-width: 3px;        
+        border-bottom-width: 3px;
         transition: width .4s;
       }
 
@@ -293,14 +318,23 @@
     </div>
 
     <div id="loaded" class="unloaded">
-      <div class="side left">
+      <div on-mouseenter="showName" on-mouseleave="unshowName" class="side left">
         <div id="face">
           <img src="[[face]]">
         </div>
 
         <div class="detail">
-          [[shipClass]] Lv[[level]]
-          <div class="exp-bar" style="width:[[expPercent]]%"></div>          
+          <div id="detail-slide">
+            <div class="detail-slide-inner">
+              [[shipClass]] Lv[[level]]
+            </div>
+
+            <div class="detail-slide-inner jp">
+              [[shipName]]
+            </div>
+          </div>
+
+          <div class="exp-bar" style="width:[[expPercent]]%"></div>
         </div>
       </div>
 
@@ -333,8 +367,8 @@
           <div class="equipment-slot"></div>
           <div class="equipment-slot"></div>
         </div>
-        
-      </div>      
+
+      </div>
     </div>
   </template>
 
@@ -379,16 +413,17 @@
         curExp
         planeCount (array of numbers direct from api)
         shipId (player api id for external identification)
+        shipName
       */
       loadShip(data)
-      {        
+      {
         for (var x in data)
         {
           this[x]=data[x];
         }
 
         // this.maxHp=data.maxHp
-        // this.curHp=data.curHp      
+        // this.curHp=data.curHp
         this.hpPercent=(this.curHp/this.maxHp)*100;
 
         // this.level=data.level;
@@ -396,7 +431,7 @@
         // this.face=data.face;
 
         // this.morale=data.morale;
-        
+
         // this.curAmmo=data.curAmmo;
         // this.maxAmmo=data.maxAmmo;
         this.ammoPercent=(this.curAmmo/this.maxAmmo)*100;
@@ -414,7 +449,7 @@
         this.loaded=1;
         this.$["loaded"].classList.remove("unloaded");
         this.$["no-data"].classList.add("loaded");
-      }      
+      }
 
       loadEquipment(data)
       {
@@ -458,7 +493,7 @@
         else
         {
           this.$["morale"].classList.remove("low","high");
-        }        
+        }
       }
 
       unload()
@@ -466,6 +501,16 @@
         this.loaded=0;
         this.$["no-data"].classList.remove("loaded");
         this.$["loaded"].classList.add("unloaded");
+      }
+
+      showName()
+      {
+        this.$["detail-slide"].classList.add("slideup");
+      }
+
+      unshowName()
+      {
+        this.$["detail-slide"].classList.remove("slideup");
       }
     }
 
