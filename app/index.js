@@ -369,7 +369,8 @@ function genLoadableShip(ship)
         curExp:ship.api_exp[1],
         maxExp:_expPerLv[ship.api_lv-1],
         planeCount:ship.api_onslot,
-        shipId:ship.api_id
+        shipId:ship.api_id,
+        shipClass:_sTypes[_apiAllShip[ship.api_sortno].api_stype-1]
     };
 }
 
