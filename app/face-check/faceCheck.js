@@ -2,7 +2,14 @@ window.onload=main;
 
 function main()
 {
+    var inputArea=document.querySelector(".input-area");
+    var pbutton=inputArea.querySelector(".p-button");
+    var input=inputArea.querySelector(".input");
 
+    pbutton.addEventListener("click",(e)=>{
+        inputArea.parentNode.removeChild(inputArea);
+        loadIds(input.value);
+    });
 }
 
 function loadIds(data)
@@ -11,6 +18,7 @@ function loadIds(data)
 
     var ipoint=document.querySelector(".ships");
     var white=0;
+
     for (var x in data)
     {
         ipoint.insertAdjacentHTML("beforeend",genShip(x,data[x],white));
@@ -38,7 +46,7 @@ function genShip(name,data,white)
 
     return `
     <div class="ship ${white}">
-      <div class="name">${name}</div>
+      <div class="name"><p>${name}</p></div>
 
       ${genImgContain(data)}
 

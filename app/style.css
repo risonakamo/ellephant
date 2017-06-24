@@ -29,8 +29,8 @@ body
 
 .input-wrap
 {
-    width: 100%;   
-    margin-top: 40vh; 
+    width: 100%;
+    margin-top: 40vh;
     text-align: center;
     font-family: "segoe ui","shingoR";
 }
@@ -54,7 +54,7 @@ body
     color: #e7e7e5;
     font-size: 18px;
     background-color: rgba(0,0,0,0);
-    border-style: none;    
+    border-style: none;
     border-bottom: 1px solid #e7e7e5;
     margin-bottom: 10px;
     box-sizing: border-box;
@@ -139,7 +139,7 @@ exp-fleet,.main-fleet
 }
 
 exp-fleet:hover,.main-fleet:hover
-{    
+{
     border-right: 2px solid #c9dee3;
 }
 
@@ -168,7 +168,7 @@ exp-fleet:hover,.main-fleet:hover
 .tabs
 {
     width: 100%;
-    height: 40px;    
+    height: 40px;
     border-bottom: 1px solid #798988;
     padding-left: 20px;
     user-select: none;
@@ -183,7 +183,7 @@ exp-fleet:hover,.main-fleet:hover
     text-align: center;
     font-family: "futuralight";
     letter-spacing: 1px;
-    cursor: pointer;    
+    cursor: pointer;
 }
 
 .tab:hover
