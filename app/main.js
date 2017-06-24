@@ -71,7 +71,7 @@ function viewerEvents()
 function windowRestore()
 {
     _appdata=`${process.env["appdata"]}/kancollectron`;
-    
+
     _windowLocations={};
 
     if (!fs.existsSync(`${_appdata}/User`) || !fs.existsSync(`${_appdata}/User/settings.json`))
@@ -80,14 +80,14 @@ function windowRestore()
     }
 
     else
-    {        
+    {
         _windowLocations=JSON.parse(fs.readFileSync(`${_appdata}/User/settings.json`));
     }
 }
 
 function saveWindow()
 {
-    var locations=_win.getBounds();    
+    var locations=_win.getBounds();
 
     _windowLocations.viewer=[];
     _windowLocations.viewer[0]=locations.x;
@@ -174,6 +174,11 @@ function setupGameWindow(args)
             {
                 setTimeout(()=>{receiveArb(par,"pvpResult")},500);
             }
+
+            else if (par.response.url=="http://203.104.209.39/kcsapi/api_get_member/ship_deck")
+            {
+                setTimeout(()=>{receiveArb(par,"shipdeck")},500);
+            }
         }
 
         else if (method=="Network.requestWillBeSent")
@@ -237,7 +242,7 @@ app.on("ready",main);
 //         }
 
 //         _win.webContents.send("deckinfo",(JSON.parse(res.body.slice(7))));
-//     });    
+//     });
 // }
 
 // function gameWindowDebugSetup()
@@ -251,7 +256,7 @@ app.on("ready",main);
 //             {
 //                 _gamewindow.webContents.debugger.sendCommand("Network.getResponseBody",{requestId:par.requestId},(err,res)=>{
 //                     console.log(res.body);
-//                 });                
+//                 });
 //             }
 //         }
 //     });
