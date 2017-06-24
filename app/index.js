@@ -141,6 +141,10 @@ function ipcReceivers()
         EQswitch(res);
     });
 
+    ipcRenderer.on("shipdeck",(e,res)=>{
+        deckUpdate(res.api_data);
+    });
+
     ipcRenderer.once("requireinfo",(e,res)=>{
         _apiEquip={};
         for (var x=0,l=res.api_data.api_slot_item.length;x<l;x++)
@@ -292,7 +296,8 @@ function updateExpFace(fleet)
     }
 }
 
-//ships is array of 6 from fleet
+//ships is array of 6 ints from fleet,
+//fleetcontain is the fleet number to be updated as index number
 function updateFleetShip(ships,fleetContain)
 {
     if (_apiShip_ready!=1)
@@ -679,4 +684,14 @@ function updateFleetSupply(fleet,resupply)
     {
         _expFleets[fleet-1].supplyState(resupply);
     }
+}
+
+function deckUpdate(data)
+{
+    for (var x=0;x<data.api_ship_data.length;x++)
+    {
+        _apiShip[data.api_ship_data[x].api_id]=data.api_ship_data[x];
+    }
+
+    updateFleetShip(data.api_deck_data[0].api_ship,data.api_deck_data[0].api_id-1);
 }
