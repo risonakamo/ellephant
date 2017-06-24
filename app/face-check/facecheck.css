@@ -1,0 +1,65 @@
+@charset "UTF-8";
+
+body
+{
+    margin: 0;
+    background-color: #1e1e1e;
+    font-family: "meiryo";
+    font-size: 0;
+    color: white;
+}
+
+div
+{
+    display: inline-block;
+    vertical-align: top;
+}
+
+.ships
+{
+    display: block;
+}
+
+.ship
+{
+    height: 110px;
+    display: block;
+    padding: 20px 0 10px 0;
+}
+
+.ship.white
+{
+    background-color: rgba(255,255,255,.1);
+}
+
+.name
+{
+    width: 150px;
+    height: 110px;
+    line-height: 110px;
+    font-size: 20px;
+    text-align: center;
+}
+
+.img-contain
+{
+    width: 100px;
+    height: 110px;
+    margin-right: 3px;
+}
+
+.img-contain img
+{
+    width: 100px;
+    height: 90px;
+    background-color: rgba(255,255,255,.1);
+}
+
+.img-name
+{
+    width: 100px;
+    height: 20px;
+    line-height: 20px;
+    font-size: 15px;
+    text-align: center;
+}
