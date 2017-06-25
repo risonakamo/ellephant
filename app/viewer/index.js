@@ -362,7 +362,7 @@ function genLoadableShip(ship)
         maxHp:ship.api_maxhp,
         curHp:ship.api_nowhp,
         level:ship.api_lv,
-        face:`face/${ship.api_ship_id}.png`,
+        face:`../face/${ship.api_ship_id}.png`,
         morale:ship.api_cond,
         curAmmo:ship.api_bull,
         curGas:ship.api_fuel,
@@ -390,7 +390,7 @@ function genEquip(apishipEquip)
             continue;
         }
 
-        stringequip.push(`equipment/${_apiAllEquip[_apiEquip[apishipEquip[x]].api_slotitem_id].api_type[3]}.png`);
+        stringequip.push(`../equipment/${_apiAllEquip[_apiEquip[apishipEquip[x]].api_slotitem_id].api_type[3]}.png`);
     }
 
     return stringequip;
@@ -520,7 +520,7 @@ function rDockUpdate(data)
         }
 
         _rDocks[x].loadShip({
-            face:`face/${_apiShip[data[x].api_ship_id].api_ship_id}.png`,
+            face:`../face/${_apiShip[data[x].api_ship_id].api_ship_id}.png`,
             timeComplete:data[x].api_complete_time,
             maxTime:_apiShip[data[x].api_ship_id].api_ndock_time
         });

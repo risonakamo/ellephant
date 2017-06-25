@@ -1,4 +1,4 @@
-<link rel="import" href="polymer/polymer/polymer-element.html">
+<link rel="import" href="../polymer/polymer/polymer-element.html">
 
 <dom-module id="repair-box">
   <template>
@@ -20,7 +20,7 @@
       .timer
       {
         height: 48px;
-        line-height: 48px;        
+        line-height: 48px;
         font-size: 30px;
         color: #32a7c8;
       }
@@ -66,7 +66,7 @@
 
       #slider
       {
-        transition: transform .4s;        
+        transition: transform .4s;
       }
 
       .loaded
@@ -197,11 +197,11 @@
           return;
         }
 
-        this.sec--;   
+        this.sec--;
         if (this.sec<10)
         {
           this.sec="0"+this.sec;
-        }        
+        }
       }
 
       formatTime()
@@ -219,7 +219,7 @@
         if (this.hour<10)
         {
           this.hour="0"+this.hour;
-        }        
+        }
       }
 
       updateBar()

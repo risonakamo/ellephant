@@ -28,7 +28,7 @@ function main()
 
     _win=new BrowserWindow(winops);
 
-    _win.loadURL(`file://${__dirname}/index.html`);
+    _win.loadURL(`file://${__dirname}/viewer/index.html`);
 
     viewerEvents();
 }

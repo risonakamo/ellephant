@@ -1,4 +1,4 @@
-<link rel="import" href="polymer/polymer/polymer-element.html">
+<link rel="import" href="../polymer/polymer/polymer-element.html">
 
 <!--
   #wrap class states: no-expedition, completed, resupply
@@ -13,7 +13,7 @@
         display: inline-block;
         position: relative;
         width: 250px;
-        height: 100px;        
+        height: 100px;
         box-sizing: border-box;
         /*background-color: rgba(255,255,255,.05);        */
         user-select: none;
@@ -77,7 +77,7 @@
       }
 
       #border
-      {        
+      {
         width: 80%;
         /*border-bottom: 1px solid #e7e7e5;*/
         border-bottom: 1px solid #736f6c;
@@ -117,14 +117,14 @@
         color: #967844;
       }
     </style>
-    
+
     <div id="wrap">
       <div id="slide-box">
         <div id="inner-slide">
           <div id="timer">
             [[hour]]:[[min]]:[[sec]]
           </div>
-          
+
           <div id="info">
             [[infoMessage]]
           </div>
@@ -138,7 +138,7 @@
 
       <div id="border" class="borders">
         <div id="border2" class="borders" style="width:[[barPercent]]%"></div>
-      </div> 
+      </div>
 
       <img class="face" src="[[face]]">
     </div>
@@ -152,18 +152,18 @@
       {
         return "exp-fleet";
       }
-      
+
       static get properties()
       {
         return {
-          
+
         };
       }
 
       ready()
       {
         super.ready();
-                
+
         this.resupply=0;
         this.clearExpedition();
       }
@@ -202,7 +202,7 @@
       }
 
       complete()
-      {        
+      {
         clearTimeout(this.timer);
 
         this.infoMessage="Completed";
@@ -225,7 +225,7 @@
         this.barPercent=0;
         this.wrapState("no-expedition");
         this.$["inner-slide"].classList.add("slideup");
-      }      
+      }
 
       updateTime()
       {
@@ -264,11 +264,11 @@
           return;
         }
 
-        this.sec--;   
+        this.sec--;
         if (this.sec<10)
         {
           this.sec="0"+this.sec;
-        }        
+        }
       }
 
       formatTime()
@@ -286,7 +286,7 @@
         if (this.hour<10)
         {
           this.hour="0"+this.hour;
-        }        
+        }
       }
 
       updateBar()
