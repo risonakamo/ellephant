@@ -18,6 +18,8 @@ void deckUpdate(object data); //update after a sortie battle given the ship_deck
 
 void pvpUpdate(object data); //api data of api practice object sent in
 void loadPvpFleet(object data); //handle recieve of single enemy fleet
+void equipUpdate(object data); //handles ship3 api object for equipment loadout updates
+void equipExchange(object data); //handles equipment exchange api event
 
 /*-- helpers --*/
 // void saveFleetShipIds(array ships);
@@ -32,3 +34,4 @@ object genLoadableShip(object ship); //gen fleepship obj for fleetship elements
 array genEquip(array apishipEquip); //helper, gens array of equip ids
 void updateShipData(object update);
 void tabPage(int page); //navigate to specified page
+array findShip(int id); //attempts to find number of fleet of given id ship

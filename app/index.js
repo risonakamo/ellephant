@@ -145,6 +145,14 @@ function ipcReceivers()
         deckUpdate(res.api_data);
     });
 
+    ipcRenderer.on("shipEquip",(e,res)=>{
+        equipUpdate(res.api_data);
+    });
+
+    ipcRenderer.on("equipExchange",(e,res)=>{
+
+    });
+
     ipcRenderer.once("requireinfo",(e,res)=>{
         _apiEquip={};
         for (var x=0,l=res.api_data.api_slot_item.length;x<l;x++)
@@ -694,4 +702,42 @@ function deckUpdate(data)
     }
 
     updateFleetShip(data.api_deck_data[0].api_ship,data.api_deck_data[0].api_id-1);
+}
+
+function equipUpdate(data)
+{
+    _apiShip[data.api_ship_data[0].api_id]=data.api_ship_data[0];
+
+    var shipfind=findShip(data.api_ship_data[0].api_id);
+
+    if (shipfind[0]<0)
+    {
+        return;
+    }
+
+    _fleetShips[(4*shipfind[0])+shipfind[1]].loadShip(genLoadableShip(data.api_ship_data[0]));
+}
+
+//attempts to find give api_id (player ship id) in current loaded fleets
+//returns fleet number (index) and position (index) in fleet as [array]
+function findShip(id)
+{
+    id=parseInt(id);
+    for (var x=0;x<4;x++)
+    {
+        for (var y=0;y<_fleetShipIds[x].length;y++)
+        {
+            if (_fleetShipIds[x][y]==id)
+            {
+                return [x,y];
+            }
+        }
+    }
+
+    return [-1,-1];
+}
+
+function equipExchange(data)
+{
+
 }

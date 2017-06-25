@@ -179,6 +179,11 @@ function setupGameWindow(args)
             {
                 setTimeout(()=>{receiveArb(par,"shipdeck")},500);
             }
+
+            else if (par.response.url=="http://203.104.209.39/kcsapi/api_get_member/ship3")
+            {
+                setTimeout(()=>{receiveArb(par,"shipEquip")},500);
+            }
         }
 
         else if (method=="Network.requestWillBeSent")
@@ -187,6 +192,12 @@ function setupGameWindow(args)
             {
                 _win.webContents.send("change",decodeURIComponent(par.request.postData));
             }
+
+            else if (par.request.url=="http://203.104.209.39/kcsapi/api_req_kaisou/slot_exchange_index")
+            {
+                _win.webContents.send("equipExchange",decodeURIComponent(par.request.postData));
+            }
+
         }
     });
 
