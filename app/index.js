@@ -104,17 +104,7 @@ function ipcReceivers()
     });
 
     ipcRenderer.on("change",(e,res)=>{
-        res=res.split("&");
-        var data={};
-        var t;
-
-        for (var x=0;x<res.length;x++)
-        {
-            t=res[x].split("=");
-            data[t[0]]=t[1];
-        }
-
-        changeUpdate(data);
+        changeUpdate(parsePost(res));
     });
 
     ipcRenderer.on("presetLoad",(e,res)=>{
@@ -150,7 +140,7 @@ function ipcReceivers()
     });
 
     ipcRenderer.on("equipExchange",(e,res)=>{
-
+        equipExchange(parsePost(res));
     });
 
     ipcRenderer.once("requireinfo",(e,res)=>{
@@ -739,5 +729,39 @@ function findShip(id)
 
 function equipExchange(data)
 {
+    data.api_id=parseInt(data.api_id);
+    switchEquipment(data.api_id,parseInt(data.api_src_idx),parseInt(data.api_dst_idx));
 
+    var shipfind=findShip(data.api_id);
+
+    if (shipfind[0]==-1)
+    {
+        return;
+    }
+
+    _fleetShips[(4*shipfind[0])+shipfind[1]].loadShip(genLoadableShip(_apiShip[data.api_id]));
+}
+
+//parse api post data into object, give it the
+//full unsplit string
+function parsePost(res)
+{
+    res=res.split("&");
+    var data={};
+    var t;
+
+    for (var x=0;x<res.length;x++)
+    {
+        t=res[x].split("=");
+        data[t[0]]=t[1];
+    }
+
+    return data;
+}
+
+function switchEquipment(id,src,dst)
+{
+    var t=_apiShip[id].api_slot[src];
+    _apiShip[id].api_slot[src]=_apiShip[id].api_slot[dst];
+    _apiShip[id].api_slot[dst]=t;
 }

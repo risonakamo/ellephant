@@ -35,3 +35,5 @@ array genEquip(array apishipEquip); //helper, gens array of equip ids
 void updateShipData(object update);
 void tabPage(int page); //navigate to specified page
 array findShip(int id); //attempts to find number of fleet of given id ship
+object parsePost(string res); //parse api post response which comes in a string
+void switchEquipment(int id,int src,int dst); //switch equipment in given index slots of ship
