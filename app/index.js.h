@@ -32,7 +32,6 @@ void EQswitch(char key); //performs tab switching given e or q key
 /*-- utility --*/
 object genLoadableShip(object ship); //gen fleepship obj for fleetship elements
 array genEquip(array apishipEquip); //helper, gens array of equip ids
-void updateShipData(object update);
 void tabPage(int page); //navigate to specified page
 array findShip(int id); //attempts to find number of fleet of given id ship
 object parsePost(string res); //parse api post response which comes in a string

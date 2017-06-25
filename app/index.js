@@ -421,15 +421,6 @@ function expeditionUpdate(data)
     }
 }
 
-//needs array of ship data to be updated
-function updateShipdata(update)
-{
-    for (var x=0;x<update.length;x++)
-    {
-        _apiShip[update[x].api_id]=update[x];
-    }
-}
-
 function chargeUpdate(data)
 {
     for (var x=0,l=data.api_data.api_ship.length;x<l;x++)
