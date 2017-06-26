@@ -130,6 +130,10 @@ function ipcReceivers()
         equipExchange(parsePost(res));
     });
 
+    ipcRenderer.on("ndock",(e,res)=>{
+        rDockUpdate(res.api_data);
+    });
+
     ipcRenderer.once("requireinfo",(e,res)=>{
         _apiEquip={};
         for (var x=0,l=res.api_data.api_slot_item.length;x<l;x++)
@@ -509,7 +513,8 @@ function rDockUpdate(data)
         _rDocks[x].loadShip({
             face:`../face/${_apiShip[data[x].api_ship_id].api_ship_id}.png`,
             timeComplete:data[x].api_complete_time,
-            maxTime:_apiShip[data[x].api_ship_id].api_ndock_time
+            maxTime:_apiShip[data[x].api_ship_id].api_ndock_time,
+            name:_apiAllShip[_apiShip[data[x].api_ship_id].api_sortno].api_name
         });
     }
 }

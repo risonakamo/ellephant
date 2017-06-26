@@ -73,6 +73,26 @@
       {
         transform: translateY(-48px);
       }
+
+      .name
+      {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 112px;
+        height: 50px;
+        line-height: 50px;
+        font-size: 18px;
+        color: #32a7c8;
+        text-align: center;
+        opacity: 0;
+        transition: opacity .2s;
+      }
+
+      :host(:hover) .name
+      {
+        opacity: .5;
+      }
     </style>
 
     <div class="slide-contain">
@@ -93,6 +113,8 @@
 
     <img class="face" src="[[face]]">
 
+    <div class="name">[[name]]</div>
+
   </template>
 
   <script>
@@ -103,15 +125,17 @@
         return "repair-box";
       }
 
-      /*private variables:
-        hour
-        min
-        sec
-        maxTime
-        percent: progress bar percent
-        face: src link for image
-        loaded: if 1 already loaded, dont do update
-        timer: holds timeout function to update clock*/
+      /*--- variables ---
+        int hour:    |
+        int min:     |obvious
+        int sec:     |stuff
+        int maxTime: |
+
+        float percent: progress bar percent
+        string face: src link for image
+        int loaded: if 1 already loaded, dont do update
+        setInterval timer: holds timeout function to update clock
+        string name: ship name*/
       static get properties()
       {
         return {
@@ -129,7 +153,8 @@
       /*data requires:
       timeComplete: direct from api completion time
       face: facce src url
-      maxTime: direct from api length of repair time*/
+      maxTime: direct from api length of repair time
+      name: name of ship*/
       loadShip(data)
       {
         if (this.loaded==1)
@@ -140,6 +165,7 @@
         this.loaded=1;
         this.$["slider"].classList.add("loaded");
 
+        this.name=data.name;
         var timeleft=data.timeComplete-new Date().getTime()-60000;
         this.face=data.face;
         this.maxTime=data.maxTime/(1000*60);
@@ -229,7 +255,7 @@
 
       complete()
       {
-
+        this.clearDock();
       }
 
       clearDock()
@@ -239,6 +265,8 @@
         this.loaded=0;
         this.percent=0;
         this.$["slider"].classList.remove("loaded");
+        this.face="";
+        this.name="";
       }
     }
 
