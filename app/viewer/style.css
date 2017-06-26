@@ -108,7 +108,7 @@ body
     /*background-color: #e7e7e5;*/
 }
 
-.main-fleet
+/*.main-fleet
 {
     position: relative;
     width: 100%;
@@ -129,16 +129,16 @@ body
     right: 0;
     top: -50%;
     -webkit-mask-image: linear-gradient(to right, rgba(0,0,0,0) 0%,rgba(0,0,0,0.66) 14%,rgba(0,0,0,1) 30%);
-}
+}*/
 
-exp-fleet,.main-fleet
+exp-fleet,m-fleet
 {
     --font-light: "futuralight";
     transition: background-color,border-right .4s,.1s;
     cursor: pointer;
 }
 
-exp-fleet:hover,.main-fleet:hover
+exp-fleet:hover,m-fleet:hover
 {
     border-right: 2px solid #c9dee3;
 }

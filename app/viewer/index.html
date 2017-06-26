@@ -11,6 +11,7 @@
     <link rel="import" href="../elements/fleetship.html">
     <link rel="import" href="../elements/repairbox.html">
     <link rel="import" href="../elements/pvpfleet.html">
+    <link rel="import" href="../elements/mainfleet.html">
 
     <script src="apiData.js"></script>
     <script src="index.js"></script>
@@ -31,10 +32,11 @@
 
       <div class="viewer-page current">
         <div class="expedition">
-          <div class="main-fleet selected">
+          <!--<div class="main-fleet selected">
             MAIN FLEET ‣
             <img class="main-face">
-          </div>
+          </div>-->
+          <m-fleet class="main-fleet selected"></m-fleet>
 
           <exp-fleet></exp-fleet>
           <exp-fleet></exp-fleet>

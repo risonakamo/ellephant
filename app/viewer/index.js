@@ -5,10 +5,10 @@ window.onload=main;
 //html element globals
 var _expFleets; //array
 var _fleetShips; //array
-var _mainFace;
 var _rDocks;
 var _pvpFleets;
 var _pvpCountBadge;
+var _mFleet;
 
 //array of arrays of ids of currently loaded fleetships and pvp opponents
 var _fleetShipIds;
@@ -38,10 +38,10 @@ function main()
 
     _expFleets=document.querySelectorAll("exp-fleet");
     _fleetShips=document.querySelectorAll("fleet-ship");
-    _mainFace=document.querySelector(".main-face");
     _rDocks=document.querySelectorAll("repair-box");
     _pvpFleets=document.querySelectorAll("pvp-fleet");
     _pvpCountBadge=document.querySelector(".pvp-notif");
+    _mFleet=document.querySelector("m-fleet");
 
     _tabs=document.querySelectorAll(".tab");
     _pages=document.querySelectorAll(".viewer-page");
@@ -276,13 +276,11 @@ function updateExpFace(fleet)
 {
     if (fleet==0)
     {
-        _mainFace.src=_fleetShips[0].face;
+        _mFleet.face=_fleetShips[0].face;
+        return;
     }
 
-    else
-    {
-        _expFleets[fleet-1].face=_fleetShips[fleet*6].face;
-    }
+    _expFleets[fleet-1].face=_fleetShips[fleet*6].face;
 }
 
 //ships is array of 6 ints from fleet,

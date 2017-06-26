@@ -1,0 +1,53 @@
+<link rel="import" href="../polymer/polymer/polymer-element.html">
+
+<dom-module id="m-fleet">
+  <template>
+    <style>
+      :host
+      {
+        display: inline-block;
+        position: relative;
+        width: 250px;
+        height: 50px;
+      }
+
+      .main-face
+      {
+        position: absolute;
+        opacity: .2;
+        height: 200%;
+        right: 0;
+        top: -50%;
+        -webkit-mask-image: linear-gradient(to right, rgba(0,0,0,0) 0%,
+                          rgba(0,0,0,0.66) 14%,rgba(0,0,0,1) 30%);
+      }
+    </style>
+
+
+
+    <img class="main-face" src="[[face]]">
+
+  </template>
+
+  <script>
+    class mFleet extends Polymer.Element
+    {
+      static get is()
+      {
+        return "m-fleet";
+      }
+
+      /*
+        string face: face src image file url
+      */
+      static get properties()
+      {
+        return {
+
+        };
+      }
+    }
+
+    customElements.define(mFleet.is,mFleet);
+  </script>
+</dom-module>
