@@ -9,6 +9,14 @@
         position: relative;
         width: 250px;
         height: 50px;
+        box-sizing: border-box;
+        overflow: hidden;
+        user-select: none;
+      }
+
+      :host(.selected.sortie)
+      {
+        border-right: 2px solid #e50018 !important;
       }
 
       .main-face
@@ -21,8 +29,42 @@
         -webkit-mask-image: linear-gradient(to right, rgba(0,0,0,0) 0%,
                           rgba(0,0,0,0.66) 14%,rgba(0,0,0,1) 30%);
       }
+
+      .slide-box
+      {
+        width: 250px;
+        height: 50px;
+        line-height: 50px;
+        font-size: 30px;
+        padding-left: 20px;
+      }
+
+      .slider
+      {
+        transition: transform,background-color .4s,.4s;
+      }
+
+      :host(.sortie) .slider
+      {
+        background-color: rgba(186,39,61,.1);
+        transform: translateY(-50px);
+      }
+
+      .sortie
+      {
+        color: #e50018;
+      }
     </style>
 
+    <div class="slider">
+      <div class="slide-box">
+        MAIN FLEET ‣
+      </div>
+
+      <div class="slide-box sortie">
+        SORTIE ‣
+      </div>
+    </div>
 
 
     <img class="main-face" src="[[face]]">
@@ -38,13 +80,27 @@
       }
 
       /*
-        string face: face src image file url
+        string face: face src image file url, directly set
       */
       static get properties()
       {
         return {
 
         };
+      }
+
+      setState(state)
+      {
+        switch (state)
+        {
+          case 0:
+          this.classList.remove("sortie");
+          break;
+
+          case 1:
+          this.classList.add("sortie");
+          break;
+        }
       }
     }
 

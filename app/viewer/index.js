@@ -9,6 +9,7 @@ var _rDocks;
 var _pvpFleets;
 var _pvpCountBadge;
 var _mFleet;
+var _tabBar;
 
 //array of arrays of ids of currently loaded fleetships and pvp opponents
 var _fleetShipIds;
@@ -45,6 +46,7 @@ function main()
 
     _tabs=document.querySelectorAll(".tab");
     _pages=document.querySelectorAll(".viewer-page");
+    _tabBar=document.querySelector(".tabs");
 
     expBoxEvents();
 }
@@ -132,6 +134,10 @@ function ipcReceivers()
 
     ipcRenderer.on("ndock",(e,res)=>{
         rDockUpdate(res.api_data);
+    });
+
+    ipcRenderer.on("sortiestart",(e,res)=>{
+        sortieState(1);
     });
 
     ipcRenderer.once("requireinfo",(e,res)=>{
@@ -228,6 +234,8 @@ function portUpdate(port)
         setTimeout(()=>{portUpdate(port)},500);
         return;
     }
+
+    sortieState(0);
 
     expeditionUpdate(port.api_data.api_deck_port);
 
@@ -745,4 +753,19 @@ function switchEquipment(id,src,dst)
     var t=_apiShip[id].api_slot[src];
     _apiShip[id].api_slot[src]=_apiShip[id].api_slot[dst];
     _apiShip[id].api_slot[dst]=t;
+}
+
+function sortieState(state)
+{
+    if (state==0)
+    {
+        _tabBar.classList.remove("sortie");
+        _mFleet.setState(0);
+    }
+
+    else
+    {
+        _tabBar.classList.add("sortie");
+        _mFleet.setState(1);
+    }
 }

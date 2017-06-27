@@ -196,6 +196,21 @@ exp-fleet:hover,m-fleet:hover
     background-color: #26bbe5;
 }
 
+.tabs.sortie
+{
+    border-bottom: 1px solid #6e4f53;
+}
+
+.tabs.sortie .tab.selected
+{
+    background-color: #e50018;
+}
+
+.tabs.sortie .tab:hover
+{
+    background-color: rgba(163,0,24,.2);
+}
+
 .collapse
 {
     display: none;

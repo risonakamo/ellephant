@@ -189,6 +189,11 @@ function setupGameWindow(args)
             {
                 setTimeout(()=>{receiveArb(par,"ndock")},500);
             }
+
+            else if (par.response.url=="http://203.104.209.39/kcsapi/api_req_map/start")
+            {
+                setTimeout(()=>{receiveArb(par,"sortiestart")},500);
+            }
         }
 
         else if (method=="Network.requestWillBeSent")
