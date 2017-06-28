@@ -12,6 +12,7 @@ var _mFleet;
 var _tabBar;
 
 //array of arrays of ids of currently loaded fleetships and pvp opponents
+//can be used to reload a fleetship
 var _fleetShipIds;
 var _pvpIds;
 
@@ -420,8 +421,12 @@ function expeditionUpdate(data)
 
 function chargeUpdate(data)
 {
+    //for every ship given by data, update corresponding ship in
+    //player api object _apiShip
     for (var x=0,l=data.api_data.api_ship.length;x<l;x++)
     {
+        //loop over properties since charge object only provides bullet and
+        //ammo and not whole object (cannot set)
         for (var y in data.api_data.api_ship[x])
         {
             if (y=="api_id")
@@ -433,20 +438,27 @@ function chargeUpdate(data)
         }
     }
 
-    var update=[-1,-1,-1,-1,-1,-1];
-    for (var x=0,l=data.api_data.api_ship.length;x<l;x++)
+    var fleet=findShip(data.api_data.api_ship[0].api_id);
+
+    if (fleet[0]>=0)
     {
-        update[x]=data.api_data.api_ship[x].api_id;
+        updateFleetShip(_fleetShipIds[fleet[0]],fleet[0]);
     }
 
-    for (var x=0;x<=24;x+=6)
-    {
-        if (_fleetShips[x].shipId==data.api_data.api_ship[0].api_id)
-        {
-            updateFleetShip(update,x/6);
-            return;
-        }
-    }
+    // var update=[-1,-1,-1,-1,-1,-1];
+    // for (var x=0,l=data.api_data.api_ship.length;x<l;x++)
+    // {
+    //     update[x]=data.api_data.api_ship[x].api_id;
+    // }
+
+    // for (var x=0;x<=24;x+=6)
+    // {
+    //     if (_fleetShips[x].shipId==data.api_data.api_ship[0].api_id)
+    //     {
+    //         updateFleetShip(update,x/6);
+    //         return;
+    //     }
+    // }
 }
 
 function expBoxEvents()

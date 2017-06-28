@@ -171,7 +171,23 @@ exp-fleet:hover,m-fleet:hover
     height: 40px;
     border-bottom: 1px solid #798988;
     padding-left: 20px;
+    transition: background-color .4s;
     user-select: none;
+}
+
+.tabs.sortie
+{
+    border-bottom: 1px solid #6e4f53;
+}
+
+.tabs.sortie .tab.selected
+{
+    background-color: #e50018;
+}
+
+.tabs.sortie .tab:hover
+{
+    background-color: rgba(163,0,24,.2);
 }
 
 .tab
@@ -196,20 +212,6 @@ exp-fleet:hover,m-fleet:hover
     background-color: #26bbe5;
 }
 
-.tabs.sortie
-{
-    border-bottom: 1px solid #6e4f53;
-}
-
-.tabs.sortie .tab.selected
-{
-    background-color: #e50018;
-}
-
-.tabs.sortie .tab:hover
-{
-    background-color: rgba(163,0,24,.2);
-}
 
 .collapse
 {
