@@ -3,16 +3,21 @@ window.onload=main;
 function main()
 {
     var inputArea=document.querySelector(".input-area");
-    var pbutton=inputArea.querySelector(".p-button");
+    var pbutton=inputArea.querySelectorAll(".p-button");
     var input=inputArea.querySelector(".input");
 
-    pbutton.addEventListener("click",(e)=>{
+    pbutton[0].addEventListener("click",(e)=>{
         inputArea.parentNode.removeChild(inputArea);
-        loadIds(input.value);
+        loadIds(input.value,0);
+    });
+
+    pbutton[1].addEventListener("click",(e)=>{
+        inputArea.parentNode.removeChild(inputArea);
+        loadIds(input.value,1);
     });
 }
 
-function loadIds(data)
+function loadIds(data,damage)
 {
     data=JSON.parse(data);
 
@@ -21,7 +26,7 @@ function loadIds(data)
 
     for (var x in data)
     {
-        ipoint.insertAdjacentHTML("beforeend",genShip(x,data[x],white));
+        ipoint.insertAdjacentHTML("beforeend",genShip(x,data[x],white,damage));
 
         white++;
 
@@ -32,7 +37,7 @@ function loadIds(data)
     }
 }
 
-function genShip(name,data,white)
+function genShip(name,data,white,damage)
 {
     if (white==0)
     {
@@ -48,23 +53,47 @@ function genShip(name,data,white)
     <div class="ship ${white}">
       <div class="name"><p>${name}</p></div>
 
-      ${genImgContain(data)}
+      ${genImgContain(data,damage)}
 
     </div>`;
 }
 
-function genImgContain(data)
+function genImgContain(data,damage)
 {
     var str="";
+    var damagestr="";
+
+    if (damage==1)
+    {
+        damagestr="-d";
+    }
 
     for (var x=0;x<data.length;x++)
     {
         str+=`
         <div class="img-contain">
-            <img src="../face/${data[x]}.png">
-            <div class="img-name">${data[x]}</div>
+            <img src="../face${damagestr}/${data[x]}.png">
+            <div class="img-name">${padZero(data[x])}</div>
         </div>`;
     }
 
     return str;
+}
+
+function padZero(number)
+{
+    if (number>=100)
+    {
+        return number;
+    }
+
+    if (number>=10)
+    {
+        return "0"+number;
+    }
+
+    else
+    {
+        return "00"+number;
+    }
 }
