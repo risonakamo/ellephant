@@ -313,16 +313,6 @@ function updateFleetShip(ships,fleetContain)
         ships[x]=_apiShip[ships[x]];
     }
 
-    // if (fleetContain==0)
-    // {
-    //     _mainFace.src=`face/${ships[0].api_ship_id}.png`;
-    // }
-
-    // else
-    // {
-    //     _expFleets[fleetContain-1].face=`face/${ships[0].api_ship_id}.png`;
-    // }
-
     var fleetNumber=fleetContain;
     var resupply=0;
     fleetContain*=6;
@@ -360,7 +350,8 @@ function genLoadableShip(ship)
         maxHp:ship.api_maxhp,
         curHp:ship.api_nowhp,
         level:ship.api_lv,
-        face:`../face/${ship.api_ship_id}.png`,
+        // face:`../face/${ship.api_ship_id}.png`,
+        face: genFaceFile(ship),
         morale:ship.api_cond,
         curAmmo:ship.api_bull,
         curGas:ship.api_fuel,
@@ -529,7 +520,8 @@ function rDockUpdate(data)
         }
 
         _rDocks[x].loadShip({
-            face:`../face/${_apiShip[data[x].api_ship_id].api_ship_id}.png`,
+            // face:`../face/${_apiShip[data[x].api_ship_id].api_ship_id}.png`,
+            face: genFaceFile(_apiShip[data[x].api_ship_id]),
             timeComplete:data[x].api_complete_time,
             maxTime:_apiShip[data[x].api_ship_id].api_ndock_time,
             name:_apiAllShip[_apiShip[data[x].api_ship_id].api_sortno].api_name
@@ -780,4 +772,14 @@ function sortieState(state)
         _tabBar.classList.add("sortie");
         _mFleet.setState(1);
     }
+}
+
+function genFaceFile(ship)
+{
+    if (ship.api_nowhp/ship.api_maxhp>.5)
+    {
+        return `../face/${ship.api_ship_id}.png`;
+    }
+
+    return `../face-d/${ship.api_ship_id}.png`;
 }
