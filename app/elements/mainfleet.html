@@ -30,13 +30,19 @@
                           rgba(0,0,0,0.66) 14%,rgba(0,0,0,1) 30%);
       }
 
-      .slide-box
+      .box
       {
         width: 250px;
         height: 50px;
         line-height: 50px;
         font-size: 30px;
         padding-left: 20px;
+        box-sizing: border-box;
+      }
+
+      .slide-box
+      {
+        position: relative;
       }
 
       .slider
@@ -59,14 +65,53 @@
       {
         background-color: rgba(150,120,68,.08);
       }
+
+      .resupply
+      {
+        color: #967844;
+      }
+
+      :host(.resupply) .resupply
+      {
+        opacity: 1;
+      }
+
+      :host(.normal) .normal
+      {
+        opacity: 1;
+      }
+
+      :host(.morale) .morale
+      {
+        opacity: 1;
+      }
+
+      .top-box
+      {
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0;
+        transition: opacity .2s;
+      }
     </style>
 
     <div class="slider">
-      <div class="slide-box">
-        MAIN FLEET ‣
+      <div class="box slide-box">
+        <div class="box top-box normal">
+          MAIN FLEET ‣
+        </div>
+
+        <div class="box top-box resupply">
+          RESUPPLY ‣
+        </div>
+
+        <div class="box top-box morale">
+          [[hour]]:[[min]]:[[sec]]
+        </div>
       </div>
 
-      <div class="slide-box sortie">
+      <div class="box slide-box sortie">
         SORTIE ‣
       </div>
     </div>
@@ -86,6 +131,8 @@
 
       /*
         string face: face src image file url, directly set
+        int hour,min,sec
+        int currentState
       */
       static get properties()
       {
@@ -94,22 +141,87 @@
         };
       }
 
+      ready()
+      {
+        super.ready();
+
+        this.setState(0);
+      }
+
       setState(state)
       {
+        if (this.currentState==state)
+        {
+          return;
+        }
+
+        this.currentState=state;
+        this.classList.remove("sortie","resupply","morale","normal");
         switch (state)
         {
           case 0:
-          this.classList.remove("sortie");
+          this.classList.add("normal");
           break;
 
           case 1:
+          this.classList.add("resupply");
+          break;
+
+          case 2:
           this.classList.add("sortie");
           break;
-
-          case 3:
-
-          break;
         }
+      }
+
+      updateTime()
+      {
+        if (this.sec==0)
+        {
+          if (this.min==0)
+          {
+            if (this.hour==0)
+            {
+              this.complete();
+              return;
+            }
+
+            this.hour--;
+            this.min=59;
+
+            if (this.hour<10)
+            {
+              this.hour="0"+this.hour;
+            }
+
+            return;
+          }
+
+          this.min--;
+          this.sec=59;
+
+          if (this.min<10)
+          {
+            this.min="0"+this.min;
+          }
+
+          return;
+        }
+
+        this.sec--;
+        if (this.sec<10)
+        {
+          this.sec="0"+this.sec;
+        }
+      }
+
+      complete()
+      {
+
+      }
+
+      loadMorale()
+      {
+
       }
     }
 

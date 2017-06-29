@@ -329,7 +329,7 @@ function updateFleetShip(ships,fleetContain)
 
             if ((_fleetShips[fleetContain].curAmmo<_fleetShips[fleetContain].maxAmmo
                 || _fleetShips[fleetContain].curGas<_fleetShips[fleetContain].maxGas)
-                && fleetNumber!=0 && resupply==0)
+                && resupply==0)
             {
                 resupply=1;
             }
@@ -455,7 +455,6 @@ function chargeUpdate(data)
 function expBoxEvents()
 {
     var slider=document.querySelector(".fleet-slider");
-    var mainfleet=document.querySelector(".main-fleet");
 
     _expFleets.forEach((x,i)=>{
         x.addEventListener("click",(e)=>{
@@ -468,7 +467,7 @@ function expBoxEvents()
 
             x.classList.add("selected");
 
-            mainfleet.classList.remove("selected");
+            _mFleet.classList.remove("selected");
             for (var y=0;y<3;y++)
             {
                 if (y!=i)
@@ -479,15 +478,15 @@ function expBoxEvents()
         });
     });
 
-    mainfleet.addEventListener("click",(e)=>{
-        if (mainfleet.classList.contains("selected"))
+    _mFleet.addEventListener("click",(e)=>{
+        if (_mFleet.classList.contains("selected"))
         {
             return;
         }
 
         slider.style.transform=`translateY(0px)`;
 
-        mainfleet.classList.add("selected");
+        _mFleet.classList.add("selected");
 
         for (var x=0;x<3;x++)
         {
@@ -668,7 +667,7 @@ function updateFleetSupply(fleet,resupply)
 {
     if (fleet==0)
     {
-
+        _mFleet.setState(resupply);
     }
 
     else
@@ -770,7 +769,7 @@ function sortieState(state)
     else
     {
         _tabBar.classList.add("sortie");
-        _mFleet.setState(1);
+        _mFleet.setState(2);
     }
 }
 
