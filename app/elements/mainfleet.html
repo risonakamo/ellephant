@@ -94,6 +94,17 @@
         opacity: 0;
         transition: opacity .2s;
       }
+
+      .morale
+      {
+        color: #f4e1a5;
+        padding-left: 40px;
+      }
+
+      :host(.morale)
+      {
+        background-color: rgba(242,244,188,.06);
+      }
     </style>
 
     <div class="slider">
@@ -107,7 +118,7 @@
         </div>
 
         <div class="box top-box morale">
-          [[hour]]:[[min]]:[[sec]]
+          [[min]]:[[sec]] ‣
         </div>
       </div>
 
@@ -115,7 +126,6 @@
         SORTIE ‣
       </div>
     </div>
-
 
     <img class="main-face" src="[[face]]">
 
@@ -131,8 +141,10 @@
 
       /*
         string face: face src image file url, directly set
-        int hour,min,sec
+        int min,sec
         int currentState
+        function timer: timer variable to clearTimeout on
+        int moraleVal: number representing max missing morale of fleet
       */
       static get properties()
       {
@@ -150,16 +162,28 @@
 
       setState(state)
       {
-        if (this.currentState==state)
-        {
-          return;
-        }
+        // if (this.currentState==state)
+        // {
+        //   if (this.moraleVal>0)
+        //   {
+        //     this.loadMorale();
+        //   }
+
+        //   return;
+        // }
 
         this.currentState=state;
         this.classList.remove("sortie","resupply","morale","normal");
         switch (state)
         {
           case 0:
+
+          if (this.moraleVal>0)
+          {
+            this.loadMorale();
+            break;
+          }
+
           this.classList.add("normal");
           break;
 
@@ -179,20 +203,7 @@
         {
           if (this.min==0)
           {
-            if (this.hour==0)
-            {
-              this.complete();
-              return;
-            }
-
-            this.hour--;
-            this.min=59;
-
-            if (this.hour<10)
-            {
-              this.hour="0"+this.hour;
-            }
-
+            this.complete();
             return;
           }
 
@@ -216,12 +227,36 @@
 
       complete()
       {
+        clearTimeout(this.timer);
 
+        delete this.timer;
+
+        this.moraleVal=0;
+
+        this.setState(0);
       }
 
       loadMorale()
       {
+        if (this.moraleVal<10)
+        {
+          this.min="0"+this.moraleVal;
+        }
 
+        else
+        {
+          this.min=this.moraleVal;
+        }
+
+        this.sec="00";
+
+        if (!this.timer)
+        {
+          this.timer=setInterval(()=>{this.updateTime()},1000);
+        }
+
+        this.classList.remove("sortie","resupply","morale","normal");
+        this.classList.add("morale");
       }
     }
 

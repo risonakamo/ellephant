@@ -314,8 +314,11 @@ function updateFleetShip(ships,fleetContain)
     }
 
     var fleetNumber=fleetContain;
-    var resupply=0;
     fleetContain*=6;
+
+    var resupply=0;
+    var maxFatigue=0;
+
     for (var x=0;x<6;x++)
     {
         if (ships[x]==-1)
@@ -333,9 +336,20 @@ function updateFleetShip(ships,fleetContain)
             {
                 resupply=1;
             }
+
+            if (49-_fleetShips[fleetContain].morale>maxFatigue)
+            {
+                maxFatigue=49-_fleetShips[fleetContain].morale;
+                console.log(maxFatigue);
+            }
         }
 
         fleetContain++;
+    }
+
+    if (fleetNumber==0)
+    {
+        _mFleet.moraleVal=maxFatigue;
     }
 
     updateFleetSupply(fleetNumber,resupply);
