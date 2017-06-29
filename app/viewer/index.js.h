@@ -16,8 +16,6 @@ void expeditionUpdate(array data); //expedition elements
 void chargeUpdate(object data); //charge object
 void deckUpdate(object data); //update after a sortie battle given the ship_deck api data
 
-void pvpUpdate(object data); //api data of api practice object sent in
-void loadPvpFleet(object data); //handle recieve of single enemy fleet
 void equipUpdate(object data); //handles ship3 api object for equipment loadout updates
 void equipExchange(object data); //handles equipment exchange api event
 
@@ -38,3 +36,7 @@ object parsePost(string res); //parse api post response which comes in a string
 void switchEquipment(int id,int src,int dst); //switch equipment in given index slots of ship
 void sortieState(int state);
 string genFaceFile(object ship); //gen filepath for image of given apiship object
+
+/*-- moved out --*/
+void pvpUpdate(object data); //api data of api practice object sent in
+void loadPvpFleet(object data); //handle recieve of single enemy fleet

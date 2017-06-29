@@ -2,19 +2,19 @@ const {ipcRenderer}=require("electron");
 
 window.onload=main;
 
+//objects
+var pvp;
+
 //html element globals
 var _expFleets; //array
 var _fleetShips; //array
 var _rDocks;
-var _pvpFleets;
-var _pvpCountBadge;
 var _mFleet;
 var _tabBar;
 
 //array of arrays of ids of currently loaded fleetships and pvp opponents
 //can be used to reload a fleetship
 var _fleetShipIds;
-var _pvpIds;
 
 //player api (from require info)
 var _apiShip; //ships of player
@@ -28,21 +28,17 @@ var _apiAllEquip;
 var _apiAllExpedition;
 var _apiIdtoSort;
 
-//other globals
-var _lastPvp; //element last pvp clicked on
-var _pvpCount; //count of current pvp opponents
-
 function main()
 {
     setupInput();
     ipcReceivers();
     setupTabs();
 
+    pvp=new _pvp();
+
     _expFleets=document.querySelectorAll("exp-fleet");
     _fleetShips=document.querySelectorAll("fleet-ship");
     _rDocks=document.querySelectorAll("repair-box");
-    _pvpFleets=document.querySelectorAll("pvp-fleet");
-    _pvpCountBadge=document.querySelector(".pvp-notif");
     _mFleet=document.querySelector("m-fleet");
 
     _tabs=document.querySelectorAll(".tab");
@@ -103,18 +99,18 @@ function ipcReceivers()
     });
 
     ipcRenderer.on("pvpUpdate",(e,res)=>{
-        pvpUpdate(res.api_data);
+        pvp.pvpUpdate(res.api_data);
     });
 
     ipcRenderer.on("pvpFleet",(e,res)=>{
-        loadPvpFleet(res.api_data);
+        pvp.loadPvpFleet(res.api_data);
     });
 
     ipcRenderer.on("pvpResult",(e,res)=>{
-        _lastPvp.setState(apiData.pvpRank[res.api_data.api_win_rank]);
+        pvp.lastPvp.setState(apiData.pvpRank[res.api_data.api_win_rank]);
 
-        _pvpCount--;
-        _pvpCountBadge.innerHTML=`${_pvpCount}&#9873;`;
+        pvp.pvpCount--;
+        pvp.pvpCountBadge.innerHTML=`${pvp.pvpCount}&#9873;`;
     });
 
     ipcRenderer.on("gameKey",(e,res)=>{
@@ -572,47 +568,6 @@ function setupTabs()
             tabPage(i);
         });
     });
-}
-
-function pvpUpdate(data)
-{
-    var newPvpCount=0;
-    _pvpIds={};
-    for (var x=0;x<5;x++)
-    {
-        _pvpIds[data.api_list[x].api_enemy_id]=x;
-
-        if (!data.api_list[x].api_state)
-        {
-            newPvpCount++;
-        }
-
-        _pvpFleets[x].initialLoad(data.api_list[x]);
-    }
-
-    if (newPvpCount!=_pvpCount)
-    {
-        _pvpCount=newPvpCount;
-        _pvpCountBadge.innerHTML=`${_pvpCount}&#9873;`;
-    }
-}
-
-function loadPvpFleet(data)
-{
-    //loop enemy ships and find ship type
-    for (var x=0;x<6;x++)
-    {
-        if (data.api_deck.api_ships[x].api_id<0)
-        {
-            break;
-        }
-
-        //getting type of enemy ship
-        data.api_deck.api_ships[x].type=apiData.sTypes[_apiAllShip[_apiIdtoSort[data.api_deck.api_ships[x].api_ship_id]].api_stype-1];
-    }
-
-    _lastPvp=_pvpFleets[_pvpIds[data.api_member_id]];
-    _pvpFleets[_pvpIds[data.api_member_id]].fleetLoad(data.api_deck.api_ships);
 }
 
 function keyControl()
