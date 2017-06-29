@@ -9,6 +9,7 @@ class _pvp
     {
         this.pvpFleets=document.querySelectorAll("pvp-fleet"); //element pvp fleets
         this.pvpCountBadge=document.querySelector(".pvp-notif"); //element tab bar count of current opponents
+        this.pvpPage=document.querySelector(".pvp-page");
     }
 
     pvpUpdate(data)
@@ -32,6 +33,8 @@ class _pvp
             this.pvpCount=newPvpCount;
             this.pvpCountBadge.innerHTML=`${this.pvpCount}&#9873;`;
         }
+
+        this.pvpPage.classList.remove("unload");
     }
 
     loadPvpFleet(data)

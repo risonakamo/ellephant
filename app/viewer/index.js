@@ -4,6 +4,7 @@ window.onload=main;
 
 //objects
 var pvp;
+var apiData=new _apiData;
 
 //html element globals
 var _expFleets; //array

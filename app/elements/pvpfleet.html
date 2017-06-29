@@ -36,7 +36,7 @@
         width: 100%;
         height: 30px;
         line-height: 30px;
-        font-size: 23px;
+        font-size: 19px;
         margin-top: 23px;
       }
 
@@ -354,6 +354,8 @@
         switch(state)
         {
           case 0:
+          this.classList.remove("a-rank","b-rank","c-rank","d-rank","s-rank");
+          this.unloadText="UNLOADED";
           return;
 
           case 2:
