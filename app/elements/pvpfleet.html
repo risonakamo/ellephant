@@ -7,12 +7,14 @@
       {
         position: relative;
         display: inline-block;
-        width: 720px;
+        width: 100%;
+        min-width: 720px;
         height: 100px;
         font-size: 0;
         overflow: hidden;
         user-select: none;
         cursor: default;
+        transition: background-color .4s;
       }
 
       :host div
@@ -122,56 +124,56 @@
         opacity: 0;
       }
 
-      .d-rank
+      :host(.d-rank)
       {
         background-color: rgba(11,63,1,.3);
       }
 
-      .d-rank #unload-sign
+      :host(.d-rank) #unload-sign
       {
         color: #2f9c1f;
         font-size: 55px;
       }
 
-      .c-rank
+      :host(.c-rank)
       {
         background-color: rgba(255,198,61,.18);
       }
 
-      .c-rank #unload-sign
+      :host(.c-rank) #unload-sign
       {
         color: #ffc63d;
         font-size: 55px;
       }
 
-      .b-rank
+      :host(.b-rank)
       {
         background-color: rgba(91,42,22,.2);
       }
 
-      .b-rank #unload-sign
+      :host(.b-rank) #unload-sign
       {
         color: #c2831d;
         font-size: 55px;
       }
 
-      .a-rank
+      :host(.a-rank)
       {
         background-color: rgba(156,23,17,.13);
       }
 
-      .a-rank #unload-sign
+      :host(.a-rank) #unload-sign
       {
         color: #8f0c0f;
         font-size: 55px;
       }
 
-      .s-rank
+      :host(.s-rank)
       {
         background-color: rgba(255,253,167,.15);
       }
 
-      .s-rank #unload-sign
+      :host(.s-rank) #unload-sign
       {
         color: #e9ea7b;
         font-size: 55px;
@@ -179,7 +181,9 @@
 
       #host
       {
-        transition: background-color .4s;
+        display: block;
+        width: 720px;
+        margin: auto;
       }
     </style>
 
@@ -353,27 +357,27 @@
           return;
 
           case 2:
-          this.$["host"].classList.add("d-rank");
+          this.classList.add("d-rank");
           this.unloadText="D";
           break;
 
           case 3:
-          this.$["host"].classList.add("c-rank");
+          this.classList.add("c-rank");
           this.unloadText="C";
           break;
 
           case 4:
-          this.$["host"].classList.add("b-rank");
+          this.classList.add("b-rank");
           this.unloadText="B";
           break;
 
           case 5:
-          this.$["host"].classList.add("a-rank");
+          this.classList.add("a-rank");
           this.unloadText="A";
           break;
 
           case 6:
-          this.$["host"].classList.add("s-rank");
+          this.classList.add("s-rank");
           this.unloadText="S";
           break;
         }
