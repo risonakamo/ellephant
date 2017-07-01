@@ -337,7 +337,6 @@ function updateFleetShip(ships,fleetContain)
             if (49-_fleetShips[fleetContain].morale>maxFatigue)
             {
                 maxFatigue=49-_fleetShips[fleetContain].morale;
-                console.log(maxFatigue);
             }
         }
 

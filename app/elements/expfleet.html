@@ -183,9 +183,9 @@
         this.expNum=`EXPEDITION ${data.expNum}`;
         this.maxTime=data.maxTime;
 
-        var timeleft=data.timeComplete-new Date().getTime()-60000;
+        var timeleft=(data.timeComplete-new Date().getTime());
 
-        if (timeleft<0)
+        if (timeleft<=0)
         {
           this.complete();
           return;
@@ -194,6 +194,23 @@
         this.sec=Math.floor((timeleft/1000)%60);
         this.min=Math.floor((timeleft/(1000*60))%60);
         this.hour=Math.floor((timeleft/(1000*60*60))%24);
+
+        this.min--;
+
+        if (this.min<0)
+        {
+          if (this.hour==0)
+          {
+            this.min=0;
+          }
+
+          else
+          {
+            this.hour--;
+            this.min=59;
+          }
+        }
+
         this.formatTime();
 
         this.updateBar();
