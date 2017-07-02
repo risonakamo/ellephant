@@ -1,0 +1,13 @@
+{
+  "name": "kancollectron",
+  "version": "1.0.0",
+  "description": "electron kantai wrapper",
+  "main": "main.js",
+  "author": "risonakamo",
+  "dependencies": {
+    "flash-player-loader": "^1.2.0"
+  },
+  "devDependencies": {
+    "electron-packager": "^8.7.2"
+  }
+}

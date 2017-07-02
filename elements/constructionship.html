@@ -1,0 +1,188 @@
+<link rel="import" href="../polymer/polymer/polymer-element.html">
+<link rel="import" href="ftimer.html">
+
+<dom-module id="construction-ship">
+  <template>
+    <style>
+      :host
+      {
+        display: inline-block;
+        position: relative;
+        width: 85px;
+        height: 35px;
+        cursor: default;
+      }
+
+      .container
+      {
+        position: absolute;
+        width: 85px;
+        height: 35px;
+        top: 0;
+        right: 0;
+        line-height: 35px;
+        text-align: center;
+        font-size: 20px;
+        color: #f1ac00;
+        opacity: 0;
+        transition: opacity .4s;
+      }
+
+      :host(.loaded) .timer
+      {
+        opacity: 1;
+      }
+
+      :host(.unloaded) .message
+      {
+        opacity: 1;
+      }
+    </style>
+
+    <div class="container message">
+      Complete
+    </div>
+
+    <div class="container timer">
+      [[hour]]:[[min]]:[[sec]]
+    </div>
+
+  </template>
+
+  <script>
+    class constructionShip extends Polymer.Element
+    {
+      static get is()
+      {
+        return "construction-ship";
+      }
+
+      /*--- variables ---
+        int hour,min,sec: time numbers
+        timeout timer*/
+      static get properties()
+      {
+        return {
+
+        };
+      }
+
+      loadShip(data)
+      {
+        if (data.api_state!=2)
+        {
+          this.setState(data.api_state);
+          return;
+        }
+
+        if (this.timer)
+        {
+          return;
+        }
+
+        var timeleft=data.api_complete_time-new Date().getTime();
+
+        if (timeleft<=0)
+        {
+          this.complete();
+          return;
+        }
+
+        this.sec=Math.floor((timeleft/1000)%60);
+        this.min=Math.floor((timeleft/(1000*60))%60);
+        this.hour=Math.floor((timeleft/(1000*60*60))%24);
+        this.formatTime();
+
+        this.timer=setInterval(()=>{this.updateTime()},1000);
+        this.setState(2);
+      }
+
+      updateTime()
+      {
+        if (this.sec==0)
+        {
+          if (this.min==0)
+          {
+            if (this.hour==0)
+            {
+              this.complete();
+              return;
+            }
+
+            this.hour--;
+            this.min=59;
+
+            if (this.hour<10)
+            {
+              this.hour="0"+this.hour;
+            }
+
+            return;
+          }
+
+          this.min--;
+          this.sec=59;
+
+          if (this.min<10)
+          {
+            this.min="0"+this.min;
+          }
+
+          return;
+        }
+
+        this.sec--;
+        if (this.sec<10)
+        {
+          this.sec="0"+this.sec;
+        }
+      }
+
+      formatTime()
+      {
+        if (this.sec<10)
+        {
+          this.sec="0"+this.sec;
+        }
+
+        if (this.min<10)
+        {
+          this.min="0"+this.min;
+        }
+
+        if (this.hour<10)
+        {
+          this.hour="0"+this.hour;
+        }
+      }
+
+      complete()
+      {
+        clearTimeout(this.timer);
+
+        this.setState(3);
+      }
+
+      setState(state)
+      {
+        this.classList.remove("loaded","unloaded");
+        switch(state)
+        {
+          case -1:
+          case 0: //ready to load ship
+            break;
+
+          case 2: //construction in progress
+            this.classList.add("loaded");
+            break;
+
+          case 3: //ship completed and waiting
+            this.classList.add("unloaded");
+            break;
+        }
+      }
+    }
+
+    customElements.define(constructionShip.is,constructionShip);
+  </script>
+</dom-module>
