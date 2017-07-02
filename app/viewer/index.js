@@ -4,6 +4,7 @@ window.onload=main;
 
 //objects
 var pvp;
+var construction;
 var apiData=new _apiData;
 
 //html element globals
@@ -35,7 +36,8 @@ function main()
     ipcReceivers();
     setupTabs();
 
-    pvp=new _pvp();
+    pvp=new _pvp;
+    construction= new _construction;
 
     _expFleets=document.querySelectorAll("exp-fleet");
     _fleetShips=document.querySelectorAll("fleet-ship");
@@ -138,12 +140,25 @@ function ipcReceivers()
         sortieState(1);
     });
 
+    ipcRenderer.on("constructiondock",(e,res)=>{
+        construction.loadKdock(res.api_data);
+    });
+
+    ipcRenderer.on("getship",(e,res)=>{
+        res=res.api_data;
+        construction.loadKdock(res.api_kdock);
+
+        _apiShip[res.api_id]=res.api_ship;
+    });
+
     ipcRenderer.once("requireinfo",(e,res)=>{
         _apiEquip={};
         for (var x=0,l=res.api_data.api_slot_item.length;x<l;x++)
         {
             _apiEquip[res.api_data.api_slot_item[x].api_id]=res.api_data.api_slot_item[x];
         }
+
+        construction.loadKdock(res.api_data.api_kdock);
     });
 
     ipcRenderer.once("apistart",(e,res)=>{
