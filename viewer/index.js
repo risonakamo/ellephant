@@ -6,13 +6,13 @@ window.onload=main;
 var pvp;
 var construction;
 var apiData=new _apiData;
+var viewer;
 
 //html element globals
 var _expFleets; //array
 var _fleetShips; //array
 var _rDocks;
 var _mFleet;
-var _tabBar;
 
 //array of arrays of ids of currently loaded fleetships and pvp opponents
 //can be used to reload a fleetship
@@ -32,156 +32,16 @@ var _apiIdtoSort;
 
 function main()
 {
-    setupInput();
-    ipcReceivers();
-    setupTabs();
-
     pvp=new _pvp;
     construction= new _construction;
+    viewer= new _viewerHtml;
 
     _expFleets=document.querySelectorAll("exp-fleet");
     _fleetShips=document.querySelectorAll("fleet-ship");
     _rDocks=document.querySelectorAll("repair-box");
     _mFleet=document.querySelector("m-fleet");
 
-    _tabs=document.querySelectorAll(".tab");
-    _pages=document.querySelectorAll(".viewer-page");
-    _tabBar=document.querySelector(".tabs");
-
     expBoxEvents();
-}
-
-//setup for inital input screen
-function setupInput()
-{
-    var goBt=document.querySelector(".go-bt");
-    var urlBox=document.querySelector(".url-box");
-    var inputWrap=document.querySelector(".input-wrap");
-    var viewer=document.querySelector(".viewer");
-
-    var sendWindowRequest=function(e){
-        ipcRenderer.send("requestWindow",urlBox.value);
-        inputWrap.parentNode.removeChild(inputWrap);
-        viewer.classList.remove("collapse");
-        keyControl();
-    };
-
-    goBt.addEventListener("click",sendWindowRequest);
-
-    urlBox.addEventListener("keypress",(e)=>{
-        if (e.key=="Enter")
-        {
-            e.preventDefault();
-            sendWindowRequest();
-        }
-    });
-}
-
-//receives from main process
-function ipcReceivers()
-{
-    ipcRenderer.on("portinfo",(e,res)=>{
-        portUpdate(res);
-    });
-
-    ipcRenderer.on("deckinfo",(e,res)=>{
-        expeditionUpdate(res.api_data);
-    });
-
-    ipcRenderer.on("charge",(e,res)=>{
-        chargeUpdate(res);
-    });
-
-    ipcRenderer.on("change",(e,res)=>{
-        changeUpdate(parsePost(res));
-    });
-
-    ipcRenderer.on("presetLoad",(e,res)=>{
-        updateFleetShip(res.api_data.api_ship,res.api_data.api_id-1);
-        _fleetShipIds[res.api_data.api_id-1]=res.api_data.api_ship.slice();
-    });
-
-    ipcRenderer.on("pvpUpdate",(e,res)=>{
-        pvp.pvpUpdate(res.api_data);
-    });
-
-    ipcRenderer.on("pvpFleet",(e,res)=>{
-        pvp.loadPvpFleet(res.api_data);
-    });
-
-    ipcRenderer.on("pvpResult",(e,res)=>{
-        pvp.lastPvp.setState(apiData.pvpRank[res.api_data.api_win_rank]);
-
-        pvp.pvpCount--;
-        pvp.pvpCountBadge.innerHTML=`${pvp.pvpCount}&#9873;`;
-    });
-
-    ipcRenderer.on("gameKey",(e,res)=>{
-        EQswitch(res);
-    });
-
-    ipcRenderer.on("shipdeck",(e,res)=>{
-        deckUpdate(res.api_data);
-    });
-
-    ipcRenderer.on("shipEquip",(e,res)=>{
-        equipUpdate(res.api_data);
-    });
-
-    ipcRenderer.on("equipExchange",(e,res)=>{
-        equipExchange(parsePost(res));
-    });
-
-    ipcRenderer.on("ndock",(e,res)=>{
-        rDockUpdate(res.api_data);
-    });
-
-    ipcRenderer.on("sortiestart",(e,res)=>{
-        sortieState(1);
-    });
-
-    ipcRenderer.on("constructiondock",(e,res)=>{
-        construction.loadKdock(res.api_data);
-    });
-
-    ipcRenderer.on("getship",(e,res)=>{
-        res=res.api_data;
-        construction.loadKdock(res.api_kdock);
-
-        _apiShip[res.api_id]=res.api_ship;
-    });
-
-    ipcRenderer.once("requireinfo",(e,res)=>{
-        _apiEquip={};
-        for (var x=0,l=res.api_data.api_slot_item.length;x<l;x++)
-        {
-            _apiEquip[res.api_data.api_slot_item[x].api_id]=res.api_data.api_slot_item[x];
-        }
-
-        construction.loadKdock(res.api_data.api_kdock);
-    });
-
-    ipcRenderer.once("apistart",(e,res)=>{
-        // _apistart=res.api_data;
-
-        _apiAllShip={};
-        _apiIdtoSort={};
-        for (var x=0;x<=465;x++)
-        {
-            _apiAllShip[res.api_data.api_mst_ship[x].api_sortno]=res.api_data.api_mst_ship[x];
-            _apiIdtoSort[res.api_data.api_mst_ship[x].api_id]=res.api_data.api_mst_ship[x].api_sortno;
-        }
-
-        _apiAllEquip={};
-        for (var x=0;x<=228;x++)
-        {
-            _apiAllEquip[res.api_data.api_mst_slotitem[x].api_sortno]=res.api_data.api_mst_slotitem[x];
-        }
-
-        _apiAllExpedition=res.api_data.api_mst_mission;
-
-        _apistart_ready=1;
-    });
 }
 
 function changeUpdate(data)
@@ -553,100 +413,6 @@ function rDockUpdate(data)
     }
 }
 
-function setupTabs()
-{
-    var tabs=document.querySelectorAll(".tab");
-    var pages=document.querySelectorAll(".viewer-page");
-
-    tabs.forEach((x,i,a)=>{
-        x.addEventListener("click",(e)=>{
-            // if (pages[i].classList.contains("current"))
-            // {
-            //     return;
-            // }
-
-            // for (var y=0;y<pages.length;y++)
-            // {
-            //     if (y==i)
-            //     {
-            //         pages[i].classList.add("current");
-            //         tabs[i].classList.add("selected");
-            //     }
-
-            //     else
-            //     {
-            //         pages[y].classList.remove("current");
-            //         tabs[y].classList.remove("selected");
-            //     }
-            // }
-
-            tabPage(i);
-        });
-    });
-}
-
-function keyControl()
-{
-    document.addEventListener("keypress",(e)=>{
-        EQswitch(e.key);
-    });
-}
-
-function EQswitch(key)
-{
-    if (key=="e")
-    {
-        var a=_currentTab+1;
-
-        if (a>=_pages.length)
-        {
-            a=0;
-        }
-
-        tabPage(a);
-    }
-
-    else if (key=="q")
-    {
-        var a=_currentTab-1;
-
-        if (a<0)
-        {
-            a=_pages.length-1;
-        }
-
-        tabPage(a);
-    }
-}
-
-var _currentTab=0;
-var _tabs;
-var _pages;
-function tabPage(page)
-{
-    if (page==_currentTab)
-    {
-        return;
-    }
-
-    _currentTab=page;
-
-    for (var x=0;x<_pages.length;x++)
-    {
-        if (x==page)
-        {
-            _pages[x].classList.add("current");
-            _tabs[x].classList.add("selected");
-        }
-
-        else
-        {
-            _pages[x].classList.remove("current");
-            _tabs[x].classList.remove("selected");
-        }
-    }
-}
-
 function updateFleetSupply(fleet,resupply)
 {
     if (fleet==0)
@@ -746,13 +512,13 @@ function sortieState(state)
 {
     if (state==0)
     {
-        _tabBar.classList.remove("sortie");
+        viewer.tabBar.classList.remove("sortie");
         _mFleet.setState(0);
     }
 
     else
     {
-        _tabBar.classList.add("sortie");
+        viewer.tabBar.classList.add("sortie");
         _mFleet.setState(2);
     }
 }
