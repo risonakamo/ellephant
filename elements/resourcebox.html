@@ -7,7 +7,7 @@
       {
         display: inline-block;
         width: 300px;
-        height: 70px;
+        height: 85px;
         user-select: none;
         cursor: default;
       }
@@ -22,7 +22,7 @@
       {
         width: 110px;
         height: 25px;
-        margin-top: 5px;
+        margin-bottom: 5px;
       }
 
       .container.short
@@ -59,11 +59,6 @@
         width: 55px;
       }
 
-      .contain-contain
-      {
-        height: 50px;
-      }
-
       .main-resource
       {
         width: 220px;
@@ -73,9 +68,29 @@
       {
         width: 80px;
       }
+
+      .space-resource
+      {
+        width: 300px;
+      }
+
+      .space-contain
+      {
+        margin-bottom: 0;
+      }
+
+      .space-contain.equipment
+      {
+        width: 130px;
+      }
+
+      .space-contain.equipment .value
+      {
+        width: 100px;
+      }
     </style>
 
-    <div class="contain-contain main-resource">
+    <div class="main-resource">
       <div class="container">
         <div class="resource-icon"><img src="../supply/fuel.png"></div>
         <div class="value">9999999</div>
@@ -97,7 +112,7 @@
       </div>
     </div>
 
-    <div class="contain-contain other-resource">
+    <div class="other-resource">
       <div class="container short">
         <div class="resource-icon"><img src="../supply/bucket.png"></div>
         <div class="value">9999</div>
@@ -109,6 +124,17 @@
       </div>
     </div>
 
+    <div class="space-resource">
+      <div class="container space-contain">
+        <div class="resource-icon"></div>
+        <div class="value">999/999</div>
+      </div>
+
+      <div class="container space-contain equipment">
+        <div class="resource-icon"></div>
+        <div class="value">9999/9999</div>
+      </div>
+    </div>
 
   </template>
 
