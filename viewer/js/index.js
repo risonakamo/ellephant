@@ -19,16 +19,16 @@ var _mFleet;
 var _fleetShipIds;
 
 //player api (from require info)
-var _apiShip; //ships of player
+var _apiShip; //ships of player sorted by api id
 var _apiShip_ready;
 var _apiEquip; //equipment of player
 
 //api Alls (from api start)
 var _apistart_ready;
-var _apiAllShip;
+var _apiAllShip; //sorted by sort_no
 var _apiAllEquip;
 var _apiAllExpedition;
-var _apiIdtoSort;
+var _apiIdtoSort; //sorted by api_id, data is api_sort_no usable for apiAllShip
 
 function main()
 {

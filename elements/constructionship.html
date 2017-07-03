@@ -14,6 +14,7 @@
         box-sizing: border-box;
         border-bottom: 1px solid #f1ac00;
         background-color: rgba(50,51,43,0.2);
+        margin: 0 5px 5px 0;
       }
 
       .container
@@ -43,7 +44,7 @@
     </style>
 
     <div class="container message">
-      Complete
+      <img src="[[typeImg]]">
     </div>
 
     <div class="container timer">
@@ -62,7 +63,8 @@
 
       /*--- variables ---
         int hour,min,sec: time numbers
-        timeout timer*/
+        timeout timer
+        int typeImg: type-image name of the ship (has to be loaded externally)*/
       static get properties()
       {
         return {
@@ -70,8 +72,15 @@
         };
       }
 
-      loadShip(data)
+      loadShip(data,typeImg)
       {
+        if (!typeImg || typeImg<=0)
+        {
+          typeImg=1;
+        }
+
+        this.typeImg=`../ship-type/${typeImg}.png`;
+
         if (data.api_state!=2)
         {
           this.setState(data.api_state);

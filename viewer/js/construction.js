@@ -9,9 +9,22 @@ class _construction
     //requires size 4 kdock ARRAY
     loadKdock(data)
     {
+        if (!_apistart_ready)
+        {
+            setTimeout(()=>{this.loadKdock(data)},200);
+            return;
+        }
+
+        var type;
         for (var x=0;x<4;x++)
         {
-            this.cships[x].loadShip(data[x]);
+            type=0;
+            if (data[x].api_created_ship_id>0)
+            {
+                type=apiData.sTypeImg[_apiAllShip[_apiIdtoSort[data[x].api_created_ship_id]]-1];
+            }
+
+            this.cships[x].loadShip(data[x],type);
         }
     }
 }
