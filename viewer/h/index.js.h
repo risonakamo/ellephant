@@ -29,16 +29,3 @@ object parsePost(string res); //parse api post response which comes in a string
 void switchEquipment(int id,int src,int dst); //switch equipment in given index slots of ship
 void sortieState(int state);
 string genFaceFile(object ship); //gen filepath for image of given apiship object
-
-/*-- moved out --*/
-    /*--- pvp object ---*/
-void pvpUpdate(object data); //api data of api practice object sent in
-void loadPvpFleet(object data); //handle recieve of single enemy fleet
-
-    /*--- viewer object ---*/
-void ipcReceivers();
-void setupInput();
-void setupTabs();
-void keyControl();
-void EQswitch(char key); //performs tab switching given e or q key
-void tabPage(int page); //navigate to specified page

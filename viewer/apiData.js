@@ -1,20 +1,20 @@
 class _apiData
 {
+
+    /*  OTHER VARIABLES
+        --- player info ---
+        object apiShip: ships of player sorted by api_id, unique id for each ship for each player
+        object apiEquip: equipment of player
+
+        --- api Alls ---
+        apiAllShip: all ship information sorted by api_sortno
+        apiAllEquip: equipment data sorted by ???
+        apiAllExpedition: expedition data sorted by ???
+
+        apiIdtoSort: convert an api_id (used for images) to sortno (used by apiAllShip)
+    */
     constructor()
     {
-        /*   OTHER VARIABLES
-          --- player info ---
-          object apiShip: ships of player sorted by api_id, unique id for each ship for each player
-          object apiEquip: equipment of player
-
-          --- api Alls ---
-          apiAllShip: all ship information sorted by api_sortno
-          apiAllEquip: equipment data sorted by ???
-          apiAllExpedition: expedition data sorted by ???
-
-          apiIdtoSort: convert an api_id (used for images) to sortno (used by apiAllShip)
-        */
-
         this.pvpRank={"S":6,"A":5,"B":4,"C":3,"D":2};
 
         this.sTypes=["DE","DD","CL","CLT","CA","CAV","CVL","BB","BB","BBV","CV","超弩級戦艦","SS","SSV","AO","AV","LHA",

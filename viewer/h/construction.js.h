@@ -1,0 +1,1 @@
+void loadKdock(object data); //load api kdock array object
