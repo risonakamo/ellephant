@@ -1,0 +1,134 @@
+<link rel="import" href="../polymer/polymer/polymer-element.html">
+
+<dom-module id="resource-box">
+  <template>
+    <style>
+      :host
+      {
+        display: inline-block;
+        width: 320px;
+        height: 70px;
+        user-select: none;
+        cursor: default;
+      }
+
+      div
+      {
+        display: inline-block;
+        vertical-align: top;
+      }
+
+      .container
+      {
+        width: 110px;
+        height: 25px;
+        margin-top: 5px;
+      }
+
+      .container.short
+      {
+        width: 80px;
+      }
+
+      .resource-icon
+      {
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        overflow: hidden;
+      }
+
+      .resource-icon img
+      {
+        width: 100%;
+      }
+
+      .value
+      {
+        width: 80px;
+        height: 25px;
+        line-height: 25px;
+        font-size: 18px;
+        box-sizing: border-box;
+        padding-left: 6px;
+        overflow: hidden;
+      }
+
+      .container.short .value
+      {
+        width: 55px;
+      }
+
+      .contain-contain
+      {
+        height: 25px;
+      }
+
+      .main-resource
+      {
+        width: 220px;
+      }
+
+      .other-resource
+      {
+        width: 80px;
+      }
+    </style>
+
+    <div class="contain-contain main-resource">
+      <div class="container">
+        <div class="resource-icon"><img src="fuel.png"></div>
+        <div class="value">9999999</div>
+      </div>
+
+      <div class="container">
+        <div class="resource-icon"><img src="steel.png"></div>
+        <div class="value">9999999</div>
+      </div>
+
+      <div class="container">
+        <div class="resource-icon"><img src="ammo.png"></div>
+        <div class="value">9999999</div>
+      </div>
+
+      <div class="container">
+        <div class="resource-icon"><img src="baux.png"></div>
+        <div class="value">9999999</div>
+      </div>
+    </div>
+
+    <div class="contain-contain other-resource">
+      <div class="container short">
+        <div class="resource-icon"><img src="bucket.png"></div>
+        <div class="value">9999</div>
+      </div>
+
+      <div class="container short">
+        <div class="resource-icon"></div>
+        <div class="value">9999</div>
+      </div>
+    </div>
+
+
+  </template>
+
+
+  <script>
+    class resourceBox extends Polymer.Element
+    {
+      static get is()
+      {
+        return "resource-box";
+      }
+
+      static get properties()
+      {
+        return {
+
+        };
+      }
+    }
+
+    customElements.define(resourceBox.is,resourceBox);
+  </script>
+</dom-module>

@@ -18,6 +18,12 @@
     src: url("../fonts/f2.otf") format("opentype");
 }
 
+@font-face
+{
+    font-family: "futuracondense";
+    src: url("../fonts/f3.otf") format("opentype");
+}
+
 body
 {
     margin: 0;
@@ -291,4 +297,9 @@ pvp-fleet
 .construction
 {
     width: 170px;
+}
+
+resource-box
+{
+    --value-font: "futuracondense";
 }
