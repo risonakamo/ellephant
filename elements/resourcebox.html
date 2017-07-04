@@ -95,46 +95,46 @@
     <div class="main-resource">
       <div class="container">
         <div class="resource-icon"><img src="../supply/fuel.png"></div>
-        <div class="value">9999999</div>
+        <div class="value">[[gas]]</div>
       </div>
 
       <div class="container">
         <div class="resource-icon"><img src="../supply/steel.png"></div>
-        <div class="value">9999999</div>
+        <div class="value">[[steel]]</div>
       </div>
 
       <div class="container">
         <div class="resource-icon"><img src="../supply/ammo.png"></div>
-        <div class="value">9999999</div>
+        <div class="value">[[ammo]]</div>
       </div>
 
       <div class="container">
         <div class="resource-icon"><img src="../supply/baux.png"></div>
-        <div class="value">9999999</div>
+        <div class="value">[[baux]]</div>
       </div>
     </div>
 
     <div class="other-resource">
       <div class="container short">
         <div class="resource-icon"><img src="../supply/bucket.png"></div>
-        <div class="value">9999</div>
+        <div class="value">[[bucket]]</div>
       </div>
 
       <div class="container short">
         <div class="resource-icon"><img src="../supply/screw.png"></div>
-        <div class="value">9999</div>
+        <div class="value">[[screw]]</div>
       </div>
     </div>
 
     <div class="space-resource">
       <div class="container space-contain">
         <div class="resource-icon"><img src="../supply/ships.png"></div>
-        <div class="value">999/999</div>
+        <div class="value">[[ships]]/[[maxShip]]</div>
       </div>
 
       <div class="container space-contain equipment">
         <div class="resource-icon"><img src="../supply/equipments.png"></div>
-        <div class="value">9999/9999</div>
+        <div class="value">[[equips]]/[[maxEquip]]</div>
       </div>
     </div>
 
@@ -149,11 +149,53 @@
         return "resource-box";
       }
 
+      /*--- data variables ---
+        int gas
+        int ammo
+        int steel
+        int baux
+        int bucket
+        int screw
+        int dev
+        int ships: direct set
+        int equips: direct set
+        int maxShip
+        int maxEquip*/
       static get properties()
       {
         return {
 
         };
+      }
+
+      //load material array from Port api response
+      /*usable for:
+        port api_material
+        charge api_material (resupplying)*/
+      loadMaterial(data)
+      {
+        this.gas=data[0].api_value;
+        this.ammo=data[1].api_value;
+        this.steel=data[2].api_value;
+        this.baux=data[3].api_value;
+
+        if (data.length>4)
+        {
+          this.bucket=data[5].api_value;
+          this.screw=data[7].api_value;
+          this.dev=data[6].api_value;
+        }
+      }
+
+      //load max ship/equip values given api_basic object from port
+      //one time only if undefined
+      loadMax(data)
+      {
+        if (!this.maxShip)
+        {
+          this.maxShip=data.api_max_chara;
+          this.maxEquip=data.api_max_slotitem;
+        }
       }
     }
 

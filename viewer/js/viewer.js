@@ -191,6 +191,8 @@ class _viewerHtml
             }
 
             construction.loadKdock(res.api_data.api_kdock);
+
+            resource.resourceBox.equips=res.api_data.api_slot_item.length;
         });
 
         ipcRenderer.once("apistart",(e,res)=>{

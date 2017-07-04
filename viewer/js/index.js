@@ -34,6 +34,7 @@ function main()
 {
     pvp=new _pvp;
     construction= new _construction;
+    resource=new _resource;
     viewer= new _viewerHtml;
 
     _expFleets=document.querySelectorAll("exp-fleet");
@@ -113,6 +114,8 @@ function portUpdate(port)
     expeditionUpdate(port.api_data.api_deck_port);
 
     processApiShip(port.api_data.api_ship);
+
+    resource.loadPort(port.api_data);
 
     _fleetShipIds=[];
     for (var x=0;x<4;x++)
