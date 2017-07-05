@@ -219,6 +219,16 @@ function setupGameWindow(args)
             {
                 setTimeout(()=>{receiveArb(par,"scrapitem")},500);
             }
+
+            else if (par.response.url=="http://203.104.209.39/kcsapi/api_req_kousyou/createitem")
+            {
+                setTimeout(()=>{receiveArb(par,"createitem")},500);
+            }
+
+            else if (par.response.url=="http://203.104.209.39/kcsapi/api_get_member/material")
+            {
+                setTimeout(()=>{receiveArb(par,"generalmaterial")},500);
+            }
         }
 
         else if (method=="Network.requestWillBeSent")

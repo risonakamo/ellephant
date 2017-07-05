@@ -207,6 +207,14 @@ class _viewerHtml
             resource.loadScrapEquips(parsePost(res));
         });
 
+        ipcRenderer.on("createitem",(e,res)=>{
+            resource.loadCraftItem(res.api_data);
+        });
+
+        ipcRenderer.on("generalmaterial",(e,res)=>{
+            resource.resourceBox.loadMaterial(res.api_data);
+        });
+
         ipcRenderer.once("requireinfo",(e,res)=>{
             _apiEquip={};
             for (var x=0,l=res.api_data.api_slot_item.length;x<l;x++)

@@ -75,4 +75,19 @@ class _resource
 
         this.resourceBox.equips-=removedEquips;
     }
+
+    //handles whole api data object from crafting an item
+    loadCraftItem(data)
+    {
+        this.loadCharge(data.api_material);
+
+        this.resourceBox.dev=data.api_material[6];
+
+        if (data.api_slot_item)
+        {
+            this.resourceBox.equips++;
+
+            _apiEquip[data.api_slot_item.api_id]=data.api_slot_item;
+        }
+    }
 }

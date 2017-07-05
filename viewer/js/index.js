@@ -416,7 +416,13 @@ function rDockUpdate(data)
             name:_apiAllShip[_apiShip[data[x].api_ship_id].api_sortno].api_name
         });
 
-        resource.loadRepair(data[x]);
+
+        if (!_rDocks[x].initialLoad)
+        {
+            resource.loadRepair(data[x]);
+        }
+
+        _rDocks[x].initialLoad=1;
     }
 }
 
