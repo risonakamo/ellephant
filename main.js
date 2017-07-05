@@ -210,11 +210,6 @@ function setupGameWindow(args)
                 setTimeout(()=>{receiveArb(par,"sortieresult")},500);
             }
 
-            else if (par.response.url=="http://203.104.209.39/kcsapi/api_req_quest/clearitemget")
-            {
-                setTimeout(()=>{receiveArb(par,"questclear")},500);
-            }
-
             else if (par.response.url=="http://203.104.209.39/kcsapi/api_req_kousyou/destroyitem2")
             {
                 setTimeout(()=>{receiveArb(par,"scrapitem")},500);
@@ -228,6 +223,16 @@ function setupGameWindow(args)
             else if (par.response.url=="http://203.104.209.39/kcsapi/api_get_member/material")
             {
                 setTimeout(()=>{receiveArb(par,"generalmaterial")},500);
+            }
+
+            else if (par.response.url=="http://203.104.209.39/kcsapi/api_req_kousyou/destroyship")
+            {
+                setTimeout(()=>{receiveArb(par,"scrapship")},500);
+            }
+
+            else if (par.response.url=="http://203.104.209.39/kcsapi/api_req_kousyou/remodel_slot")
+            {
+                setTimeout(()=>{receiveArb(par,"akashiupgrade")},500);
             }
         }
 
@@ -256,6 +261,11 @@ function setupGameWindow(args)
             else if (par.request.url=="http://203.104.209.39/kcsapi/api_req_kousyou/createship_speedchange")
             {
                 _win.webContents.send("instantcraft",decodeURIComponent(par.request.postData));
+            }
+
+            else if (par.request.url=="http://203.104.209.39/kcsapi/api_req_kousyou/destroyship")
+            {
+                _win.webContents.send("scrapshipPost",decodeURIComponent(par.request.postData));
             }
 
         }

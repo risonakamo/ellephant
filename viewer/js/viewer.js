@@ -195,10 +195,6 @@ class _viewerHtml
             resource.loadModernise(parsePost(res));
         });
 
-        ipcRenderer.on("questclear",(e,res)=>{
-
-        });
-
         ipcRenderer.on("scrapitem",(e,res)=>{
             resource.loadGetMaterial(res.api_data.api_get_material);
         });
@@ -217,6 +213,19 @@ class _viewerHtml
 
         ipcRenderer.on("instantcraft",(e,res)=>{
             construction.instantCraft(parseInt(parsePost(res).api_kdock_id));
+        });
+
+        ipcRenderer.on("scrapship",(e,res)=>{
+            resource.loadCharge(res.api_data.api_material);
+        });
+
+        ipcRenderer.on("scrapshipPost",(e,res)=>{
+            resource.resourceBox.equips-=apiData.removeShip(parseInt(parsePost(res).api_ship_id));
+            resource.resourceBox.ships--;
+        });
+
+        ipcRenderer.on("akashiupgrade",(e,res)=>{
+            resource.loadAkashi(res.api_data);
         });
 
         ipcRenderer.once("requireinfo",(e,res)=>{

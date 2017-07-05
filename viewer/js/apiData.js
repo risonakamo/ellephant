@@ -39,7 +39,7 @@ class _apiData
             return;
         }
 
-        var equipments=_apiShip[id].api_slot.length;
+        var equipments=0;
 
         //delete all equipment of the ship
         for (var x=0;x<equipments;x++)
@@ -47,6 +47,7 @@ class _apiData
             if (_apiShip[id].api_slot[x]>0)
             {
                 delete _apiEquip[_apiShip[id].api_slot[x]];
+                equipments++;
             }
         }
 
