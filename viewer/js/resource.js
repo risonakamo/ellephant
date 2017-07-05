@@ -14,8 +14,6 @@ class _resource
     }
 
     //requires api_material array from charge object
-    //also works for expedition's result.api_get_material array
-    //basically requires array of 4 main resources
     loadCharge(data)
     {
         this.resourceBox.gas=data[0];
@@ -52,5 +50,29 @@ class _resource
     {
         this.resourceBox.ships++;
         this.resourceBox.equips+=newEquips;
+    }
+
+    //requires api get material, which gives addative value
+    //for 4 main resources in an array
+    //usable for: scrap equipment
+    loadGetMaterial(data)
+    {
+        this.resourceBox.gas+=data[0];
+        this.resourceBox.ammo+=data[1];
+        this.resourceBox.steel+=data[2];
+        this.resourceBox.baux+=data[3];
+    }
+
+    loadScrapEquips(data)
+    {
+        data=data.api_slotitem_ids.split(",");
+        var removedEquips=data.length;
+
+        for (var x=0;x<removedEquips;x++)
+        {
+            delete _apiEquip[parseInt(data[x])];
+        }
+
+        this.resourceBox.equips-=removedEquips;
     }
 }
