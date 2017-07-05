@@ -204,6 +204,11 @@ function setupGameWindow(args)
             {
                 setTimeout(()=>{receiveArb(par,"getship")},500);
             }
+
+            else if (par.response.url=="http://203.104.209.39/kcsapi/api_req_sortie/battleresult")
+            {
+                setTimeout(()=>{receiveArb(par,"sortieresult")},500);
+            }
         }
 
         else if (method=="Network.requestWillBeSent")
@@ -216,6 +221,11 @@ function setupGameWindow(args)
             else if (par.request.url=="http://203.104.209.39/kcsapi/api_req_kaisou/slot_exchange_index")
             {
                 _win.webContents.send("equipExchange",decodeURIComponent(par.request.postData));
+            }
+
+            else if (par.request.url=="http://203.104.209.39/kcsapi/api_req_kaisou/powerup")
+            {
+                _win.webContents.send("modernise",decodeURIComponent(par.request.postData));
             }
 
         }

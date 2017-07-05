@@ -29,4 +29,23 @@ class _apiData
               9400,9700,10000,10400,10800,11200,11600,12000,12400,12800,13200,13600,14000,14500,15000,
               15500,16000,16500,17000,17500,18000,18500,19000,20000,22000,25000,30000,40000,60000,90000,148500];
     }
+
+    removeShip(id)
+    {
+        if (!_apiShip[id])
+        {
+            return;
+        }
+
+        //delete all equipment of the ship
+        for (var x=0,l=_apiShip[id].api_slot.length;x<l;x++)
+        {
+            if (_apiShip[x].api_slot[x]>0)
+            {
+                delete _apiEquip(_apiShip[id].api_slot[x]);
+            }
+        }
+
+        delete _apiShip[id];
+    }
 }

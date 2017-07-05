@@ -324,6 +324,8 @@ function chargeUpdate(data)
         updateFleetShip(_fleetShipIds[fleet[0]],fleet[0]);
     }
 
+    resource.loadCharge(data.api_data.api_material);
+
     // var update=[-1,-1,-1,-1,-1,-1];
     // for (var x=0,l=data.api_data.api_ship.length;x<l;x++)
     // {
@@ -413,6 +415,8 @@ function rDockUpdate(data)
             maxTime:_apiShip[data[x].api_ship_id].api_ndock_time,
             name:_apiAllShip[_apiShip[data[x].api_ship_id].api_sortno].api_name
         });
+
+        resource.loadRepair(data[x]);
     }
 }
 

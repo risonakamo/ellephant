@@ -172,6 +172,11 @@
         //   return;
         // }
 
+        if (this.currentState==2 && state==1)
+        {
+          return;
+        }
+
         this.currentState=state;
         this.classList.remove("sortie","resupply","morale","normal");
         switch (state)
@@ -193,6 +198,7 @@
 
           case 2:
           this.classList.add("sortie");
+          this.inSortie=1;
           break;
         }
       }

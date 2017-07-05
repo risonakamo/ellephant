@@ -183,6 +183,14 @@ class _viewerHtml
             _apiShip[res.api_id]=res.api_ship;
         });
 
+        ipcRenderer.on("modernise",(e,res)=>{
+            resource.loadModernise(parsePost(res));
+        });
+
+        ipcRenderer.on("questclear",(e,res)=>{
+
+        });
+
         ipcRenderer.once("requireinfo",(e,res)=>{
             _apiEquip={};
             for (var x=0,l=res.api_data.api_slot_item.length;x<l;x++)
