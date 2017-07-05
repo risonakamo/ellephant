@@ -35,12 +35,22 @@ class _resource
 
     loadModernise(data)
     {
-        for (var x=0;x<data.api_id_items;x++)
+        var usedShips=data.api_id_items.split(",");
+        var usedShipsLength=usedShips.length;
+        var removedEquipments=0;
+
+        for (var x=0;x<usedShipsLength;x++)
         {
-            apiData.removeShip(x);
+            removedEquipments+=apiData.removeShip(parseInt(usedShips[x]));
         }
 
-        this.resourceBox.ships=_apiShip.length;
-        this.resourceBox.equips=_apiEquip.length;
+        this.resourceBox.ships-=usedShipsLength;
+        this.resourceBox.equips-=removedEquipments;
+    }
+
+    loadNewShip(newEquips)
+    {
+        this.resourceBox.ships++;
+        this.resourceBox.equips+=newEquips;
     }
 }

@@ -30,6 +30,8 @@ class _apiData
               15500,16000,16500,17000,17500,18000,18500,19000,20000,22000,25000,30000,40000,60000,90000,148500];
     }
 
+    //remove ship from apiShip with id and equipment from apiEquip
+    //returns number of equipment removed
     removeShip(id)
     {
         if (!_apiShip[id])
@@ -37,15 +39,18 @@ class _apiData
             return;
         }
 
+        var equipments=_apiShip[id].api_slot.length;
+
         //delete all equipment of the ship
-        for (var x=0,l=_apiShip[id].api_slot.length;x<l;x++)
+        for (var x=0;x<equipments;x++)
         {
-            if (_apiShip[x].api_slot[x]>0)
+            if (_apiShip[id].api_slot[x]>0)
             {
-                delete _apiEquip(_apiShip[id].api_slot[x]);
+                delete _apiEquip[_apiShip[id].api_slot[x]];
             }
         }
 
         delete _apiShip[id];
+        return equipments;
     }
 }

@@ -181,6 +181,14 @@ class _viewerHtml
             construction.loadKdock(res.api_kdock);
 
             _apiShip[res.api_id]=res.api_ship;
+
+            var newEquips=res.api_slotitem.length;
+            for (var x=0;x<newEquips;x++)
+            {
+                _apiEquip[res.api_slotitem[x].api_id]=res.api_slotitem[x];
+            }
+
+            resource.loadNewShip(newEquips);
         });
 
         ipcRenderer.on("modernise",(e,res)=>{
