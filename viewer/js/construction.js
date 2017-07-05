@@ -27,4 +27,10 @@ class _construction
             this.cships[x].loadShip(data[x],type);
         }
     }
+
+    //complete construction at int dock
+    instantCraft(dock)
+    {
+        this.cships[dock-1].complete();
+    }
 }

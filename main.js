@@ -253,6 +253,11 @@ function setupGameWindow(args)
                 _win.webContents.send("scrapitemPost",decodeURIComponent(par.request.postData));
             }
 
+            else if (par.request.url=="http://203.104.209.39/kcsapi/api_req_kousyou/createship_speedchange")
+            {
+                _win.webContents.send("instantcraft",decodeURIComponent(par.request.postData));
+            }
+
         }
     });
 

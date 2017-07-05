@@ -171,6 +171,7 @@
       complete()
       {
         clearTimeout(this.timer);
+        delete this.timer;
 
         this.setState(3);
       }
