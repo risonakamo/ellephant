@@ -4,7 +4,10 @@ const process=require("process");
 // const path=require("path");
 // const url=require("url");
 
-app.commandLine.appendSwitch("ppapi-flash-path",app.getPath("pepperFlashSystemPlugin"));
+// console.log(app.getPath("pepperFlashSystemPlugin"));
+// app.commandLine.appendSwitch("ppapi-flash-path",app.getPath("pepperFlashSystemPlugin"));
+
+app.commandLine.appendSwitch("ppapi-flash-path",`${__dirname}/pepperflash/pepflashplayer64_26_0_0_131.dll`);
 
 var _win; //main viewer window
 var _gamewindow; //game window
@@ -70,7 +73,7 @@ function viewerEvents()
 
 function windowRestore()
 {
-    _appdata=`${process.env["appdata"]}/kancollectron`;
+    _appdata=`${process.env["appdata"]}/ellephant`;
 
     _windowLocations={};
 
@@ -115,6 +118,8 @@ function setupGameWindow(args)
 {
     _apiLink=args;
 
+    //for release:   (electron debug file menu is 20px height)
+    // var winops={width:816,height:519,webPreferences:{plugins:true}};
     var winops={width:816,height:539,webPreferences:{plugins:true}};
 
     if (_windowLocations.game)
