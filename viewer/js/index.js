@@ -125,7 +125,7 @@ function portUpdate(port)
     }
 
     repair.rDockUpdate(port.api_data.api_ndock);
-    viewer.viewer.classList.remove("collapse");
+    viewer.viewerShow();
 }
 
 // function saveFleetShipIds(ships)

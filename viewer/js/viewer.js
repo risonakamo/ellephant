@@ -8,10 +8,27 @@ class _viewerHtml
         this.currentTab=0;
 
         this.viewer=document.querySelector(".viewer");
+        this.loading=document.querySelector(".loading");
 
         this.setupInput();
         this.setupTabs();
         this.ipcReceivers();
+    }
+
+    viewerShow()
+    {
+        if (this.viewerShown)
+        {
+            return;
+        }
+
+        this.viewerShown=1;
+        this.viewer.classList.remove("collapse");
+        this.loading.classList.add("slideout");
+
+        setTimeout(()=>{
+            this.loading.parentNode.removeChild(this.loading);
+        },501);
     }
 
     setupInput()
@@ -19,12 +36,14 @@ class _viewerHtml
         var goBt=document.querySelector(".go-bt");
         var urlBox=document.querySelector(".url-box");
         var inputWrap=document.querySelector(".input-wrap");
+
         var that=this;
 
         var sendWindowRequest=function(e){
             ipcRenderer.send("requestWindow",urlBox.value);
 
             inputWrap.classList.add("fade");
+            that.loading.classList.add("show");
             setTimeout(()=>{
                 inputWrap.parentNode.removeChild(inputWrap);
                 that.viewer.classList.remove("collapse-dim");
