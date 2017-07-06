@@ -2,13 +2,11 @@ void main();
 
 /*-- onetime --*/
 void expBoxEvents();
-void rDockEvents();
 
 /*-- update event handling functions --*/
 void changeUpdate(object data); //handles change data
                                 //needs to be given formatted data
 void portUpdate(); //handles port object
-void rDockUpdate(object data); //handles repair docks
 void expeditionUpdate(array data); //expedition elements
 void chargeUpdate(object data); //charge object
 void deckUpdate(object data); //update after a sortie battle given the ship_deck api data
@@ -30,4 +28,3 @@ object parsePost(string res); //parse api post response which comes in a string
 void switchEquipment(int id,int src,int dst); //switch equipment in given index slots of ship
 void sortieState(int state);
 string genFaceFile(object ship); //gen filepath for image of given apiship object
-void clearRepair(int ship); //clear repair state of ship with id "ship"

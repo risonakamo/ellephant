@@ -165,7 +165,7 @@ class _viewerHtml
         });
 
         ipcRenderer.on("ndock",(e,res)=>{
-            rDockUpdate(res.api_data);
+            repair.rDockUpdate(res.api_data);
         });
 
         ipcRenderer.on("sortiestart",(e,res)=>{
@@ -229,6 +229,21 @@ class _viewerHtml
 
         ipcRenderer.on("akashiupgrade",(e,res)=>{
             resource.loadAkashi(res.api_data);
+        });
+
+        ipcRenderer.on("repairstart",(e,res)=>{
+            res=parsePost(res);
+
+            if (res.api_highspeed=="1")
+            {
+                repair.clearRepair(parseInt(res.api_ship_id));
+            }
+        });
+
+        ipcRenderer.on("instantrepair",(e,res)=>{
+            res=parsePost(res);
+
+            repair.rDocks[res.api_ndock_id-1].clearDock();
         });
 
         ipcRenderer.once("requireinfo",(e,res)=>{

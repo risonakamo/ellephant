@@ -268,6 +268,16 @@ function setupGameWindow(args)
                 _win.webContents.send("scrapshipPost",decodeURIComponent(par.request.postData));
             }
 
+            else if (par.request.url=="http://203.104.209.39/kcsapi/api_req_nyukyo/start")
+            {
+                _win.webContents.send("repairstart",decodeURIComponent(par.request.postData));
+            }
+
+            else if (par.request.url=="http://203.104.209.39/kcsapi/api_req_nyukyo/speedchange")
+            {
+                _win.webContents.send("instantrepair",decodeURIComponent(par.request.postData));
+            }
+
         }
     });
 

@@ -264,6 +264,7 @@
       {
         clearTimeout(this.timer);
 
+        delete this.timer;
         this.loaded=0;
         this.percent=0;
         this.$["slider"].classList.remove("loaded");

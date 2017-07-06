@@ -42,7 +42,7 @@ class _apiData
         var equipments=0;
 
         //delete all equipment of the ship
-        for (var x=0;x<equipments;x++)
+        for (var x=0;x<_apiShip[id].api_slot.length;x++)
         {
             if (_apiShip[id].api_slot[x]>0)
             {

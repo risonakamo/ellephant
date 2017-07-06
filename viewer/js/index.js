@@ -7,11 +7,11 @@ var pvp;
 var construction;
 var apiData=new _apiData;
 var viewer;
+var repair;
 
 //html element globals
 var _expFleets; //array
 var _fleetShips; //array
-var _rDocks;
 var _mFleet;
 
 //array of arrays of ids of currently loaded fleetships and pvp opponents
@@ -36,14 +36,13 @@ function main()
     construction= new _construction;
     resource=new _resource;
     viewer= new _viewerHtml;
+    repair=new _repair;
 
     _expFleets=document.querySelectorAll("exp-fleet");
     _fleetShips=document.querySelectorAll("fleet-ship");
-    _rDocks=document.querySelectorAll("repair-box");
     _mFleet=document.querySelector("m-fleet");
 
     expBoxEvents();
-    rDockEvents();
 }
 
 function changeUpdate(data)
@@ -125,7 +124,7 @@ function portUpdate(port)
         updateFleetShip(port.api_data.api_deck_port[x].api_ship,x);
     }
 
-    rDockUpdate(port.api_data.api_ndock);
+    repair.rDockUpdate(port.api_data.api_ndock);
 }
 
 // function saveFleetShipIds(ships)
@@ -394,48 +393,6 @@ function expBoxEvents()
     // }
 }
 
-//requires api ndock (array) directly from port api
-function rDockUpdate(data)
-{
-    if (_apiShip_ready!=1)
-    {
-        setTimeout(()=>{rDockUpdate(data)},100);
-        return;
-    }
-
-    for (var x=0;x<2;x++)
-    {
-        if (data[x].api_state<=0 || _rDocks[x].loaded==1)
-        {
-            continue;
-        }
-
-        _rDocks[x].loadShip({
-            // face:`../face/${_apiShip[data[x].api_ship_id].api_ship_id}.png`,
-            face: genFaceFile(_apiShip[data[x].api_ship_id]),
-            timeComplete:data[x].api_complete_time,
-            maxTime:_apiShip[data[x].api_ship_id].api_ndock_time,
-            name:_apiAllShip[_apiShip[data[x].api_ship_id].api_sortno].api_name,
-            shipId:data[x].api_ship_id
-        });
-
-        _apiShip[data[x].api_ship_id].inRepair=1;
-        var shipfind=findShip(data[x].api_ship_id);
-
-        if (shipfind[0]>=0)
-        {
-            _fleetShips[(4*shipfind[0])+shipfind[1]].setRepair(1);
-        }
-
-        if (!_rDocks[x].initialLoad)
-        {
-            resource.loadRepair(data[x]);
-        }
-
-        _rDocks[x].initialLoad=1;
-    }
-}
-
 function updateFleetSupply(fleet,resupply)
 {
     if (fleet==0)
@@ -554,28 +511,4 @@ function genFaceFile(ship)
     }
 
     return `../face-d/${ship.api_ship_id}.png`;
-}
-
-function rDockEvents()
-{
-    for (var x=0;x<_rDocks.length;x++)
-    {
-        _rDocks[x].addEventListener("complete",(e)=>{
-            clearRepair(e.detail);
-        });
-    }
-}
-
-function clearRepair(ship)
-{
-    delete _apiShip[ship].inRepair;
-
-    _apiShip[ship].api_nowhp=_apiShip[ship].api_maxhp;
-
-    var findship=findShip(ship);
-
-    if (findship[0]>=0)
-    {
-        _fleetShips[(4*shipfind[0])+shipfind[1]].loadShip(genLoadableShip(_apiShip[ship]));
-    }
 }
