@@ -30,6 +30,44 @@
         width: 80px;
       }
 
+      #screw-dev
+      {
+        position: relative;
+        transition: background-color .3s;
+      }
+
+      #screw-dev:hover
+      {
+        background-color: rgba(94,102,104,.5);
+        cursor: pointer;
+      }
+
+      .short-slide
+      {
+        position: absolute;
+        width: 80px;
+        height: 25px;
+        top: 0;
+        left: 0;
+        opacity: 0;
+        transition: opacity .4s;
+      }
+
+      .short-slide.screw
+      {
+        opacity: 1;
+      }
+
+      #screw-dev.dev .screw
+      {
+        opacity: 0;
+      }
+
+      #screw-dev.dev .dev
+      {
+        opacity: 1;
+      }
+
       .resource-icon
       {
         width: 25px;
@@ -120,9 +158,16 @@
         <div class="value">[[bucket]]</div>
       </div>
 
-      <div class="container short">
-        <div class="resource-icon"><img src="../supply/screw.png"></div>
-        <div class="value">[[screw]]</div>
+      <div id="screw-dev" class="container short" on-click="screwSwitch">
+        <div class="short-slide screw">
+          <div class="resource-icon"><img src="../supply/screw.png"></div>
+          <div class="value">[[screw]]</div>
+        </div>
+
+        <div class="short-slide dev">
+          <div class="resource-icon"><img src="../supply/dev.png"></div>
+          <div class="value">[[dev]]</div>
+        </div>
       </div>
     </div>
 
@@ -196,6 +241,11 @@
           this.maxShip=data.api_max_chara;
           this.maxEquip=data.api_max_slotitem;
         }
+      }
+
+      screwSwitch()
+      {
+        this.$["screw-dev"].classList.toggle("dev");
       }
     }
 
