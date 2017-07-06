@@ -9,6 +9,7 @@ class _viewerHtml
 
         this.viewer=document.querySelector(".viewer");
         this.loading=document.querySelector(".loading");
+        this.loadLog=this.loading.querySelector(".log");
 
         this.setupInput();
         this.setupTabs();
@@ -29,6 +30,16 @@ class _viewerHtml
         setTimeout(()=>{
             this.loading.parentNode.removeChild(this.loading);
         },501);
+    }
+
+    loaderLog(message)
+    {
+        if (this.viewerShown)
+        {
+            return;
+        }
+
+        this.loadLog.insertAdjacentHTML("beforeend",`<p class="slide">${message}</p>`);
     }
 
     setupInput()
@@ -281,6 +292,7 @@ class _viewerHtml
             construction.loadKdock(res.api_data.api_kdock);
 
             resource.resourceBox.equips=res.api_data.api_slot_item.length;
+            this.loaderLog("require info ready.");
         });
 
         ipcRenderer.once("apistart",(e,res)=>{
@@ -293,16 +305,19 @@ class _viewerHtml
                 _apiAllShip[res.api_data.api_mst_ship[x].api_sortno]=res.api_data.api_mst_ship[x];
                 _apiIdtoSort[res.api_data.api_mst_ship[x].api_id]=res.api_data.api_mst_ship[x].api_sortno;
             }
+            this.loaderLog("api ships loaded.");
 
             _apiAllEquip={};
             for (var x=0;x<=228;x++)
             {
                 _apiAllEquip[res.api_data.api_mst_slotitem[x].api_sortno]=res.api_data.api_mst_slotitem[x];
             }
+            this.loaderLog("api equipment loaded.");
 
             _apiAllExpedition=res.api_data.api_mst_mission;
 
             _apistart_ready=1;
+            this.loaderLog("api start ready.");
         });
     }
 }

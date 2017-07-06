@@ -33,6 +33,11 @@ body
     overflow: hidden;
 }
 
+p
+{
+    margin: 0;
+}
+
 .input-wrap
 {
     width: 100%;
@@ -47,6 +52,7 @@ body
     position: absolute;
     top: 0;
     right: 0;
+    color: #3d81a7;
     margin-top: 43vh;
     font-size: 30px;
     opacity: 0;
@@ -65,6 +71,32 @@ body
 {
     transform: translateY(100px);
     opacity: 0;
+}
+
+.loading .log
+{
+    font-size: 15px;
+    opacity: .8;
+}
+
+.log .slide
+{
+    animation: .4s log-slide;
+}
+
+@keyframes log-slide
+{
+    from
+    {
+        transform: translateY(-10px);
+        opacity: 0;
+    }
+
+    to
+    {
+        transform: translateY(0);
+        opacity: 1;
+    }
 }
 
 .input-wrap.fade
