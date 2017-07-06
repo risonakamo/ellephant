@@ -335,11 +335,13 @@ pvp-fleet
     opacity: 0;
     z-index: -10;
     cursor: default;
-    transition: opacity .3s;
+    transform: translateY(100px);
+    transition: opacity,transform .3s,.3s;
 }
 
 .pvp-page.unload .pvp-no-load
 {
+    transform: translateY(0);
     opacity: 1;
     z-index: 5;
 }
