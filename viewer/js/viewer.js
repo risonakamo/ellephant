@@ -7,6 +7,8 @@ class _viewerHtml
         this.tabBar=document.querySelector(".tabs");
         this.currentTab=0;
 
+        this.viewer=document.querySelector(".viewer");
+
         this.setupInput();
         this.setupTabs();
         this.ipcReceivers();
@@ -17,13 +19,17 @@ class _viewerHtml
         var goBt=document.querySelector(".go-bt");
         var urlBox=document.querySelector(".url-box");
         var inputWrap=document.querySelector(".input-wrap");
-        var viewer=document.querySelector(".viewer");
         var that=this;
 
         var sendWindowRequest=function(e){
             ipcRenderer.send("requestWindow",urlBox.value);
-            inputWrap.parentNode.removeChild(inputWrap);
-            viewer.classList.remove("collapse");
+
+            inputWrap.classList.add("fade");
+            setTimeout(()=>{
+                inputWrap.parentNode.removeChild(inputWrap);
+                that.viewer.classList.remove("collapse-dim");
+            },501);
+
             that.keyControl();
         };
 

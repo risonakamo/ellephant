@@ -39,6 +39,12 @@ body
     margin-top: 40vh;
     text-align: center;
     font-family: "segoe ui","shingoR";
+    transition: opacity .4s;
+}
+
+.input-wrap.fade
+{
+    opacity: 0;
 }
 
 .button
@@ -75,6 +81,7 @@ body
 .viewer
 {
     font-size: 0;
+    transition: transform .8s;
 }
 
 .viewer div
@@ -220,13 +227,18 @@ exp-fleet:hover,m-fleet:hover
     background-color: #26bbe5;
 }
 
+.collapse-dim
+{
+    display: none;
+    width: 0;
+    height: 0;
+}
 
 .collapse
 {
-    display: none;
-    height: 0;
-    width: 0;
-    overflow: hidden;
+    z-index: -20;
+    transform: translateY(-530px);
+    opacity: 0;
 }
 
 .repair

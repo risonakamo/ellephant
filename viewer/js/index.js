@@ -125,6 +125,7 @@ function portUpdate(port)
     }
 
     repair.rDockUpdate(port.api_data.api_ndock);
+    viewer.viewer.classList.remove("collapse");
 }
 
 // function saveFleetShipIds(ships)
@@ -277,12 +278,6 @@ function genEquip(apishipEquip)
 //needs to be given api_deck_port from the port object, an array
 function expeditionUpdate(data)
 {
-    // if (_apistart_ready!=1)
-    // {
-    //     setTimeout(()=>{expeditionUpdate(data)},100);
-    //     return;
-    // }
-
     for (var x=1;x<=3;x++)
     {
         if (data[x].api_mission[0]==0)
