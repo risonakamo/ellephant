@@ -151,11 +151,12 @@
       }
 
       /*data requires:
-      timeComplete: direct from api completion time
-      face: facce src url
-      maxTime: direct from api length of repair time
-      name: name of ship
-      int initialLoad: so resourcebox ignores resource subtraction first load*/
+      int timeComplete: direct from api completion time
+      string face: facce src url
+      int maxTime: direct from api length of repair time
+      string name: name of ship
+      int initialLoad: so resourcebox ignores resource subtraction first load
+      int shipId: id of ship*/
       loadShip(data)
       {
         if (this.loaded==1)
@@ -170,6 +171,7 @@
         var timeleft=data.timeComplete-new Date().getTime()-60000;
         this.face=data.face;
         this.maxTime=data.maxTime/(1000*60);
+        this.shipId=data.shipId;
 
         if (timeleft<=0)
         {
@@ -196,7 +198,6 @@
             if (this.hour==0)
             {
               this.complete();
-              this.updateBar();
               return;
             }
 
@@ -268,6 +269,8 @@
         this.$["slider"].classList.remove("loaded");
         this.face="";
         this.name="";
+
+        this.dispatchEvent(new CustomEvent("complete",{detail:this.shipId}));
       }
     }
 

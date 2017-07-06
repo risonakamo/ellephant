@@ -43,6 +43,7 @@ function main()
     _mFleet=document.querySelector("m-fleet");
 
     expBoxEvents();
+    rDockEvents();
 }
 
 function changeUpdate(data)
@@ -251,7 +252,8 @@ function genLoadableShip(ship)
         planeCount:ship.api_onslot,
         shipId:ship.api_id,
         shipClass:apiData.sTypes[_apiAllShip[ship.api_sortno].api_stype-1],
-        shipName: _apiAllShip[ship.api_sortno].api_name
+        shipName: _apiAllShip[ship.api_sortno].api_name,
+        inRepair:ship.inRepair
     };
 }
 
@@ -413,9 +415,17 @@ function rDockUpdate(data)
             face: genFaceFile(_apiShip[data[x].api_ship_id]),
             timeComplete:data[x].api_complete_time,
             maxTime:_apiShip[data[x].api_ship_id].api_ndock_time,
-            name:_apiAllShip[_apiShip[data[x].api_ship_id].api_sortno].api_name
+            name:_apiAllShip[_apiShip[data[x].api_ship_id].api_sortno].api_name,
+            shipId:data[x].api_ship_id
         });
 
+        _apiShip[data[x].api_ship_id].inRepair=1;
+        var shipfind=findShip(data[x].api_ship_id);
+
+        if (shipfind[0]>=0)
+        {
+            _fleetShips[(4*shipfind[0])+shipfind[1]].setRepair(1);
+        }
 
         if (!_rDocks[x].initialLoad)
         {
@@ -544,4 +554,28 @@ function genFaceFile(ship)
     }
 
     return `../face-d/${ship.api_ship_id}.png`;
+}
+
+function rDockEvents()
+{
+    for (var x=0;x<_rDocks.length;x++)
+    {
+        _rDocks[x].addEventListener("complete",(e)=>{
+            clearRepair(e.detail);
+        });
+    }
+}
+
+function clearRepair(ship)
+{
+    delete _apiShip[ship].inRepair;
+
+    _apiShip[ship].api_nowhp=_apiShip[ship].api_maxhp;
+
+    var findship=findShip(ship);
+
+    if (findship[0]>=0)
+    {
+        _fleetShips[(4*shipfind[0])+shipfind[1]].loadShip(genLoadableShip(_apiShip[ship]));
+    }
 }

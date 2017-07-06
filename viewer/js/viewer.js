@@ -220,7 +220,10 @@ class _viewerHtml
         });
 
         ipcRenderer.on("scrapshipPost",(e,res)=>{
-            resource.resourceBox.equips-=apiData.removeShip(parseInt(parsePost(res).api_ship_id));
+            var removeEquips=apiData.removeShip(parseInt(parsePost(res).api_ship_id))
+            console.log(removeEquips);
+
+            resource.resourceBox.equips-=removeEquips;
             resource.resourceBox.ships--;
         });
 

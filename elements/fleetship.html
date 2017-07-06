@@ -328,6 +328,16 @@
         border-bottom-color: #cc9e7b;
       }
 
+      #loaded.repair .health,#loaded.repair .detail-slide-inner
+      {
+        color: #32a7c8;
+      }
+
+      #loaded.repair .health .border
+      {
+        border-color: #32a7c8;
+      }
+
       .hp-bar-back
       {
         margin-left: 15px;
@@ -473,30 +483,25 @@
           this[x]=data[x];
         }
 
-        // this.maxHp=data.maxHp
-        // this.curHp=data.curHp
         this.hpPercent=(this.curHp/this.maxHp)*100;
-
-        // this.level=data.level;
-        // this.shipClass=data.shipClass;
-        // this.face=data.face;
-
-        // this.morale=data.morale;
-
-        // this.curAmmo=data.curAmmo;
-        // this.maxAmmo=data.maxAmmo;
         this.ammoPercent=(this.curAmmo/this.maxAmmo)*100;
-
-        // this.curGas=data.curGas;
-        // this.maxGas=data.maxGas;
         this.gasPercent=(this.curGas/this.maxGas)*100;
-
         this.expPercent=((this.maxExp-this.curExp)/this.maxExp)*100;
 
         this.loadEquipment(data.equipment);
 
         this.applyColour();
         this.healthColour();
+
+        if (data.inRepair)
+        {
+          this.setRepair(1);
+        }
+
+        else
+        {
+          this.setRepair(0);
+        }
 
         this.loaded=1;
         this.$["loaded"].classList.remove("unloaded");
@@ -578,6 +583,20 @@
         else
         {
           this.$["loaded"].classList.remove("orange","red","yellow");
+        }
+      }
+
+      //1 to set ship as in repair
+      setRepair(state)
+      {
+        if (state)
+        {
+          this.$["loaded"].classList.add("repair");
+        }
+
+        else
+        {
+          this.$["loaded"].classList.remove("repair");
         }
       }
     }
