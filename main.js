@@ -306,79 +306,8 @@ function setupGameWindow(args)
 
 function windowClose(e)
 {
-    // e.preventDefault();
     saveWindow();
     app.quit();
 }
 
 app.on("ready",main);
-
-// function receivePort(par)
-// {
-//     _gamewindow.webContents.debugger.sendCommand("Network.getResponseBody",{requestId:par.requestId},(err,res)=>{
-//         if (res.body==undefined)
-//         {
-//             setTimeout(()=>{receivePort(par)},500);
-//             return;
-//         }
-
-//         _win.webContents.send("portinfo",(JSON.parse(res.body.slice(7))));
-//     });
-// }
-
-// function receiveDeck(par)
-// {
-//     _gamewindow.webContents.debugger.sendCommand("Network.getResponseBody",{requestId:par.requestId},(err,res)=>{
-//         if (res.body==undefined)
-//         {
-//             setTimeout(()=>{receivePort(par)},500);
-//             return;
-//         }
-
-//         _win.webContents.send("deckinfo",(JSON.parse(res.body.slice(7))));
-//     });
-// }
-
-// function gameWindowDebugSetup()
-// {
-//     _gamewindow.webContents.debugger.attach("1.2");
-
-//     _gamewindow.webContents.debugger.on("message",(e,method,par)=>{
-//         if (method=="Network.responseReceived")
-//         {
-//             if (par.reponse.url=="http://203.104.209.39/kcsapi/api_port/port")
-//             {
-//                 _gamewindow.webContents.debugger.sendCommand("Network.getResponseBody",{requestId:par.requestId},(err,res)=>{
-//                     console.log(res.body);
-//                 });
-//             }
-//         }
-//     });
-
-//     _gamewindow.webContents.debugger.sendCommand("Network.enable");
-// }
-
-// function testDebug()
-// {
-//     _gamewindow=new BrowserWindow({width:800,height:600});
-
-//     _gamewindow.webContents.debugger.attach("1.2");
-
-//     _gamewindow.webContents.debugger.on("message",(e,met,par)=>{
-//         if (met=="Network.responseReceived")
-//         {
-//             if (par.response.url=="https://electron.atom.io/docs/api/")
-//             {
-//                 _gamewindow.webContents.debugger.sendCommand("Network.getResponseBody",{requestId:par.requestId},(err,res)=>{
-//                     console.log(err);
-//                     console.log(res.body);
-//                 });
-//             }
-//         }
-//     });
-
-//     _gamewindow.webContents.debugger.sendCommand("Network.enable");
-
-//     _gamewindow.loadURL("https://electron.atom.io/docs/api/");
-// }
-
