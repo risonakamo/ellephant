@@ -21,7 +21,7 @@ function main()
     ipcs();
     windowRestore();
 
-    var winops={width:776,height:620};
+    var winops={width:760,height:550,useContentSize:true};
 
     if (_windowLocations.viewer)
     {
@@ -118,9 +118,7 @@ function setupGameWindow(args)
 {
     _apiLink=args;
 
-    //for release:   (electron debug file menu is 20px height)
-    // var winops={width:816,height:519,webPreferences:{plugins:true}};
-    var winops={width:816,height:539,webPreferences:{plugins:true}};
+    var winops={width:800,height:480,useContentSize:true,webPreferences:{plugins:true}};
 
     if (_windowLocations.game)
     {
