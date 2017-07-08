@@ -441,6 +441,33 @@
         return "fleet-ship";
       }
 
+      /*--- variables ----
+        int loaded
+        element-array equipmentSlots
+
+        --- loaded variables ---
+        int maxHp
+        int curHp
+        int level
+        string shipClass
+        string face
+        int morale
+        int curAmmo
+        int maxAmmo
+        int curGas
+        int maxGas
+        array[object] equipment: array of objects of full equipment data
+        int maxExp
+        int curExp
+        array[int] planeCount: array of numbers direct from api
+        int shipId: player api id for external identification
+        string shipName
+
+        float hpPercent
+        float ammoPercent
+        float gasPercent
+        float expPercent
+      */
       static get properties()
       {
         return {
@@ -475,20 +502,45 @@
         planeCount (array of numbers direct from api)
         shipId (player api id for external identification)
         shipName
+        inRepair
       */
+
+      //requires full ship obj
       loadShip(data)
       {
-        for (var x in data)
+        // for (var x in data)
+        // {
+        //   this[x]=data[x];
+        // }
+
+        if (_apistart_ready!=1)
         {
-          this[x]=data[x];
+          setTimeout(()=>{this.loadShip(data)},200);
         }
+
+        this.maxHp=data.api_maxhp;
+        this.curHp=data.api_nowhp;
+        this.level=data.api_lv;
+        this.shipClass=apiData.sTypes[_apiAllShip[data.api_sortno].api_stype-1];
+        this.face=genFaceFile(data);
+        this.morale=data.api_cond;
+        this.curAmmo=data.api_bull;
+        this.maxAmmo=_apiAllShip[data.api_sortno].api_bull_max;
+        this.curGas=data.api_fuel;
+        this.maxGas=_apiAllShip[data.api_sortno].api_fuel_max;
+        this.curExp=data.api_exp[1];
+        this.maxExp=apiData.expPerLv[data.api_lv-1];
+        this.planeCount=data.api_onslot;
+        this.shipId=data.api_id;
+        this.shipName=_apiAllShip[data.api_sortno].api_name;
+        data.inRepair=_apiShip[this.shipId].inRepair;
 
         this.hpPercent=(this.curHp/this.maxHp)*100;
         this.ammoPercent=(this.curAmmo/this.maxAmmo)*100;
         this.gasPercent=(this.curGas/this.maxGas)*100;
         this.expPercent=((this.maxExp-this.curExp)/this.maxExp)*100;
 
-        this.loadEquipment(data.equipment);
+        this.loadEquipment(data.api_slot);
 
         this.applyColour();
         this.healthColour();
@@ -510,28 +562,54 @@
 
       loadEquipment(data)
       {
+        var html;
         for (var x=0;x<4;x++)
         {
-          var html;
-
-          if (data[x]=="")
+          if (data[x]<0)
           {
             html="";
           }
 
           else
           {
-            html=`<img src="${data[x]}">`;
+            data[x]=_apiAllEquip[_apiEquip[data[x]].api_slotitem_id];
 
-            if (this.planeCount[x]>0)
-            {
-              html+=`<div class="plane-count">${this.planeCount[x]}</div>`;
-            }
+            html=`<img src="../equipment/${data[x].api_type[3]}.png">`;
+          }
+
+          if (this.planeCount[x]>0)
+          {
+            html+=`<div class="plane-count">${this.planeCount[x]}</div>`;
           }
 
           this.equipmentSlots[x].innerHTML=html;
         }
       }
+
+      // loadEquipment1(data)
+      // {
+      //   for (var x=0;x<4;x++)
+      //   {
+      //     var html;
+
+      //     if (data[x]=="")
+      //     {
+      //       html="";
+      //     }
+
+      //     else
+      //     {
+      //       html=`<img src="${data[x]}">`;
+
+      //       if (this.planeCount[x]>0)
+      //       {
+      //         html+=`<div class="plane-count">${this.planeCount[x]}</div>`;
+      //       }
+      //     }
+
+      //     this.equipmentSlots[x].innerHTML=html;
+      //   }
+      // }
 
       applyColour()
       {

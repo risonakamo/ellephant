@@ -204,7 +204,7 @@ function updateFleetShip(ships,fleetContain)
 
         else
         {
-            _fleetShips[fleetContain].loadShip(genLoadableShip(ships[x]));
+            _fleetShips[fleetContain].loadShip(ships[x]);
 
             if ((_fleetShips[fleetContain].curAmmo<_fleetShips[fleetContain].maxAmmo
                 || _fleetShips[fleetContain].curGas<_fleetShips[fleetContain].maxGas)
@@ -231,49 +231,49 @@ function updateFleetShip(ships,fleetContain)
     updateExpFace(fleetNumber);
 }
 
-//gen object for use with fleetship loadship
-//requires ship object from player ship list
-function genLoadableShip(ship)
-{
-    return {
-        maxHp:ship.api_maxhp,
-        curHp:ship.api_nowhp,
-        level:ship.api_lv,
-        // face:`../face/${ship.api_ship_id}.png`,
-        face: genFaceFile(ship),
-        morale:ship.api_cond,
-        curAmmo:ship.api_bull,
-        curGas:ship.api_fuel,
-        maxAmmo:_apiAllShip[ship.api_sortno].api_bull_max,
-        maxGas:_apiAllShip[ship.api_sortno].api_fuel_max,
-        equipment:genEquip(ship.api_slot),
-        curExp:ship.api_exp[1],
-        maxExp:apiData.expPerLv[ship.api_lv-1],
-        planeCount:ship.api_onslot,
-        shipId:ship.api_id,
-        shipClass:apiData.sTypes[_apiAllShip[ship.api_sortno].api_stype-1],
-        shipName: _apiAllShip[ship.api_sortno].api_name,
-        inRepair:ship.inRepair
-    };
-}
+// //gen object for use with fleetship loadship
+// //requires ship object from player ship list
+// function genLoadableShip(ship)
+// {
+//     return {
+//         maxHp:ship.api_maxhp,
+//         curHp:ship.api_nowhp,
+//         level:ship.api_lv,
+//         // face:`../face/${ship.api_ship_id}.png`,
+//         face: genFaceFile(ship),
+//         morale:ship.api_cond,
+//         curAmmo:ship.api_bull,
+//         curGas:ship.api_fuel,
+//         maxAmmo:_apiAllShip[ship.api_sortno].api_bull_max,
+//         maxGas:_apiAllShip[ship.api_sortno].api_fuel_max,
+//         equipment:genEquip(ship.api_slot),
+//         curExp:ship.api_exp[1],
+//         maxExp:apiData.expPerLv[ship.api_lv-1],
+//         planeCount:ship.api_onslot,
+//         shipId:ship.api_id,
+//         shipClass:apiData.sTypes[_apiAllShip[ship.api_sortno].api_stype-1],
+//         shipName: _apiAllShip[ship.api_sortno].api_name,
+//         inRepair:ship.inRepair
+//     };
+// }
 
-//give array of equipment ids of a ship, returns string form
-function genEquip(apishipEquip)
-{
-    var stringequip=[];
-    for (var x=0;x<4;x++)
-    {
-        if (apishipEquip[x]<0)
-        {
-            stringequip.push("");
-            continue;
-        }
+// //give array of equipment ids of a ship, returns string form
+// function genEquip(apishipEquip)
+// {
+//     var stringequip=[];
+//     for (var x=0;x<4;x++)
+//     {
+//         if (apishipEquip[x]<0)
+//         {
+//             stringequip.push("");
+//             continue;
+//         }
 
-        stringequip.push(`../equipment/${_apiAllEquip[_apiEquip[apishipEquip[x]].api_slotitem_id].api_type[3]}.png`);
-    }
+//         stringequip.push(`../equipment/${_apiAllEquip[_apiEquip[apishipEquip[x]].api_slotitem_id].api_type[3]}.png`);
+//     }
 
-    return stringequip;
-}
+//     return stringequip;
+// }
 
 //needs to be given api_deck_port from the port object, an array
 function expeditionUpdate(data)
@@ -422,7 +422,7 @@ function equipUpdate(data)
         return;
     }
 
-    _fleetShips[(4*shipfind[0])+shipfind[1]].loadShip(genLoadableShip(data.api_ship_data[0]));
+    _fleetShips[(4*shipfind[0])+shipfind[1]].loadShip(data.api_ship_data[0]);
 }
 
 //attempts to find give api_id (player ship id) in current loaded fleets
@@ -456,7 +456,7 @@ function equipExchange(data)
         return;
     }
 
-    _fleetShips[(4*shipfind[0])+shipfind[1]].loadShip(genLoadableShip(_apiShip[data.api_id]));
+    _fleetShips[(4*shipfind[0])+shipfind[1]].loadShip(_apiShip[data.api_id]);
 }
 
 //parse api post data into object, give it the
@@ -498,6 +498,7 @@ function sortieState(state)
     }
 }
 
+//requires entire ship object (needs to see hp values)
 function genFaceFile(ship)
 {
     if (ship.api_nowhp/ship.api_maxhp>.5)
