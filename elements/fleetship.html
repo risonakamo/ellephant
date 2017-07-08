@@ -456,10 +456,10 @@
         int maxAmmo
         int curGas
         int maxGas
-        array[object] equipment: array of objects of full equipment data
+        object[] equipment: array of objects of full equipment data
         int maxExp
         int curExp
-        array[int] planeCount: array of numbers direct from api
+        int[] planeCount: array of numbers direct from api
         int shipId: player api id for external identification
         string shipName
 
@@ -467,6 +467,8 @@
         float ammoPercent
         float gasPercent
         float expPercent
+
+        int[2] airPower
       */
       static get properties()
       {
@@ -564,6 +566,11 @@
       {
         var html;
         var equip;
+
+        var stars;
+        var rank;
+
+        this.airPower=[0,0];
         for (var x=0;x<4;x++)
         {
           if (data[x]<=0)
@@ -573,9 +580,24 @@
 
           else
           {
-            equip=_apiAllEquip[_apiEquip[data[x]].api_slotitem_id];
+            equip=_apiEquip[data[x]];
+            stars=equip.api_level;
+
+            if (equip.api_alv)
+            {
+              rank=equip.api_alv;
+            }
+
+            else
+            {
+              rank=0;
+            }
+
+            equip=_apiAllEquip[equip.api_slotitem_id];
 
             html=`<img src="../equipment/${equip.api_type[3]}.png">`;
+
+            this.addAirPower(this.planeCount[x],equip.api_tyku,stars,equip.api_type[2],rank);
           }
 
           if (this.planeCount[x]>0)
@@ -585,6 +607,19 @@
 
           this.equipmentSlots[x].innerHTML=html;
         }
+      }
+
+      addAirPower(slots,aa,stars,type,rank)
+      {
+        if (!apiData.planeRankScale[type])
+        {
+          return;
+        }
+
+        var prescale=Math.pow(slots,.5)*(aa+(stars*.2));
+
+        this.airPower[0]+=Math.floor(prescale+apiData.planeRankScale[type][rank][0]);
+        this.airPower[1]+=Math.floor(prescale+apiData.planeRankScale[type][rank][1]);
       }
 
       // loadEquipment1(data)
