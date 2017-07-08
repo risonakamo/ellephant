@@ -1,0 +1,50 @@
+<link rel="import" href="../polymer/polymer/polymer-element.html">
+
+<dom-module id="fleet-stat">
+  <template>
+    <style>
+      :host
+      {
+        display: inline-block;
+        width: 100%;
+        height: 30px;
+        box-sizing: border-box;
+        border-bottom: 1px solid #e7e7e5;
+      }
+
+      .air-power
+      {
+        font-size: 15px;
+      }
+    </style>
+
+    <div>
+      <div class="air-power">
+        [[airPowerMin]],[[airPowerMax]]
+      </div>
+    </div>
+
+  </template>
+
+  <script>
+    class fleetStat extends Polymer.Element
+    {
+      static get is()
+      {
+        return "fleet-stat";
+      }
+
+      /*
+        int[4] allAir
+      */
+      static get properties()
+      {
+        return {
+
+        };
+      }
+    }
+
+    customElements.define(fleetStat.is,fleetStat);
+  </script>
+</dom-module>

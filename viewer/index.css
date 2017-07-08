@@ -358,13 +358,9 @@ pvp-fleet
     width: 490px;
 }
 
-.fleet-stats
+fleet-stat
 {
-    width: 100%;
-    height: 30px;
-    box-sizing: border-box;
     margin-bottom: 5px;
-    border-bottom: 1px solid #e7e7e5;
 }
 
 .construction

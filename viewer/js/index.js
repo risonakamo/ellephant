@@ -8,6 +8,7 @@ var construction;
 var apiData=new _apiData;
 var viewer;
 var repair;
+var fleetstat;
 
 //html element globals
 var _expFleets; //array
@@ -37,6 +38,7 @@ function main()
     resource=new _resource;
     viewer= new _viewerHtml;
     repair=new _repair;
+    fleetstat= new _fleetstat;
 
     _expFleets=document.querySelectorAll("exp-fleet");
     _fleetShips=document.querySelectorAll("fleet-ship");
@@ -189,11 +191,12 @@ function updateFleetShip(ships,fleetContain)
         ships[x]=_apiShip[ships[x]];
     }
 
-    var fleetNumber=fleetContain;
-    fleetContain*=6;
+    var fleetNumber=fleetContain; //index fleet number
+    fleetContain*=6; //index number fleetShip in fleetShip array
 
     var resupply=0;
     var maxFatigue=0;
+    var fleetAirPower=[0,0];
 
     for (var x=0;x<6;x++)
     {
@@ -206,25 +209,35 @@ function updateFleetShip(ships,fleetContain)
         {
             _fleetShips[fleetContain].loadShip(ships[x]);
 
-            if ((_fleetShips[fleetContain].curAmmo<_fleetShips[fleetContain].maxAmmo
-                || _fleetShips[fleetContain].curGas<_fleetShips[fleetContain].maxGas)
-                && resupply==0)
+            //set resupply flag if ship needs resupply, skip check if resupply
+            //flag already set
+            if (resupply==0 &&
+                (_fleetShips[fleetContain].curAmmo<_fleetShips[fleetContain].maxAmmo
+                || _fleetShips[fleetContain].curGas<_fleetShips[fleetContain].maxGas))
             {
                 resupply=1;
             }
 
+            //save lowest morale difference from 49
             if (49-_fleetShips[fleetContain].morale>maxFatigue)
             {
                 maxFatigue=49-_fleetShips[fleetContain].morale;
             }
+
+            fleetAirPower[0]+=_fleetShips[fleetContain].airPower[0];
+            fleetAirPower[1]+=_fleetShips[fleetContain].airPower[1];
         }
 
+        //next ship
         fleetContain++;
     }
 
+    //if first fleet, do morale actions
     if (fleetNumber==0)
     {
         _mFleet.moraleVal=maxFatigue;
+        fleetstat.fleetstat.airPowerMin=fleetAirPower[0];
+        fleetstat.fleetstat.airPowerMax=fleetAirPower[1];
     }
 
     updateFleetSupply(fleetNumber,resupply);
@@ -338,10 +351,10 @@ function chargeUpdate(data)
     // }
 }
 
+
 function expBoxEvents()
 {
     var slider=document.querySelector(".fleet-slider");
-
     _expFleets.forEach((x,i)=>{
         x.addEventListener("click",(e)=>{
             if (x.classList.contains("selected"))
