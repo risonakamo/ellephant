@@ -17,9 +17,11 @@ class _apiData
     {
         this.pvpRank={"S":6,"A":5,"B":4,"C":3,"D":2};
 
+        //converts stype int to stype string
         this.sTypes=["DE","DD","CL","CLT","CA","CAV","CVL","BB","BB","BBV","CV","超弩級戦艦","SS","SSV","AO","AV","LHA",
                      "CVB","AR","AS","CT","AO"];
 
+        //converts stype int to stype img name
         this.sTypeImg=[-1,1,2,3,4,5,6,7,7,8,9,-1,10,11,18,12,-1,14,15,17,-1,18];
 
         this.expPerLv=[100,200,300,400,500,600,700,800,900,1000,1100,1200,1300,1400,1500,1600,1700,
@@ -28,6 +30,16 @@ class _apiData
               5200,5400,5600,5800,6000,6200,6400,6600,6800,7000,7300,7600,7900,8200,8500,8800,9100,
               9400,9700,10000,10400,10800,11200,11600,12000,12400,12800,13200,13600,14000,14500,15000,
               15500,16000,16500,17000,17500,18000,18500,19000,20000,22000,25000,30000,40000,60000,90000,148500];
+
+        this.planeRankScale={
+            6:[[0.026,0.845],[1,1.715],[3.212,3.984],[6.845,7.504],[11.205,11.786],[16.639,17],[16.999,17.205],[24.679,25.411]], //fighter
+            11:[[0,0],[0,1],[0,1],[1,3],[1,3],[3,7],[3,7],[7,9]], //seaplane
+            7:[[0,0],[0,1],[0,1],[0,1],[1,2],[1,2],[1,2],[1,3]] //carrier bombers
+        };
+
+        this.planeRankScale[45]=this.planeRankScale[6]; //fighter seaplane uses fighter
+        this.planeRankScale[8]=this.planeRankScale[7]; //other type of bomber
+        this.planeRankScale[57]=this.planeRankScale[7]; //jet bomber
     }
 
     //remove ship from apiShip with id and equipment from apiEquip
