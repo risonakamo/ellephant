@@ -23,9 +23,9 @@ class _repair
 
         _apiShip[ship].api_nowhp=_apiShip[ship].api_maxhp;
 
-        var findship=findShip(ship);
+        var shipfind=findShip(ship);
 
-        if (findship[0]>=0)
+        if (shipfind[0]>=0)
         {
             _fleetShips[(4*shipfind[0])+shipfind[1]].loadShip(genLoadableShip(_apiShip[ship]));
         }
