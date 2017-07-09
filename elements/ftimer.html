@@ -1,14 +1,14 @@
 <link rel="import" href="../polymer/polymer/polymer-element.html">
 
 <dom-module id="f-timer">
-  <style>
-    :host
-    {
-      display: inline-block;
-    }
-  </style>
-
   <template>
+    <style>
+      :host
+      {
+        display: inline-block;
+      }
+    </style>
+
     [[hour]]:[[min]]:[[sec]]
   </template>
 
@@ -22,7 +22,7 @@
 
       --- public functions ---
       void loadEndTime(int time,int decMin)
-      void complete() //clear timer and launch complete event
+      void complete(int silent) //clear timer and launch complete event
 
       --- launched events ---
       complete: when timer is up
@@ -143,10 +143,15 @@
         }
       }
 
-      complete()
+      //put 1 into silent to not launch complete event
+      complete(silent)
       {
         clearInterval(this.timer);
-        this.dispatchEvent(new CustomEvent("complete"));
+
+        if (!silent)
+        {
+          this.dispatchEvent(new CustomEvent("complete"));
+        }
       }
 
       minMark()

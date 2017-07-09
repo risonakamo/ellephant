@@ -1,4 +1,5 @@
 <link rel="import" href="../polymer/polymer/polymer-element.html">
+<link rel="import" href="ftimer.html">
 
 <!--
   #wrap class states: no-expedition, completed, resupply
@@ -121,9 +122,7 @@
     <div id="wrap">
       <div id="slide-box">
         <div id="inner-slide">
-          <div id="timer">
-            [[hour]]:[[min]]:[[sec]]
-          </div>
+          <f-timer id="timer"></f-timer>
 
           <div id="info">
             [[infoMessage]]
@@ -166,6 +165,7 @@
 
         this.resupply=0;
         this.clearExpedition();
+        this.timerEvents();
       }
 
       //obj data {expNum: number of expedition,timeComplete: completion time from api}
@@ -183,44 +183,14 @@
         this.expNum=`EXPEDITION ${data.expNum}`;
         this.maxTime=data.maxTime;
 
-        var timeleft=(data.timeComplete-new Date().getTime());
-
-        if (timeleft<=0)
-        {
-          this.complete();
-          return;
-        }
-
-        this.sec=Math.floor((timeleft/1000)%60);
-        this.min=Math.floor((timeleft/(1000*60))%60);
-        this.hour=Math.floor((timeleft/(1000*60*60))%24);
-
-        this.min--;
-
-        if (this.min<0)
-        {
-          if (this.hour==0)
-          {
-            this.min=0;
-          }
-
-          else
-          {
-            this.hour--;
-            this.min=59;
-          }
-        }
-
-        this.formatTime();
+        this.$["timer"].loadEndTime(data.timeComplete,1);
 
         this.updateBar();
-
-        this.timer=setInterval(()=>{this.updateTime()},1000);
       }
 
       complete()
       {
-        clearTimeout(this.timer);
+        this.$["timer"].complete(1);
 
         this.infoMessage="Completed";
         this.wrapState("completed");
@@ -229,7 +199,7 @@
 
       clearExpedition()
       {
-        clearTimeout(this.timer);
+        this.$["timer"].complete(1);
         this.loaded=0;
 
         this.infoMessage="No Expedition";
@@ -244,71 +214,9 @@
         this.$["inner-slide"].classList.add("slideup");
       }
 
-      updateTime()
-      {
-        if (this.sec==0)
-        {
-          if (this.min==0)
-          {
-            if (this.hour==0)
-            {
-              this.complete();
-              this.updateBar();
-              return;
-            }
-
-            this.hour--;
-            this.min=59;
-
-            if (this.hour<10)
-            {
-              this.hour="0"+this.hour;
-            }
-
-            this.updateBar();
-            return;
-          }
-
-          this.min--;
-          this.sec=59;
-
-          if (this.min<10)
-          {
-            this.min="0"+this.min;
-          }
-
-          this.updateBar();
-          return;
-        }
-
-        this.sec--;
-        if (this.sec<10)
-        {
-          this.sec="0"+this.sec;
-        }
-      }
-
-      formatTime()
-      {
-        if (this.sec<10)
-        {
-          this.sec="0"+this.sec;
-        }
-
-        if (this.min<10)
-        {
-          this.min="0"+this.min;
-        }
-
-        if (this.hour<10)
-        {
-          this.hour="0"+this.hour;
-        }
-      }
-
       updateBar()
       {
-        this.barPercent=100-((((parseInt(this.hour)*60)+parseInt(this.min))/this.maxTime)*100);
+        this.barPercent=100-((((parseInt(this.$["timer"].hour)*60)+parseInt(this.$["timer"].min))/this.maxTime)*100);
       }
 
       /*set supply warnings
@@ -346,6 +254,17 @@
         }
 
         this.$["wrap"].classList.add(state);
+      }
+
+      timerEvents()
+      {
+        this.$["timer"].addEventListener("complete",()=>{
+          this.complete();
+        });
+
+        this.$["timer"].addEventListener("minute",()=>{
+          this.updateBar();
+        });
       }
     }
 
