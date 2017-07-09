@@ -13,6 +13,20 @@
   </template>
 
   <script>
+    /*--- variables ---
+      int endTime: stored endtime when loading time in ms whatevers
+      int decMin: stored bool, whether or not to decrement 1 minute
+      int hour,min,sec: direct accessed
+      Interval timer
+      int resync: int tracks minutes elapse
+
+      --- public functions ---
+      void loadEndTime(int time,int decMin)
+      void complete() //clear timer and launch complete event
+
+      --- launched events ---
+      complete: when timer is up
+      minute: every minute tick*/
     class fTimer extends Polymer.Element
     {
       static get is()
@@ -20,16 +34,6 @@
         return "f-timer";
       }
 
-      /*--- variables ---
-        int endTime: stored endtime when loading time in ms whatevers
-        int decMin: stored bool, whether or not to decrement 1 minute
-        int hour,min,sec
-        Interval timer
-        int resync: int tracks minutes elapse
-
-        --- launched events ---
-        complete: when timer is up
-        minute: every minute tick*/
       static get properties()
       {
         return {
