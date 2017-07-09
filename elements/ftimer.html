@@ -17,7 +17,7 @@
       int endTime: stored endtime when loading time in ms whatevers
       int decMin: stored bool, whether or not to decrement 1 minute
       int hour,min,sec: direct accessed
-      Interval timer
+      Interval timer: direct accessed
       int resync: int tracks minutes elapse
 
       --- public functions ---
@@ -147,6 +147,7 @@
       complete(silent)
       {
         clearInterval(this.timer);
+        delete this.timer;
 
         if (!silent)
         {

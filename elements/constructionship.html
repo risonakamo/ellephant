@@ -32,7 +32,7 @@
         transition: opacity .4s;
       }
 
-      :host(.loaded) .timer
+      :host(.loaded) #timer
       {
         opacity: 1;
       }
@@ -47,9 +47,7 @@
       <img src="[[typeImg]]">
     </div>
 
-    <div class="container timer">
-      [[hour]]:[[min]]:[[sec]]
-    </div>
+    <f-timer id="timer"></f-timer>
 
   </template>
 
@@ -62,8 +60,6 @@
       }
 
       /*--- variables ---
-        int hour,min,sec: time numbers
-        timeout timer
         int typeImg: type-image name of the ship (has to be loaded externally)*/
       static get properties()
       {
@@ -87,92 +83,18 @@
           return;
         }
 
-        if (this.timer)
+        if (this.$["timer"].timer)
         {
           return;
         }
 
-        var timeleft=data.api_complete_time-new Date().getTime();
+        this.$["timer"].loadEndTime(data.api_complete_time);
 
-        if (timeleft<=0)
-        {
-          this.complete();
-          return;
-        }
-
-        this.sec=Math.floor((timeleft/1000)%60);
-        this.min=Math.floor((timeleft/(1000*60))%60);
-        this.hour=Math.floor((timeleft/(1000*60*60))%24);
-        this.formatTime();
-
-        this.timer=setInterval(()=>{this.updateTime()},1000);
         this.setState(2);
-      }
-
-      updateTime()
-      {
-        if (this.sec==0)
-        {
-          if (this.min==0)
-          {
-            if (this.hour==0)
-            {
-              this.complete();
-              return;
-            }
-
-            this.hour--;
-            this.min=59;
-
-            if (this.hour<10)
-            {
-              this.hour="0"+this.hour;
-            }
-
-            return;
-          }
-
-          this.min--;
-          this.sec=59;
-
-          if (this.min<10)
-          {
-            this.min="0"+this.min;
-          }
-
-          return;
-        }
-
-        this.sec--;
-        if (this.sec<10)
-        {
-          this.sec="0"+this.sec;
-        }
-      }
-
-      formatTime()
-      {
-        if (this.sec<10)
-        {
-          this.sec="0"+this.sec;
-        }
-
-        if (this.min<10)
-        {
-          this.min="0"+this.min;
-        }
-
-        if (this.hour<10)
-        {
-          this.hour="0"+this.hour;
-        }
       }
 
       complete()
       {
-        clearTimeout(this.timer);
-        delete this.timer;
-
         this.setState(3);
       }
 
@@ -193,6 +115,13 @@
             this.classList.add("unloaded");
             break;
         }
+      }
+
+      timerEvents()
+      {
+        this.$["timer"].addEventListener("complete",()=>{
+          this.complete();
+        })
       }
     }
 
