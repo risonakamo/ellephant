@@ -279,7 +279,7 @@ class _viewerHtml
         ipcRenderer.on("instantrepair",(e,res)=>{
             res=parsePost(res);
 
-            repair.rDocks[res.api_ndock_id-1].clearDock();
+            repair.rDocks[res.api_ndock_id-1].complete();
         });
 
         ipcRenderer.once("requireinfo",(e,res)=>{

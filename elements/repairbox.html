@@ -1,4 +1,5 @@
 <link rel="import" href="../polymer/polymer/polymer-element.html">
+<link rel="import" href="ftimer.html">
 
 <dom-module id="repair-box">
   <template>
@@ -17,7 +18,7 @@
         cursor: default;
       }
 
-      .timer
+      #timer
       {
         height: 48px;
         line-height: 48px;
@@ -101,9 +102,7 @@
           NO SHIP
         </div>
 
-        <div class="timer">
-          [[hour]]:[[min]]:[[sec]]
-        </div>
+        <f-timer id="timer"><f-timer>
       </div>
     </div>
 
@@ -148,6 +147,18 @@
         super.ready();
 
         this.clearDock();
+        this.timerEvents();
+      }
+
+      timerEvents()
+      {
+        this.$["timer"].addEventListener("complete",()=>{
+          this.clearDock();
+        });
+
+        this.$["timer"].addEventListener("minute",()=>{
+          this.updateBar();
+        });
       }
 
       /*data requires:
@@ -168,103 +179,26 @@
         this.$["slider"].classList.add("loaded");
 
         this.name=data.name;
-        var timeleft=data.timeComplete-new Date().getTime()-60000;
+        this.$["timer"].loadEndTime(data.timeComplete);
         this.face=data.face;
         this.maxTime=data.maxTime/(1000*60);
         this.shipId=data.shipId;
 
-        if (timeleft<=0)
-        {
-          this.complete();
-          return;
-        }
-
-        this.sec=Math.floor((timeleft/1000)%60);
-        this.min=Math.floor((timeleft/(1000*60))%60);
-        this.hour=Math.floor((timeleft/(1000*60*60))%24);
-        this.formatTime();
-
         this.updateBar();
-
-        this.timer=setInterval(()=>{this.updateTime()},1000);
-      }
-
-      updateTime()
-      {
-        if (this.sec==0)
-        {
-          if (this.min==0)
-          {
-            if (this.hour==0)
-            {
-              this.complete();
-              return;
-            }
-
-            this.hour--;
-            this.min=59;
-
-            if (this.hour<10)
-            {
-              this.hour="0"+this.hour;
-            }
-
-            this.updateBar();
-            return;
-          }
-
-          this.min--;
-          this.sec=59;
-
-          if (this.min<10)
-          {
-            this.min="0"+this.min;
-          }
-
-          this.updateBar();
-          return;
-        }
-
-        this.sec--;
-        if (this.sec<10)
-        {
-          this.sec="0"+this.sec;
-        }
-      }
-
-      formatTime()
-      {
-        if (this.sec<10)
-        {
-          this.sec="0"+this.sec;
-        }
-
-        if (this.min<10)
-        {
-          this.min="0"+this.min;
-        }
-
-        if (this.hour<10)
-        {
-          this.hour="0"+this.hour;
-        }
       }
 
       updateBar()
       {
-        this.percent=100-((((parseInt(this.hour)*60)+parseInt(this.min))/this.maxTime)*100);
+        this.percent=100-((((parseInt(this.$["timer"].hour)*60)+parseInt(this.$["timer"].min))/this.maxTime)*100);
       }
 
       complete()
       {
-        this.clearDock();
+        this.$["timer"].complete();
       }
 
       clearDock()
       {
-        clearTimeout(this.timer);
-
-        delete this.timer;
         this.loaded=0;
         this.percent=0;
         this.$["slider"].classList.remove("loaded");
