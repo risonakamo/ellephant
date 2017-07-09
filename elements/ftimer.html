@@ -2,7 +2,7 @@
 
 <dom-module id="f-timer">
   <template>
-
+    [[hour]]:[[min]]:[[sec]]
   </template>
 
   <script>
@@ -13,12 +13,143 @@
         return "f-timer";
       }
 
+      /*--- variables ---
+        int endTime: stored endtime when loading time in ms whatevers
+        int decMin: stored bool, whether or not to decrement 1 minute
+        int hour,min,sec
+        Interval timer
+        int resync: int tracks minutes elapse
+
+        --- launched events ---
+        complete: when timer is up
+        minute: every minute tick*/
       static get properties()
       {
         return {
 
         };
       }
+
+      loadEndTime(time,decMin)
+      {
+        this.endTime=time;
+        this.decMin=decMin;
+        this.resync=0;
+        time=time-new Date().getTime();
+
+        if (time<=0)
+        {
+          this.complete();
+          return;
+        }
+
+        this.sec=Math.floor((time/1000)%60);
+        this.min=Math.floor((time/(1000*60))%60);
+        this.hour=Math.floor((time/(1000*60*60))%24);
+
+        if (decMin)
+        {
+          this.min--;
+
+          if (this.min<0)
+          {
+            if (this.hour==0)
+            {
+              this.min=0;
+            }
+
+            else
+            {
+              this.hour--;
+              this.min=59;
+            }
+          }
+        }
+
+        this.formatTime();
+
+        this.timer=setInterval(()=>{this.updateTime()},1000);
+      }
+
+      updateTime()
+      {
+        if (this.sec==0)
+        {
+          if (this.min==0)
+          {
+            if (this.hour==0)
+            {
+              this.complete();
+              return;
+            }
+
+            this.hour--;
+            this.min=59;
+
+            if (this.hour<10)
+            {
+              this.hour="0"+this.hour;
+            }
+
+            this.minMark();
+            return;
+          }
+
+          this.min--;
+          this.sec=59;
+
+          if (this.min<10)
+          {
+            this.min="0"+this.min;
+          }
+
+          this.minMark();
+          return;
+        }
+
+        this.sec--;
+        if (this.sec<10)
+        {
+          this.sec="0"+this.sec;
+        }
+      }
+
+      formatTime()
+      {
+        if (this.sec<10)
+        {
+          this.sec="0"+this.sec;
+        }
+
+        if (this.min<10)
+        {
+          this.min="0"+this.min;
+        }
+
+        if (this.hour<10)
+        {
+          this.hour="0"+this.hour;
+        }
+      }
+
+      complete()
+      {
+        clearInterval(this.timer);
+        this.dispatchEvent(new CustomEvent("complete"));
+      }
+
+      minMark()
+      {
+        this.dispatchEvent(new CustomEvent("minute"));
+        this.resync++;
+
+        if (this.resync>=10)
+        {
+          clearInterval(this.timer);
+          this.loadEndTime(this.endTime,this.decMin);
+        }
+      }
+
     }
 
     customElements.define(fTimer.is,fTimer);
