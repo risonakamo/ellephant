@@ -110,6 +110,8 @@ function portUpdate(port)
         return;
     }
 
+    apiData.portLevel=port.api_data.api_basic.api_level;
+
     sortieState(0);
 
     expeditionUpdate(port.api_data.api_deck_port);
@@ -196,12 +198,18 @@ function updateFleetShip(ships,fleetContain)
     var resupply=0;
     var maxFatigue=0;
     var fleetAirPower=[0,0];
+    var los=0;
 
     for (var x=0;x<6;x++)
     {
         if (ships[x]==-1)
         {
             _fleetShips[fleetContain].unload();
+
+            if (fleetNumber==0)
+            {
+                los+=2;
+            }
         }
 
         else
@@ -227,6 +235,7 @@ function updateFleetShip(ships,fleetContain)
             {
                 fleetAirPower[0]+=_fleetShips[fleetContain].airPower[0];
                 fleetAirPower[1]+=_fleetShips[fleetContain].airPower[1];
+                los+=_fleetShips[fleetContain].los;
             }
         }
 
@@ -240,6 +249,7 @@ function updateFleetShip(ships,fleetContain)
         _mFleet.moraleVal=maxFatigue;
         fleetstat.fleetstat.airPowerMin=fleetAirPower[0];
         fleetstat.fleetstat.airPowerMax=fleetAirPower[1];
+        fleetstat.fleetstat.los=(los-Math.ceil(.4*apiData.portLevel)).toFixed(3);
     }
 
     updateFleetSupply(fleetNumber,resupply);
@@ -441,16 +451,14 @@ function equipUpdate(data)
 
     if (shipfind<6)
     {
-        fleetstat.fleetstat.airPowerMin-=_fleetShips[shipfind].airPower[0];
-        fleetstat.fleetstat.airPowerMax-=_fleetShips[shipfind].airPower[1];
+        fleetstat.equipChangeRemove(_fleetShips[shipfind]);
     }
 
     _fleetShips[shipfind].loadShip(data.api_ship_data[0]);
 
     if (shipfind<6)
     {
-        fleetstat.fleetstat.airPowerMin+=_fleetShips[shipfind].airPower[0];
-        fleetstat.fleetstat.airPowerMax+=_fleetShips[shipfind].airPower[1];
+        fleetstat.equipChangeAdd(_fleetShips[shipfind]);
     }
 }
 
@@ -489,16 +497,14 @@ function equipExchange(data)
 
     if (shipfind<6)
     {
-        fleetstat.fleetstat.airPowerMin-=_fleetShips[shipfind].airPower[0];
-        fleetstat.fleetstat.airPowerMax-=_fleetShips[shipfind].airPower[1];
+        fleetstat.equipChangeRemove(_fleetShips[shipfind]);
     }
 
     _fleetShips[shipfind].loadShip(_apiShip[data.api_id]);
 
     if (shipfind<6)
     {
-        fleetstat.fleetstat.airPowerMin+=_fleetShips[shipfind].airPower[0];
-        fleetstat.fleetstat.airPowerMax+=_fleetShips[shipfind].airPower[1];
+        fleetstat.equipChangeAdd(_fleetShips[shipfind]);
     }
 }
 

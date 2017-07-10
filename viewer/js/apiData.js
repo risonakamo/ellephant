@@ -5,6 +5,7 @@ class _apiData
         --- player info ---
         object apiShip: ships of player sorted by api_id, unique id for each ship for each player
         object apiEquip: equipment of player
+        int portLevel
 
         --- api Alls ---
         apiAllShip: all ship information sorted by api_sortno
