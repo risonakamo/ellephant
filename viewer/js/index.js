@@ -53,7 +53,6 @@ function changeUpdate(data)
     var idx=parseInt(data.api_ship_idx);
     var newShip=parseInt(data.api_ship_id);
 
-
     if (newShip==-1)
     {
         for (var x=idx;x<=4;x++)
@@ -438,7 +437,21 @@ function equipUpdate(data)
         return;
     }
 
-    _fleetShips[(4*shipfind[0])+shipfind[1]].loadShip(data.api_ship_data[0]);
+    shipfind=(4*shipfind[0])+shipfind[1];
+
+    if (shipfind<6)
+    {
+        fleetstat.fleetstat.airPowerMin-=_fleetShips[shipfind].airPower[0];
+        fleetstat.fleetstat.airPowerMax-=_fleetShips[shipfind].airPower[1];
+    }
+
+    _fleetShips[shipfind].loadShip(data.api_ship_data[0]);
+
+    if (shipfind<6)
+    {
+        fleetstat.fleetstat.airPowerMin+=_fleetShips[shipfind].airPower[0];
+        fleetstat.fleetstat.airPowerMax+=_fleetShips[shipfind].airPower[1];
+    }
 }
 
 //attempts to find give api_id (player ship id) in current loaded fleets
@@ -472,7 +485,21 @@ function equipExchange(data)
         return;
     }
 
-    _fleetShips[(4*shipfind[0])+shipfind[1]].loadShip(_apiShip[data.api_id]);
+    shipfind=(4*shipfind[0])+shipfind[1];
+
+    if (shipfind<6)
+    {
+        fleetstat.fleetstat.airPowerMin-=_fleetShips[shipfind].airPower[0];
+        fleetstat.fleetstat.airPowerMax-=_fleetShips[shipfind].airPower[1];
+    }
+
+    _fleetShips[shipfind].loadShip(_apiShip[data.api_id]);
+
+    if (shipfind<6)
+    {
+        fleetstat.fleetstat.airPowerMin+=_fleetShips[shipfind].airPower[0];
+        fleetstat.fleetstat.airPowerMax+=_fleetShips[shipfind].airPower[1];
+    }
 }
 
 //parse api post data into object, give it the
