@@ -32,7 +32,7 @@ class _apiData
               15500,16000,16500,17000,17500,18000,18500,19000,20000,22000,25000,30000,40000,60000,90000,148500];
 
         this.planeRankScale={
-            6:[[0.026,0.845],[1,1.715],[3.212,3.984],[6.845,7.504],[11.205,11.786],[16.639,17],[16.999,17.205],[24.679,25.411]], //fighter
+            6:[[.026,.845],[1,1.715],[3.212,3.984],[6.845,7.504],[11.205,11.786],[16.639,17],[16.999,17.205],[24.679,25.411]], //fighter
             11:[[0,0],[0,1],[0,1],[1,3],[1,3],[3,7],[3,7],[7,9]], //seaplane
             7:[[0,0],[0,1],[0,1],[0,1],[1,2],[1,2],[1,2],[1,3]] //carrier bombers
         };
@@ -40,6 +40,37 @@ class _apiData
         this.planeRankScale[45]=this.planeRankScale[6]; //fighter seaplane uses fighter
         this.planeRankScale[8]=this.planeRankScale[7]; //other type of bomber
         this.planeRankScale[57]=this.planeRankScale[7]; //jet bomber
+
+        this.losEquipScale={
+			6:.6, //fighter
+			7:.6, //dive bomb
+			8:.8, //torp bomber
+			57:.6, //jet
+			9:1, //recon
+			94:1, //recon
+			10:1.2, //seaplane
+			11:1.1, //seaplane bomber
+			45:.6, //seaplane fighter
+			41:.6, //taitei chan
+			26:.6, //asw plane
+			12:.6, //small radar
+			13:.6, //big radar
+			40:.6, //sonar
+			51:.6, //sub radar
+			29:.6, //flashlight
+			39:.6, //lookouts
+			34:.6, //fleet command
+			35:.6 //carrier wrench thing
+        };
+
+        this.losStarScale={
+            12:1.25, //small radar
+            13:1.4, //big radar
+            9:1.2, //recon
+            94:1.2, //recon
+            10:1.2, //seaplane
+            11:1.15 //seaplane fighter
+        };
     }
 
     //remove ship from apiShip with id and equipment from apiEquip

@@ -469,6 +469,8 @@
         float expPercent
 
         int[2] airPower
+        float los: los stat direct accessed
+        float shiplos
       */
       static get properties()
       {
@@ -542,6 +544,7 @@
         this.gasPercent=(this.curGas/this.maxGas)*100;
         this.expPercent=((this.maxExp-this.curExp)/this.maxExp)*100;
 
+        this.shiplos=data.api_sakuteki[0];
         this.loadEquipment(data.api_slot);
 
         this.applyColour();
@@ -571,6 +574,7 @@
         var rank;
 
         this.airPower=[0,0];
+        this.los=0;
         for (var x=0;x<4;x++)
         {
           if (data[x]<=0)
@@ -598,6 +602,7 @@
             html=`<img src="../equipment/${equip.api_type[3]}.png">`;
 
             this.addAirPower(this.planeCount[x],equip.api_tyku,stars,equip.api_type[2],rank);
+            this.addLos(equip.api_saku,equip.api_type[2],stars);
           }
 
           if (this.planeCount[x]>0)
@@ -607,6 +612,8 @@
 
           this.equipmentSlots[x].innerHTML=html;
         }
+
+        this.los+=Math.pow(this.shiplos,.5);
       }
 
       addAirPower(slots,aa,stars,type,rank)
@@ -620,6 +627,24 @@
 
         this.airPower[0]+=Math.floor(prescale+apiData.planeRankScale[type][rank][0]);
         this.airPower[1]+=Math.floor(prescale+apiData.planeRankScale[type][rank][1]);
+      }
+
+      addLos(equipLos,type,stars)
+      {
+        if (!apiData.losEquipScale[type])
+        {
+          return;
+        }
+
+        var starPower=0;
+
+        if (apiData.losStarScale[type])
+        {
+          starPower=Math.pow(stars,.5)*apiData.losStarScale[type];
+        }
+
+        this.los+=apiData.losEquipScale[type]*(equipLos+starPower);
+        this.shiplos-=equipLos;
       }
 
       // loadEquipment1(data)

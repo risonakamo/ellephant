@@ -224,8 +224,11 @@ function updateFleetShip(ships,fleetContain)
                 maxFatigue=49-_fleetShips[fleetContain].morale;
             }
 
-            fleetAirPower[0]+=_fleetShips[fleetContain].airPower[0];
-            fleetAirPower[1]+=_fleetShips[fleetContain].airPower[1];
+            if (fleetNumber==0)
+            {
+                fleetAirPower[0]+=_fleetShips[fleetContain].airPower[0];
+                fleetAirPower[1]+=_fleetShips[fleetContain].airPower[1];
+            }
         }
 
         //next ship

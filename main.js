@@ -62,6 +62,10 @@ function ipcs()
     ipcMain.on("gameKey",(e,res)=>{
         _win.webContents.send("gameKey",res);
     });
+
+    ipcMain.on("closeGame",(e,res)=>{
+        _gamewindow.close();
+    });
 }
 
 function viewerEvents()
@@ -291,6 +295,12 @@ function setupGameWindow(args)
     _gamewindow.webContents.executeJavaScript(`
         const {ipcRenderer}=require("electron");
         window.addEventListener("keypress",(e)=>{
+            if (e.code=="KeyW" && e.ctrlKey==1)
+            {
+                ipcRenderer.send("closeGame");
+                return;
+            }
+
             ipcRenderer.send("gameKey",e.key);
         });
 
