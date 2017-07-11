@@ -138,6 +138,7 @@ p
 
 .viewer
 {
+    position: relative;
     font-size: 0;
     transition: transform .8s;
 }
@@ -371,4 +372,49 @@ fleet-stat
 resource-box
 {
     --value-font: "futuracondense";
+}
+
+.esc-menu
+{
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    top: 0;
+    left: 0;
+    background-color: rgba(37,37,37,0.67);
+    z-index: -20;
+}
+
+.esc-menu.show
+{
+    width: 100%;
+    height: 100%;
+    opacity: 1;
+    z-index: 12;
+}
+
+.menu
+{
+    width: 300px;
+    margin: auto;
+    margin-top: 30vh;
+}
+
+.menu p
+{
+    width: 300px;
+    height: 40px;
+    font-size: 28px;
+    box-sizing: border-box;
+    padding-left: 16px;
+    user-select: none;
+    cursor: pointer;
+    transition: background-color,color .08s,.08s;
+}
+
+.menu p:hover
+{
+    color: #020303;
+    background-color:#e7e7e5;
 }

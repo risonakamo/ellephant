@@ -66,6 +66,31 @@ function ipcs()
     ipcMain.on("closeGame",(e,res)=>{
         _gamewindow.close();
     });
+
+    ipcMain.on("optionCommand",(e,res)=>{
+        switch (res)
+        {
+            case "resize":
+                _gamewindow.setContentSize(800,480);
+                break;
+
+            case "mute":
+                if (_gamewindow.webContents.isAudioMuted())
+                {
+                    _gamewindow.webContents.setAudioMuted(false);
+                }
+
+                else
+                {
+                    _gamewindow.webContents.setAudioMuted(true);
+                }
+                break;
+
+            case "exit":
+                _gamewindow.close();
+                break;
+        }
+    });
 }
 
 function viewerEvents()
@@ -304,9 +329,9 @@ function setupGameWindow(args)
             ipcRenderer.send("gameKey",e.key);
         });
 
-        var flash=document.querySelector("embed");
-        flash.width="800px";
-        flash.height="480px";
+        // var flash=document.querySelector("embed");
+        // flash.width="800px";
+        // flash.height="480px";
     `);
 
     _gamewindow.on("close",(e)=>{

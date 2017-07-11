@@ -11,9 +11,12 @@ class _viewerHtml
         this.loading=document.querySelector(".loading");
         this.loadLog=this.loading.querySelector(".log");
 
+        this.escMenu=document.querySelector(".esc-menu");
+
         this.setupInput();
         this.setupTabs();
         this.ipcReceivers();
+        this.setupEscMenu();
     }
 
     viewerShow()
@@ -115,6 +118,13 @@ class _viewerHtml
     {
         document.addEventListener("keypress",(e)=>{
             this.EQswitch(e.key);
+        });
+
+        document.addEventListener("keydown",(e)=>{
+            if (e.key=="Escape")
+            {
+                this.escMenu.classList.toggle("show");
+            }
         });
     }
 
@@ -318,6 +328,44 @@ class _viewerHtml
 
             _apistart_ready=1;
             this.loaderLog("api start ready.");
+        });
+    }
+
+    setupEscMenu()
+    {
+        var menuItems=this.escMenu.firstElementChild.children;
+        var muted=0;
+
+        //resume button
+        menuItems[0].addEventListener("click",(e)=>{
+            this.escMenu.classList.remove("show");
+        });
+
+        //resize button
+        menuItems[1].addEventListener("click",(e)=>{
+            ipcRenderer.send("optionCommand","resize");
+        });
+
+        //mute
+        menuItems[2].addEventListener("click",(e)=>{
+            ipcRenderer.send("optionCommand","mute");
+
+            if (muted==0)
+            {
+                menuItems[2].innerHTML="UNMUTE";
+                muted=1;
+            }
+
+            else
+            {
+                menuItems[2].innerHTML="MUTE";
+                muted=0;
+            }
+        });
+
+        //quit
+        menuItems[3].addEventListener("click",(e)=>{
+            ipcRenderer.send("optionCommand","exit");
         });
     }
 }

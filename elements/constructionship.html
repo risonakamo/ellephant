@@ -68,6 +68,13 @@
         };
       }
 
+      ready()
+      {
+        super.ready();
+
+        this.timerEvents();
+      }
+
       loadShip(data,typeImg)
       {
         if (!typeImg || typeImg<=0)
