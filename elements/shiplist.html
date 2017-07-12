@@ -1,0 +1,90 @@
+<link rel="import" href="../polymer/polymer/polymer-element.html">
+
+<dom-module id="ship-list">
+  <template>
+    <style>
+      :host
+      {
+        width: 720px;
+      }
+
+      div
+      {
+        display: inline-block;
+      }
+
+      .entry
+      {
+        width: 720px;
+        height: 40px;
+      }
+
+      .entry div
+      {
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+      }
+
+      .entry img
+      {
+        height: 40px;
+      }
+
+      .entry .id
+      {
+        width: 60px;
+      }
+
+      .entry .name
+      {
+        width: 155px;
+      }
+
+      .entry .type,.entry .level
+      {
+        width: 50px;
+      }
+
+      .entry .stats
+      {
+        width: 200px;
+      }
+
+      .entry .equipment
+      {
+        width: 160px;
+      }
+    </style>
+
+  <div class="entry">
+    <img src="../face/167.png">
+    <div class="id"></div>
+    <div class="name"></div>
+    <div class="type"></div>
+    <div class="level"></div>
+    <div class="stats"></div>
+    <div class="equipment"></div>
+  </div>
+
+  </template>
+
+  <script>
+    class shipList extends Polymer.Element
+    {
+      static get is()
+      {
+        return "ship-list";
+      }
+
+      static get properties()
+      {
+        return {
+
+        };
+      }
+    }
+
+    customElements.define(shipList.is,shipList);
+  </script>
+</dom-module>

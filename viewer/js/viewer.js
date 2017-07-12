@@ -310,7 +310,7 @@ class _viewerHtml
 
             _apiAllShip={};
             _apiIdtoSort={};
-            for (var x=0;x<=465;x++)
+            for (var x=0;x<=466;x++)
             {
                 _apiAllShip[res.api_data.api_mst_ship[x].api_sortno]=res.api_data.api_mst_ship[x];
                 _apiIdtoSort[res.api_data.api_mst_ship[x].api_id]=res.api_data.api_mst_ship[x].api_sortno;

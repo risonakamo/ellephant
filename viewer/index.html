@@ -15,6 +15,7 @@
     <link rel="import" href="../elements/mainfleet.html">
     <link rel="import" href="../elements/resourcebox.html">
     <link rel="import" href="../elements/fleetstat.html">
+    <link rel="import" href="../elements/shiplist.html">
 
     <script src="js/pvp.js"></script>
     <script src="js/construction.js"></script>
@@ -43,6 +44,7 @@
       <div class="tabs">
         <div class="tab selected">MAIN</div>
         <div class="tab">PVP<span class="pvp-notif"></span></div>
+        <div class="tab">SHIP LIST</div>
       </div>
 
       <div class="viewer-page current">
@@ -127,6 +129,10 @@
         <div class="pvp-no-load">
           UNLOADED
         </div>
+      </div>
+
+      <div class="viewer-page">
+        <ship-list></ship-list>
       </div>
     </div>
 
