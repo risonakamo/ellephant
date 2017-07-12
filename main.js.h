@@ -6,6 +6,6 @@ void receiveArb(object par,string channel); //receive and parse api data object 
 void setupGameWindow(object args); //creates/does stuff for game window
 
 void viewerEvents(); //viewer events
-void windowRestore();
-void saveWindow();
+void windowRestore(); //load settings and restore window locations
+void saveWindow(); //save and write window locations before exit
 void windowClose(); //any window close event handler

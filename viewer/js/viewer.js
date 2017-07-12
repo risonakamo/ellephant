@@ -368,4 +368,10 @@ class _viewerHtml
             ipcRenderer.send("optionCommand","exit");
         });
     }
+
+    //string msg: content field of popup
+    notify(msg)
+    {
+        ipcRenderer.send("viewerNotification",msg);
+    }
 }

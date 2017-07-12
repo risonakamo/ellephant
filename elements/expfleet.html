@@ -195,6 +195,8 @@
         this.infoMessage="Completed";
         this.wrapState("completed");
         this.$["inner-slide"].classList.add("slideup");
+
+        viewer.notify(`Expedition ${this.expNum} completed`)
       }
 
       clearExpedition()

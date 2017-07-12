@@ -1,4 +1,4 @@
-const {app,BrowserWindow,ipcMain}=require("electron");
+const {app,BrowserWindow,ipcMain,Tray}=require("electron");
 const fs=require("fs");
 const process=require("process");
 // const path=require("path");
@@ -16,6 +16,8 @@ var _apiLink; //string api link
 var _appdata;
 var _windowLocations;
 
+var ticon;
+
 function main()
 {
     ipcs();
@@ -31,7 +33,7 @@ function main()
 
     _win=new BrowserWindow(winops);
 
-    _win.loadURL(`file://${__dirname}/viewer/index.html`);
+    _win.loadURL(`${__dirname}/viewer/index.html`);
 
     viewerEvents();
 }
@@ -90,6 +92,11 @@ function ipcs()
                 _gamewindow.close();
                 break;
         }
+    });
+
+    ticon=new Tray(`${__dirname}/supply/dev.png`);
+    ipcMain.on("viewerNotification",(e,res)=>{
+        ticon.displayBalloon({icon:`${__dirname}/supply/dev.png`,title:"ellephant",content:"abc"});
     });
 }
 
