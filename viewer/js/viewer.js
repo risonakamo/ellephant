@@ -215,7 +215,7 @@ class _viewerHtml
         });
 
         ipcRenderer.on("sortiestart",(e,res)=>{
-            sortieState(1);
+            this.tabState(1);
         });
 
         ipcRenderer.on("constructiondock",(e,res)=>{
@@ -373,5 +373,54 @@ class _viewerHtml
     notify(msg)
     {
         ipcRenderer.send("viewerNotification",msg);
+    }
+
+    //0=normal
+    //1=sortie
+    //2=expedition complete
+    tabState(state)
+    {
+        this.tabBar.classList.remove("sortie","exp-complete");
+        if (state==0)
+        {
+            if (this.checkExpComplete())
+            {
+                this.tabBar.classList.add("exp-complete");
+            }
+
+            _mFleet.setState(0);
+        }
+
+        else if (state==1)
+        {
+            this.tabBar.classList.add("sortie");
+            _mFleet.setState(2);
+        }
+
+        else if (state==2)
+        {
+            if (_mFleet.currentState==2)
+            {
+                return;
+            }
+
+            else
+            {
+                this.tabBar.classList.add("exp-complete");
+            }
+        }
+    }
+
+    checkExpComplete()
+    {
+        for (var x=0;x<3;x++)
+        {
+            if (_expFleets[x].completed==1)
+            {
+                return 1;
+            }
+        }
+
+        return 0;
     }
 }

@@ -264,6 +264,16 @@ exp-fleet:hover,m-fleet:hover
     background-color: rgba(163,0,24,.2);
 }
 
+.tabs.exp-complete .tab:hover
+{
+    background-color: rgba(47, 109, 14, 0.42);
+}
+
+.tabs.exp-complete .tab.selected
+{
+    background-color: #81c15e;
+}
+
 .tab
 {
     width: 190px;

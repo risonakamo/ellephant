@@ -112,7 +112,7 @@ function portUpdate(port)
 
     apiData.portLevel=port.api_data.api_basic.api_level;
 
-    sortieState(0);
+    viewer.tabState(0);
 
     expeditionUpdate(port.api_data.api_deck_port);
 
@@ -387,6 +387,10 @@ function expBoxEvents()
                 }
             }
         });
+
+        x.addEventListener("complete",(e)=>{
+            viewer.tabState(2);
+        });
     });
 
     _mFleet.addEventListener("click",(e)=>{
@@ -532,20 +536,20 @@ function switchEquipment(id,src,dst)
     _apiShip[id].api_slot[dst]=t;
 }
 
-function sortieState(state)
-{
-    if (state==0)
-    {
-        viewer.tabBar.classList.remove("sortie");
-        _mFleet.setState(0);
-    }
+// function sortieState(state)
+// {
+//     if (state==0)
+//     {
+//         viewer.tabBar.classList.remove("sortie");
+//         _mFleet.setState(0);
+//     }
 
-    else
-    {
-        viewer.tabBar.classList.add("sortie");
-        _mFleet.setState(2);
-    }
-}
+//     else
+//     {
+//         viewer.tabBar.classList.add("sortie");
+//         _mFleet.setState(2);
+//     }
+// }
 
 //requires entire ship object (needs to see hp values)
 function genFaceFile(ship)

@@ -24,8 +24,9 @@ void updateFleetSupply(int fleet,int resupply);
 array findShip(int id); //attempts to find number of fleet of given id ship
 object parsePost(string res); //parse api post response which comes in a string
 void switchEquipment(int id,int src,int dst); //switch equipment in given index slots of ship
-void sortieState(int state);
 string genFaceFile(object ship); //gen filepath for image of given apiship object
 
+/*-- moved out --*/
 object genLoadableShip(object ship); //gen fleepship obj for fleetship elements
 array genEquip(array apishipEquip); //helper, gens array of equip ids
+void sortieState(int state);

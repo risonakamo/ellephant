@@ -16,3 +16,5 @@ void setupEscMenu();
 void EQswitch(char key); //performs tab switching given e or q key
 void tabPage(int page); //navigate to specified page
 void notify(string msg); //requests popup
+void tabState(int state);
+int checkExpComplete(); //returns 1 if there is a completed exp waiting, 0 otherwise

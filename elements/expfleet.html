@@ -195,7 +195,9 @@
         this.infoMessage="Completed";
         this.wrapState("completed");
         this.$["inner-slide"].classList.add("slideup");
+        this.completed=1;
 
+        this.dispatchEvent(new CustomEvent("complete"));
         viewer.notify(`Expedition ${this.expNum} completed`)
       }
 
@@ -203,6 +205,7 @@
       {
         this.$["timer"].complete(1);
         this.loaded=0;
+        this.completed=0;
 
         this.infoMessage="No Expedition";
 
