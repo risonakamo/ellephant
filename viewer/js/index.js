@@ -303,6 +303,7 @@ function updateFleetShip(ships,fleetContain)
 //needs to be given api_deck_port from the port object, an array
 function expeditionUpdate(data)
 {
+    var foundComplete=0;
     for (var x=1;x<=3;x++)
     {
         if (data[x].api_mission[0]==0)
@@ -316,6 +317,17 @@ function expeditionUpdate(data)
             timeComplete:data[x].api_mission[2],
             maxTime:_apiAllExpedition[data[x].api_mission[1]-1].api_time
         });
+
+        if (_expFleets[x-1].completed==1)
+        {
+            viewer.tabState(2);
+            foundComplete=1;
+        }
+    }
+
+    if (foundComplete==0)
+    {
+        viewer.tabState(0);
     }
 }
 
