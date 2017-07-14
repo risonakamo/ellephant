@@ -120,7 +120,7 @@ class _viewerHtml
     keyControl()
     {
         document.addEventListener("keydown",(e)=>{
-            this.vKeyDown(e);
+            this.vKeyDown(e.key);
         });
     }
 
