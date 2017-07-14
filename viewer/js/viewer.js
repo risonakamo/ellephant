@@ -7,6 +7,9 @@ class _viewerHtml
         this.tabBar=document.querySelector(".tabs");
         this.currentTab=0;
 
+        this.fleetSlider=document.querySelector(".fleet-slider");
+        this.currentFleet=0;
+
         this.viewer=document.querySelector(".viewer");
         this.loading=document.querySelector(".loading");
         this.loadLog=this.loading.querySelector(".log");
@@ -116,21 +119,14 @@ class _viewerHtml
 
     keyControl()
     {
-        document.addEventListener("keypress",(e)=>{
-            this.EQswitch(e.key);
-        });
-
         document.addEventListener("keydown",(e)=>{
-            if (e.key=="Escape")
-            {
-                this.escMenu.classList.toggle("show");
-            }
+            this.vKeyDown(e);
         });
     }
 
-    EQswitch(key)
+    vKeyDown(e)
     {
-        if (key=="e")
+        if (e=="e")
         {
             var a=this.currentTab+1;
 
@@ -142,7 +138,7 @@ class _viewerHtml
             this.tabPage(a);
         }
 
-        else if (key=="q")
+        if (e=="q")
         {
             var a=this.currentTab-1;
 
@@ -152,6 +148,16 @@ class _viewerHtml
             }
 
             this.tabPage(a);
+        }
+
+        if (e=="Escape")
+        {
+            this.escMenu.classList.toggle("show");
+        }
+
+        if (e=="Tab")
+        {
+            this.switchFleet(this.currentFleet+1);
         }
     }
 
@@ -195,7 +201,8 @@ class _viewerHtml
         });
 
         ipcRenderer.on("gameKey",(e,res)=>{
-            viewer.EQswitch(res);
+            console.log(res);
+            viewer.vKeyDown(res);
         });
 
         ipcRenderer.on("shipdeck",(e,res)=>{
@@ -431,5 +438,43 @@ class _viewerHtml
         }
 
         return 0;
+    }
+
+    //fleet needs to be index of fleet
+    switchFleet(fleet)
+    {
+        if (fleet>3)
+        {
+            fleet=0;
+        }
+
+        if (this.currentFleet==fleet)
+        {
+            return;
+        }
+
+        this.fleetSlider.style.transform=`translateY(-${360*fleet}px)`;
+
+        if (fleet==0)
+        {
+            _mFleet.classList.add("selected");
+        }
+
+        else
+        {
+            _expFleets[fleet-1].classList.add("selected");
+        }
+
+        if (this.currentFleet==0)
+        {
+            _mFleet.classList.remove("selected");
+        }
+
+        else
+        {
+            _expFleets[this.currentFleet-1].classList.remove("selected");
+        }
+
+        this.currentFleet=fleet;
     }
 }

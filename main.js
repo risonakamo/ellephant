@@ -326,7 +326,7 @@ function setupGameWindow(args)
 
     _gamewindow.webContents.executeJavaScript(`
         const {ipcRenderer}=require("electron");
-        window.addEventListener("keypress",(e)=>{
+        window.addEventListener("keydown",(e)=>{
             if (e.code=="KeyW" && e.ctrlKey==1)
             {
                 ipcRenderer.send("closeGame");
