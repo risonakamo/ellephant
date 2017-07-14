@@ -35,11 +35,13 @@
 
       #timer
       {
+        height: 50px;
         font-size: 40px;
       }
 
       #info
       {
+        height: 50px;
         font-size: 40px;
         transition: color .4s;
       }
@@ -116,6 +118,33 @@
       #wrap.resupply #expedition-name
       {
         color: #967844;
+      }
+
+      :host(.min)
+      {
+        height: 50px;
+      }
+
+      :host(.min) #wrap
+      {
+        padding: 0px 0px 0px 13px;
+      }
+
+      :host(.min) #expedition-name
+      {
+        height: 0;
+        overflow: hidden
+      }
+
+      :host(.min) #timer
+      {
+        font-size: 22px;
+      }
+
+      :host(.min) #info
+      {
+        font-size: 22px;
+        line-height: 50px;
       }
     </style>
 
