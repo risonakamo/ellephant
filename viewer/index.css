@@ -222,6 +222,11 @@ exp-fleet:hover,m-fleet:hover
     background-color: rgba(107,135,139,.05);
 }
 
+.expedition.min
+{
+    height: 200px;
+}
+
 .fleet
 {
     position: relative;

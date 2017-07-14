@@ -17,6 +17,7 @@
         height: 100px;
         box-sizing: border-box;
         /*background-color: rgba(255,255,255,.05);        */
+        overflow: hidden;
         user-select: none;
         cursor: default;
       }
@@ -139,12 +140,20 @@
       :host(.min) #timer
       {
         font-size: 22px;
+        line-height: 50px;
+        margin-left: 8px;
       }
 
       :host(.min) #info
       {
         font-size: 22px;
         line-height: 50px;
+      }
+
+      :host(.min) .face
+      {
+        height: 200%;
+        bottom: -50%;
       }
     </style>
 

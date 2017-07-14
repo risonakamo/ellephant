@@ -346,25 +346,34 @@ class _viewerHtml
             ipcRenderer.send("optionCommand","resize");
         });
 
-        //mute
         menuItems[2].addEventListener("click",(e)=>{
+            for (var x=0;x<3;x++)
+            {
+                _expFleets[x].classList.toggle("min");
+            }
+
+            _expFleets[0].parentNode.classList.toggle("min");
+        });
+
+        //mute
+        menuItems[3].addEventListener("click",(e)=>{
             ipcRenderer.send("optionCommand","mute");
 
             if (muted==0)
             {
-                menuItems[2].innerHTML="UNMUTE";
+                menuItems[3].innerHTML="UNMUTE";
                 muted=1;
             }
 
             else
             {
-                menuItems[2].innerHTML="MUTE";
+                menuItems[3].innerHTML="MUTE";
                 muted=0;
             }
         });
 
         //quit
-        menuItems[3].addEventListener("click",(e)=>{
+        menuItems[4].addEventListener("click",(e)=>{
             ipcRenderer.send("optionCommand","exit");
         });
     }

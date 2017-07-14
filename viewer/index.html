@@ -47,96 +47,98 @@
         <div class="tab">SHIP LIST</div>
       </div>
 
-      <div class="viewer-page main current">
-        <div class="left">
-          <div class="expedition">
-            <m-fleet class="selected"></m-fleet>
+      <div class="viewer-pages">
+        <div class="viewer-page main current">
+          <div class="left">
+            <div class="expedition">
+              <m-fleet class="selected"></m-fleet>
 
-            <exp-fleet></exp-fleet>
-            <exp-fleet></exp-fleet>
-            <exp-fleet></exp-fleet>
-          </div>
+              <exp-fleet></exp-fleet>
+              <exp-fleet></exp-fleet>
+              <exp-fleet></exp-fleet>
+            </div>
 
-          <div class="repair">
-            <repair-box></repair-box>
-            <repair-box></repair-box>
-          </div>
-        </div>
-
-        <div class="right">
-          <div class="fleet">
-            <div class="fleet-slider">
-              <div class="fleet-contain">
-                <fleet-ship></fleet-ship>
-                <fleet-ship></fleet-ship>
-                <fleet-ship></fleet-ship>
-                <fleet-ship></fleet-ship>
-                <fleet-ship></fleet-ship>
-                <fleet-ship></fleet-ship>
-              </div>
-
-              <div class="fleet-contain">
-                <fleet-ship></fleet-ship>
-                <fleet-ship></fleet-ship>
-                <fleet-ship></fleet-ship>
-                <fleet-ship></fleet-ship>
-                <fleet-ship></fleet-ship>
-                <fleet-ship></fleet-ship>
-              </div>
-
-              <div class="fleet-contain">
-                <fleet-ship></fleet-ship>
-                <fleet-ship></fleet-ship>
-                <fleet-ship></fleet-ship>
-                <fleet-ship></fleet-ship>
-                <fleet-ship></fleet-ship>
-                <fleet-ship></fleet-ship>
-              </div>
-
-              <div class="fleet-contain">
-                <fleet-ship></fleet-ship>
-                <fleet-ship></fleet-ship>
-                <fleet-ship></fleet-ship>
-                <fleet-ship></fleet-ship>
-                <fleet-ship></fleet-ship>
-                <fleet-ship></fleet-ship>
-              </div>
+            <div class="repair">
+              <repair-box></repair-box>
+              <repair-box></repair-box>
             </div>
           </div>
 
-          <div class="info">
-            <fleet-stat></fleet-stat>
+          <div class="right">
+            <div class="fleet">
+              <div class="fleet-slider">
+                <div class="fleet-contain">
+                  <fleet-ship></fleet-ship>
+                  <fleet-ship></fleet-ship>
+                  <fleet-ship></fleet-ship>
+                  <fleet-ship></fleet-ship>
+                  <fleet-ship></fleet-ship>
+                  <fleet-ship></fleet-ship>
+                </div>
 
-            <div class="construction">
-              <construction-ship></construction-ship>
-              <construction-ship></construction-ship>
-              <construction-ship></construction-ship>
-              <construction-ship></construction-ship>
+                <div class="fleet-contain">
+                  <fleet-ship></fleet-ship>
+                  <fleet-ship></fleet-ship>
+                  <fleet-ship></fleet-ship>
+                  <fleet-ship></fleet-ship>
+                  <fleet-ship></fleet-ship>
+                  <fleet-ship></fleet-ship>
+                </div>
+
+                <div class="fleet-contain">
+                  <fleet-ship></fleet-ship>
+                  <fleet-ship></fleet-ship>
+                  <fleet-ship></fleet-ship>
+                  <fleet-ship></fleet-ship>
+                  <fleet-ship></fleet-ship>
+                  <fleet-ship></fleet-ship>
+                </div>
+
+                <div class="fleet-contain">
+                  <fleet-ship></fleet-ship>
+                  <fleet-ship></fleet-ship>
+                  <fleet-ship></fleet-ship>
+                  <fleet-ship></fleet-ship>
+                  <fleet-ship></fleet-ship>
+                  <fleet-ship></fleet-ship>
+                </div>
+              </div>
             </div>
 
-            <div class="resources">
-              <resource-box></resource-box>
+            <div class="info">
+              <fleet-stat></fleet-stat>
+
+              <div class="construction">
+                <construction-ship></construction-ship>
+                <construction-ship></construction-ship>
+                <construction-ship></construction-ship>
+                <construction-ship></construction-ship>
+              </div>
+
+              <div class="resources">
+                <resource-box></resource-box>
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="viewer-page pvp-page unload">
-        <div class="pvp-fleets">
-          <pvp-fleet></pvp-fleet>
-          <pvp-fleet></pvp-fleet>
-          <pvp-fleet></pvp-fleet>
-          <pvp-fleet></pvp-fleet>
-          <pvp-fleet></pvp-fleet>
+        <div class="viewer-page pvp-page unload">
+          <div class="pvp-fleets">
+            <pvp-fleet></pvp-fleet>
+            <pvp-fleet></pvp-fleet>
+            <pvp-fleet></pvp-fleet>
+            <pvp-fleet></pvp-fleet>
+            <pvp-fleet></pvp-fleet>
+          </div>
+
+          <div class="pvp-no-load">
+            UNLOADED
+          </div>
         </div>
 
-        <div class="pvp-no-load">
-          UNLOADED
+        <div class="viewer-page">
+          <ship-list></ship-list>
         </div>
-      </div>
-
-      <div class="viewer-page">
-        <ship-list></ship-list>
       </div>
     </div>
 
@@ -144,6 +146,7 @@
       <div class="menu">
         <p>RETURN</p>
         <p>RESIZE</p>
+        <p>MIN MODE</p>
         <p>MUTE</p>
         <p>QUIT</p>
       </div>

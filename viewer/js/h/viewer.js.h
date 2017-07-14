@@ -1,9 +1,16 @@
 //viewer object handles html display ect related things
 
+/*--- initialised variables ---*/
 element tabs;
 element-array pages;
 element tabBar;
 int currentTab;
+
+element viewer;
+element loading;
+element loadLog;
+
+element escMenu;
 
 /*--- one times ---*/
 void ipcReceivers(); //main process listeners
