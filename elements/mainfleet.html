@@ -105,12 +105,27 @@
       {
         background-color: rgba(242,244,188,.06);
       }
+
+      :host(.carrier) .normal
+      {
+        color: #6796b2;
+      }
+
+      :host(.surface) .normal
+      {
+        color: #6c9d6b;
+      }
+
+      :host(.transport) .normal
+      {
+        color: #4ea27c;
+      }
     </style>
 
     <div class="slider">
       <div class="box slide-box">
         <div class="box top-box normal">
-          MAIN FLEET ‣
+          [[fleetText]] ‣
         </div>
 
         <div class="box top-box resupply">
@@ -145,6 +160,8 @@
         int currentState
         function timer: timer variable to clearTimeout on
         int moraleVal: number representing max missing morale of fleet
+
+        string fleetText: "MAIN FLEET" or "COMBINED"
       */
       static get properties()
       {
@@ -157,6 +174,7 @@
       {
         super.ready();
 
+        this.fleetText="MAIN FLEET";
         this.setState(0);
       }
 
@@ -200,6 +218,35 @@
           this.classList.add("sortie");
           this.inSortie=1;
           break;
+        }
+      }
+
+      setCombined(state)
+      {
+        if (state>0)
+        {
+          this.fleetText="COMBINED";
+
+          switch (state)
+          {
+            case 1:
+            this.classList.add("carrier");
+            break;
+
+            case 2:
+            this.classList.add("surface");
+            break;
+
+            case 3:
+            this.classList.add("transport");
+            break;
+          }
+        }
+
+        else
+        {
+          this.fleetText="MAIN FLEET";
+          this.classList.remove("carrier","surface","transport");
         }
       }
 

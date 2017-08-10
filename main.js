@@ -317,6 +317,10 @@ function setupGameWindow(args)
                 _win.webContents.send("instantrepair",decodeURIComponent(par.request.postData));
             }
 
+            else if (par.request.url=="http://203.104.209.39/kcsapi/api_req_hensei/combined")
+            {
+                _win.webContents.send("fleetCombine",decodeURIComponent(par.request.postData));
+            }
         }
     });
 

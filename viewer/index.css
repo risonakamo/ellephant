@@ -175,6 +175,7 @@ p
 
 .expedition
 {
+    position: relative;
     width: 250px;
     height: 350px;
     margin-top: 10px;
@@ -225,6 +226,39 @@ exp-fleet:hover,m-fleet:hover
 .expedition.min
 {
     height: 200px;
+}
+
+.combined-box
+{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 250px;
+    height: 150px;
+    z-index: -51;
+    border-right: 2px solid;
+    opacity: 0;
+    transition: opacity .2s;
+}
+
+.combined-box.show
+{
+    opacity: 1;
+}
+
+.combined-box.carrier
+{
+    border-right-color: #6796b2;
+}
+
+.combined-box.surface
+{
+    border-right-color: #6c9d6b;
+}
+
+.combined-box.transport
+{
+    border-right-color: #4ea27c;
 }
 
 .fleet

@@ -13,7 +13,8 @@ var fleetstat;
 //html element globals
 var _expFleets; //array
 var _fleetShips; //array
-var _mFleet;
+var _mFleet; //mainfleet
+var _combineBox;
 
 //array of arrays of ids of currently loaded fleetships and pvp opponents
 //can be used to reload a fleetship
@@ -43,6 +44,7 @@ function main()
     _expFleets=document.querySelectorAll("exp-fleet");
     _fleetShips=document.querySelectorAll("fleet-ship");
     _mFleet=document.querySelector("m-fleet");
+    _combineBox=document.querySelector(".combined-box");
 
     expBoxEvents();
 }
@@ -128,7 +130,38 @@ function portUpdate(port)
     }
 
     repair.rDockUpdate(port.api_data.api_ndock);
+
+    if (port.api_data.api_combined_flag!=undefined)
+    {
+        setCombined(port.api_data.api_combined_flag);
+    }
+
     viewer.viewerShow();
+}
+
+function setCombined(state)
+{
+    _mFleet.setCombined(state);
+
+    switch (state)
+    {
+        case 0:
+        _combineBox.classList.remove("carrier","surface","transport","show");
+        break;
+
+        case 1:
+        _combineBox.classList.add("carrier","show");
+        break;
+
+        case 2:
+        _combineBox.classList.add("surface","show");
+        break;
+
+        case 3:
+        _combineBox.classList.add("transport","show");
+        break;
+
+    }
 }
 
 // function saveFleetShipIds(ships)
