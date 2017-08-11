@@ -120,13 +120,13 @@ class _viewerHtml
     keyControl()
     {
         document.addEventListener("keydown",(e)=>{
-            this.vKeyDown(e.key);
+            this.vKeyDown(e);
         });
     }
 
     vKeyDown(e)
     {
-        if (e=="e")
+        if (e.key=="e")
         {
             var a=this.currentTab+1;
 
@@ -138,7 +138,7 @@ class _viewerHtml
             this.tabPage(a);
         }
 
-        if (e=="q")
+        if (e.key=="q")
         {
             var a=this.currentTab-1;
 
@@ -150,14 +150,22 @@ class _viewerHtml
             this.tabPage(a);
         }
 
-        if (e=="Escape")
+        if (e.key=="Escape")
         {
             this.escMenu.classList.toggle("show");
         }
 
-        if (e=="Tab")
+        if (e.key=="Tab")
         {
-            this.switchFleet(this.currentFleet+1);
+            if (e.ctrlKey)
+            {
+                this.switchFleet(this.currentFleet-1);
+            }
+
+            else
+            {
+                this.switchFleet(this.currentFleet+1);
+            }
         }
     }
 

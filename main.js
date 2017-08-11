@@ -337,12 +337,8 @@ function setupGameWindow(args)
                 return;
             }
 
-            ipcRenderer.send("gameKey",e.key);
+            ipcRenderer.send("gameKey",{key:e.key,ctrlKey:e.ctrlKey});
         });
-
-        // var flash=document.querySelector("embed");
-        // flash.width="800px";
-        // flash.height="480px";
     `);
 
     _gamewindow.on("close",(e)=>{
