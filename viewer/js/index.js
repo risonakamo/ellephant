@@ -298,50 +298,6 @@ function updateFleetShip(ships,fleetContain)
     updateExpFace(fleetNumber);
 }
 
-// //gen object for use with fleetship loadship
-// //requires ship object from player ship list
-// function genLoadableShip(ship)
-// {
-//     return {
-//         maxHp:ship.api_maxhp,
-//         curHp:ship.api_nowhp,
-//         level:ship.api_lv,
-//         // face:`../face/${ship.api_ship_id}.png`,
-//         face: genFaceFile(ship),
-//         morale:ship.api_cond,
-//         curAmmo:ship.api_bull,
-//         curGas:ship.api_fuel,
-//         maxAmmo:_apiAllShip[ship.api_sortno].api_bull_max,
-//         maxGas:_apiAllShip[ship.api_sortno].api_fuel_max,
-//         equipment:genEquip(ship.api_slot),
-//         curExp:ship.api_exp[1],
-//         maxExp:apiData.expPerLv[ship.api_lv-1],
-//         planeCount:ship.api_onslot,
-//         shipId:ship.api_id,
-//         shipClass:apiData.sTypes[_apiAllShip[ship.api_sortno].api_stype-1],
-//         shipName: _apiAllShip[ship.api_sortno].api_name,
-//         inRepair:ship.inRepair
-//     };
-// }
-
-// //give array of equipment ids of a ship, returns string form
-// function genEquip(apishipEquip)
-// {
-//     var stringequip=[];
-//     for (var x=0;x<4;x++)
-//     {
-//         if (apishipEquip[x]<0)
-//         {
-//             stringequip.push("");
-//             continue;
-//         }
-
-//         stringequip.push(`../equipment/${_apiAllEquip[_apiEquip[apishipEquip[x]].api_slotitem_id].api_type[3]}.png`);
-//     }
-
-//     return stringequip;
-// }
-
 //needs to be given api_deck_port from the port object, an array
 function expeditionUpdate(data)
 {
@@ -505,18 +461,19 @@ function equipUpdate(data)
         return;
     }
 
-    shipfind=(4*shipfind[0])+shipfind[1];
+    var fleet=shipfind[0];
+    shipfind=(6*shipfind[0])+shipfind[1];
 
     if (shipfind<6 || (_combinedState>0 && shipfind<12))
     {
-        fleetstat.equipChangeRemove(_fleetShips[shipfind]);
+        fleetstat.equipChangeRemove(_fleetShips[shipfind],fleet);
     }
 
     _fleetShips[shipfind].loadShip(data.api_ship_data[0]);
 
     if (shipfind<6 || (_combinedState>0 && shipfind<12))
     {
-        fleetstat.equipChangeAdd(_fleetShips[shipfind]);
+        fleetstat.equipChangeAdd(_fleetShips[shipfind],fleet);
     }
 }
 
@@ -551,18 +508,21 @@ function equipExchange(data)
         return;
     }
 
-    shipfind=(4*shipfind[0])+shipfind[1];
+    var fleet=shipfind[0];
+    shipfind=(6*shipfind[0])+shipfind[1];
+
+    console.log(_fleetShips[shipfind]);
 
     if (shipfind<6 || (_combinedState>0 && shipfind<12))
     {
-        fleetstat.equipChangeRemove(_fleetShips[shipfind]);
+        fleetstat.equipChangeRemove(_fleetShips[shipfind],fleet);
     }
 
     _fleetShips[shipfind].loadShip(_apiShip[data.api_id]);
 
     if (shipfind<6 || (_combinedState>0 && shipfind<12))
     {
-        fleetstat.equipChangeAdd(_fleetShips[shipfind]);
+        fleetstat.equipChangeAdd(_fleetShips[shipfind],fleet);
     }
 }
 

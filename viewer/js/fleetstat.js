@@ -8,18 +8,28 @@ class _fleetstat
     //re evaluate fleetstat for single ship, used during equipment
     //updates.  requires FLEETSHIP ELEMENT that would normally
     //be selected during said equipment updates anyway
-    equipChangeRemove(ship)
+    equipChangeRemove(ship,ignoreAirPower)
     {
-        this.fleetstat.airPowerMin-=ship.airPower[0];
-        this.fleetstat.airPowerMax-=ship.airPower[1];
-        this.fleetstat.los-=ship.los;
+        if (!ignoreAirPower)
+        {
+            this.fleetstat.airPowerMin-=ship.airPower[0];
+            this.fleetstat.airPowerMax-=ship.airPower[1];
+        }
+
+        // this.fleetstat.los-=ship.los;
+        this.fleetstat.los=(parseFloat(this.fleetstat.los)-ship.los).toFixed(3);
     }
 
-    equipChangeAdd(ship)
+    equipChangeAdd(ship,ignoreAirPower)
     {
-        this.fleetstat.airPowerMin+=ship.airPower[0];
-        this.fleetstat.airPowerMax+=ship.airPower[1];
-        this.fleetstat.los+=ship.los;
+        if (!ignoreAirPower)
+        {
+            this.fleetstat.airPowerMin+=ship.airPower[0];
+            this.fleetstat.airPowerMax+=ship.airPower[1];
+        }
+
+        // this.fleetstat.los+=ship.los;
+        this.fleetstat.los=(parseFloat(this.fleetstat.los)+ship.los).toFixed(3);
     }
 
     //calculates 2nd fleet los and adds to main los
