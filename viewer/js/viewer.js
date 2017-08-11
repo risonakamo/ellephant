@@ -172,6 +172,20 @@ class _viewerHtml
                 this.switchFleet(this.currentFleet+1);
             }
         }
+
+        if (e.key=="r" && e.ctrlKey)
+        {
+            e.preventDefault();
+
+            ipcRenderer.send("requestRelaunch");
+        }
+
+        if (e.key=="w" && e.ctrlKey)
+        {
+            e.preventDefault();
+
+            ipcRenderer.send("closeGame");
+        }
     }
 
     //receives from main process

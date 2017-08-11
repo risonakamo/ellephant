@@ -101,6 +101,11 @@ function ipcs()
         }
     });
 
+    ipcMain.on("requestRelaunch",(e,res)=>{
+        app.relaunch({args:[".",_apiLink]});
+        app.exit(0);
+    });
+
     ticon=new Tray(`${__dirname}/supply/dev.png`);
     ipcMain.on("viewerNotification",(e,res)=>{
         ticon.displayBalloon({icon:`${__dirname}/supply/dev.png`,title:"ellephant",content:"abc"});
