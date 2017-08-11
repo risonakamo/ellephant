@@ -695,6 +695,7 @@
       unload()
       {
         this.loaded=0;
+        delete this.los;
         this.$["no-data"].classList.remove("loaded");
         this.$["loaded"].classList.add("unloaded");
       }

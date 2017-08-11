@@ -32,6 +32,9 @@ var _apiAllEquip;
 var _apiAllExpedition;
 var _apiIdtoSort; //sorted by api_id, data is api_sort_no usable for apiAllShip
 
+//please move this somewhere else...
+var _combinedState;
+
 function main()
 {
     pvp=new _pvp;
@@ -141,26 +144,32 @@ function portUpdate(port)
 
 function setCombined(state)
 {
+    _combinedState=state;
     _mFleet.setCombined(state);
 
-    switch (state)
+    if (!state)
     {
-        case 0:
         _combineBox.classList.remove("carrier","surface","transport","show");
-        break;
+    }
 
-        case 1:
-        _combineBox.classList.add("carrier","show");
-        break;
+    else
+    {
+        fleetstat.combinedLOS();
+        switch (state)
+        {
+            case 1:
+            _combineBox.classList.add("carrier","show");
+            break;
 
-        case 2:
-        _combineBox.classList.add("surface","show");
-        break;
+            case 2:
+            _combineBox.classList.add("surface","show");
+            break;
 
-        case 3:
-        _combineBox.classList.add("transport","show");
-        break;
+            case 3:
+            _combineBox.classList.add("transport","show");
+            break;
 
+        }
     }
 }
 
@@ -498,14 +507,14 @@ function equipUpdate(data)
 
     shipfind=(4*shipfind[0])+shipfind[1];
 
-    if (shipfind<6)
+    if (shipfind<6 || (_combinedState>0 && shipfind<12))
     {
         fleetstat.equipChangeRemove(_fleetShips[shipfind]);
     }
 
     _fleetShips[shipfind].loadShip(data.api_ship_data[0]);
 
-    if (shipfind<6)
+    if (shipfind<6 || (_combinedState>0 && shipfind<12))
     {
         fleetstat.equipChangeAdd(_fleetShips[shipfind]);
     }
@@ -544,14 +553,14 @@ function equipExchange(data)
 
     shipfind=(4*shipfind[0])+shipfind[1];
 
-    if (shipfind<6)
+    if (shipfind<6 || (_combinedState>0 && shipfind<12))
     {
         fleetstat.equipChangeRemove(_fleetShips[shipfind]);
     }
 
     _fleetShips[shipfind].loadShip(_apiShip[data.api_id]);
 
-    if (shipfind<6)
+    if (shipfind<6 || (_combinedState>0 && shipfind<12))
     {
         fleetstat.equipChangeAdd(_fleetShips[shipfind]);
     }
