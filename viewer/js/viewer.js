@@ -449,6 +449,11 @@ class _viewerHtml
     //fleet needs to be index of fleet
     switchFleet(fleet)
     {
+        if (fleet<0)
+        {
+            fleet=3;
+        }
+
         if (fleet>3)
         {
             fleet=0;
