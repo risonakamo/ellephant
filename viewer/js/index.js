@@ -125,6 +125,11 @@ function portUpdate(port)
 
     resource.loadPort(port.api_data);
 
+    if (port.api_data.api_combined_flag!=undefined)
+    {
+        setCombined(port.api_data.api_combined_flag);
+    }
+
     _fleetShipIds=[];
     for (var x=0;x<4;x++)
     {
@@ -134,27 +139,35 @@ function portUpdate(port)
 
     repair.rDockUpdate(port.api_data.api_ndock);
 
-    if (port.api_data.api_combined_flag!=undefined)
-    {
-        setCombined(port.api_data.api_combined_flag);
-    }
-
     viewer.viewerShow();
 }
 
-function setCombined(state)
+//change combined state to something 0=not combined, 1,2,3=various combined formes
+//set postchange to 1 to do some extra stuff that should happen when combinestate changes
+//from a post call
+function setCombined(state,postChange)
 {
     _combinedState=state;
     _mFleet.setCombined(state);
 
     if (!state)
     {
+        if (postChange)
+        {
+            fleetstat.fleetstat.los=0;
+            fleetstat.combinedLOS(0);
+        }
+
         _combineBox.classList.remove("carrier","surface","transport","show");
     }
 
     else
     {
-        fleetstat.combinedLOS();
+        if (postChange)
+        {
+            fleetstat.combinedLOS(1);
+        }
+
         switch (state)
         {
             case 1:
@@ -292,6 +305,11 @@ function updateFleetShip(ships,fleetContain)
         fleetstat.fleetstat.airPowerMin=fleetAirPower[0];
         fleetstat.fleetstat.airPowerMax=fleetAirPower[1];
         fleetstat.fleetstat.los=(los-Math.ceil(.4*apiData.portLevel)).toFixed(3);
+    }
+
+    if (_combinedState && fleetNumber==1)
+    {
+        fleetstat.combinedLOS(1);
     }
 
     updateFleetSupply(fleetNumber,resupply);

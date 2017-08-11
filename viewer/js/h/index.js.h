@@ -12,7 +12,7 @@ void chargeUpdate(object data); //charge object
 void deckUpdate(object data); //update after a sortie battle given the ship_deck api data
 void equipUpdate(object data); //handles ship3 api object for equipment loadout updates
 void equipExchange(object data); //handles equipment exchange api event
-void setCombined(int state);
+void setCombined(int state,bool postChange);
 
 /*-- helpers --*/
 // void saveFleetShipIds(array ships);

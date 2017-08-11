@@ -307,7 +307,7 @@ class _viewerHtml
         });
 
         ipcRenderer.on("fleetCombine",(e,res)=>{
-            setCombined(parseInt(parsePost(res).api_combined_type));
+            setCombined(parseInt(parsePost(res).api_combined_type),1);
         });
 
         ipcRenderer.once("requireinfo",(e,res)=>{

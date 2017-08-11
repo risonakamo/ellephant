@@ -32,11 +32,12 @@ class _fleetstat
         this.fleetstat.los=(parseFloat(this.fleetstat.los)+ship.los).toFixed(3);
     }
 
-    //calculates 2nd fleet los and adds to main los
-    combinedLOS()
+    //calculate and add to los a given fleet INDEX
+    combinedLOS(fleet)
     {
+        fleet*=6;
         var los=0;
-        for (var x=6;x<=11;x++)
+        for (var x=fleet;x<=fleet+5;x++)
         {
             if (_fleetShips[x].los)
             {
