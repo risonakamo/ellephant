@@ -56,6 +56,11 @@ class _viewerHtml
 
         var that=this;
 
+        ipcRenderer.on("cmdArgs",(e,res)=>{
+            urlBox.value=res;
+        });
+        ipcRenderer.send("requestCmdArgs");;
+
         var sendWindowRequest=function(e){
             ipcRenderer.send("requestWindow",urlBox.value);
 
