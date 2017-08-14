@@ -160,6 +160,7 @@
         int currentState
         function timer: timer variable to clearTimeout on
         int moraleVal: number representing max missing morale of fleet
+        int repairFlag
 
         string fleetText: "MAIN FLEET" or "COMBINED"
       */
@@ -178,18 +179,12 @@
         this.setState(0);
       }
 
+      //0=normal,1=resupply,2=sortie
+      //morale state activates in normal if moraleVal is in threshold
+      //resupply overrides morale (more important to resupply (right?))
       setState(state)
       {
-        // if (this.currentState==state)
-        // {
-        //   if (this.moraleVal>0)
-        //   {
-        //     this.loadMorale();
-        //   }
-
-        //   return;
-        // }
-
+        //block setting resupply flag if currently in sortie
         if (this.currentState==2 && state==1)
         {
           return;

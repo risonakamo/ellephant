@@ -53,6 +53,7 @@ function receiveArb(par,channel)
 
 function ipcs()
 {
+    //send cmd arguments to viewer
     ipcMain.on("requestCmdArgs",(e,res)=>{
         if (process.argv.length>=3)
         {
@@ -60,14 +61,17 @@ function ipcs()
         }
     });
 
+    //open game window
     ipcMain.on("requestWindow",(e,args)=>{
         setupGameWindow(args);
     });
 
+    //get current api link (probably not used)
     ipcMain.on("requestAPI",(e,args)=>{
         e.sender.send("requestAPI",_apiLink);
     });
 
+    //game window key combo sent to viewer
     ipcMain.on("gameKey",(e,res)=>{
         _win.webContents.send("gameKey",res);
     });
@@ -76,6 +80,7 @@ function ipcs()
         _gamewindow.close();
     });
 
+    //viewer various commands
     ipcMain.on("optionCommand",(e,res)=>{
         switch (res)
         {
@@ -93,6 +98,13 @@ function ipcs()
                 {
                     _gamewindow.webContents.setAudioMuted(true);
                 }
+                break;
+
+            case "screenshot":
+                _gamewindow.capturePage((img)=>{
+                    var d=new Date();
+                    fs.writeFile(`kancolle-${d.getFullYear()}-${d.getMonth()}-${d.getDate()}_${d.getHours().toString().padStart(2,"0")}${d.getMinutes().toString().padStart(2,"0")}${d.getSeconds().toString().padStart(2,"0")}.png`,img.toPNG(),(err)=>{});
+                });
                 break;
 
             case "exit":

@@ -175,16 +175,32 @@ class _viewerHtml
 
         if (e.key=="r" && e.ctrlKey)
         {
-            e.preventDefault();
+            if (e.preventDefault)
+            {
+                e.preventDefault();
+            }
 
             ipcRenderer.send("requestRelaunch");
         }
 
         if (e.key=="w" && e.ctrlKey)
         {
-            e.preventDefault();
+            if (e.preventDefault)
+            {
+                e.preventDefault();
+            }
 
             ipcRenderer.send("closeGame");
+        }
+
+        if (e.key=="s" && e.ctrlKey)
+        {
+            if (e.preventDefault)
+            {
+                e.preventDefault();
+            }
+
+            ipcRenderer.send("optionCommand","screenshot");
         }
     }
 

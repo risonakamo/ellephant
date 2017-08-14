@@ -175,7 +175,7 @@
         this.$["slider"].classList.add("loaded");
 
         this.name=data.name;
-        this.$["timer"].loadEndTime(data.timeComplete);
+        this.$["timer"].loadEndTime(data.timeComplete,1);
         this.face=data.face;
         this.maxTime=data.maxTime/(1000*60);
         this.shipId=data.shipId;
