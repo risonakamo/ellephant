@@ -445,6 +445,11 @@ class _viewerHtml
     //2=expedition complete
     tabState(state)
     {
+        if (_mFleet.currentState==2 && state==2)
+        {
+            return;
+        }
+
         this.tabBar.classList.remove("sortie","exp-complete");
         if (state==0)
         {
