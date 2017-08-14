@@ -202,6 +202,12 @@
             break;
           }
 
+          else
+          {
+            clearTimeout(this.timer);
+            delete this.timer;
+          }
+
           this.classList.add("normal");
           break;
 

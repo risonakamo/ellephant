@@ -115,7 +115,7 @@ function ipcs()
 
     ipcMain.on("requestRelaunch",(e,res)=>{
         app.relaunch({args:[".",_apiLink]});
-        app.exit(0);
+        windowClose();
     });
 
     ticon=new Tray(`${__dirname}/supply/dev.png`);
