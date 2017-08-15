@@ -27,7 +27,7 @@ class _repair
 
         if (shipfind[0]>=0)
         {
-            _fleetShips[(4*shipfind[0])+shipfind[1]].loadShip(genLoadableShip(_apiShip[ship]));
+            _fleetShips[(6*shipfind[0])+shipfind[1]].loadShip(_apiShip[ship]);
         }
     }
 
