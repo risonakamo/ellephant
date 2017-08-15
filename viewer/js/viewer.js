@@ -131,6 +131,7 @@ class _viewerHtml
 
     vKeyDown(e)
     {
+        //next tab
         if (e.key=="e")
         {
             var a=this.currentTab+1;
@@ -143,6 +144,7 @@ class _viewerHtml
             this.tabPage(a);
         }
 
+        //previous tab
         if (e.key=="q")
         {
             var a=this.currentTab-1;
@@ -155,11 +157,13 @@ class _viewerHtml
             this.tabPage(a);
         }
 
+        //open menu
         if (e.key=="Escape")
         {
             this.escMenu.classList.toggle("show");
         }
 
+        //switch fleet, ctrl for backwards
         if (e.key=="Tab")
         {
             if (e.ctrlKey)
@@ -173,6 +177,21 @@ class _viewerHtml
             }
         }
 
+        //go to fleet 0, or fleet 1 if on 0 (for combined fleet)
+        if (e.key=="Shift")
+        {
+            if (this.currentFleet==0)
+            {
+                this.switchFleet(1);
+            }
+
+            else
+            {
+                this.switchFleet(0);
+            }
+        }
+
+        //reload app
         if (e.key=="r" && e.ctrlKey)
         {
             if (e.preventDefault)
@@ -183,6 +202,7 @@ class _viewerHtml
             ipcRenderer.send("requestRelaunch");
         }
 
+        //close app
         if (e.key=="w" && e.ctrlKey)
         {
             if (e.preventDefault)
@@ -193,6 +213,7 @@ class _viewerHtml
             ipcRenderer.send("closeGame");
         }
 
+        //screenshot
         if (e.key=="s" && e.ctrlKey)
         {
             if (e.preventDefault)

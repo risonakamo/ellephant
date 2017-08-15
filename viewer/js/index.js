@@ -465,7 +465,10 @@ function deckUpdate(data)
         _apiShip[data.api_ship_data[x].api_id]=data.api_ship_data[x];
     }
 
-    updateFleetShip(data.api_deck_data[0].api_ship,data.api_deck_data[0].api_id-1);
+    for (var x=0;x<data.api_deck_data.length;x++)
+    {
+        updateFleetShip(data.api_deck_data[x].api_ship,data.api_deck_data[x].api_id-1);
+    }
 }
 
 function equipUpdate(data)
