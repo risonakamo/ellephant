@@ -122,17 +122,17 @@
         color: #967844;
       }
 
-      :host(.min)
+      :host(.min),:host(.combined)
       {
         height: 50px;
       }
 
-      :host(.min) #wrap
+      :host(.min) #wrap,:host(.combined) #wrap
       {
         padding: 0px 0px 0px 13px;
       }
 
-      :host(.min) #expedition-name
+      :host(.min) #expedition-name,:host(.combined) #expedition-name
       {
         height: 0;
         overflow: hidden
@@ -151,7 +151,13 @@
         line-height: 50px;
       }
 
-      :host(.min) .face
+      :host(.combined) #info
+      {
+        height: 0;
+        display: none;
+      }
+
+      :host(.min) .face,:host(.combined) .face
       {
         height: 200%;
         bottom: -50%;

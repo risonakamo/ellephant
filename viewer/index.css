@@ -177,7 +177,6 @@ p
 {
     position: relative;
     width: 250px;
-    height: 350px;
     margin-top: 10px;
     /*background-color: #e7e7e5;*/
 }
@@ -223,18 +222,13 @@ exp-fleet:hover,m-fleet:hover
     background-color: rgba(107,135,139,.05);
 }
 
-.expedition.min
-{
-    height: 200px;
-}
-
 .combined-box
 {
     position: absolute;
     top: 0;
     left: 0;
     width: 250px;
-    height: 150px;
+    height: 100px;
     z-index: -51;
     border-right: 2px solid;
     opacity: 0;

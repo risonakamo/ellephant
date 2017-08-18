@@ -159,6 +159,7 @@ function setCombined(state,postChange)
         }
 
         _combineBox.classList.remove("carrier","surface","transport","show");
+        _expFleets[0].classList.removed("combined");
     }
 
     else
@@ -167,6 +168,8 @@ function setCombined(state,postChange)
         {
             fleetstat.combinedLOS(1);
         }
+
+        _expFleets[0].classList.add("combined");
 
         switch (state)
         {
