@@ -61,7 +61,7 @@ class _repair
 
             if (shipfind[0]>=0)
             {
-                _fleetShips[(4*shipfind[0])+shipfind[1]].setRepair(1);
+                _fleetShips[(6*shipfind[0])+shipfind[1]].setRepair(1);
             }
 
             if (!this.rDocks[x].initialLoad)

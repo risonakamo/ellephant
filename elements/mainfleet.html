@@ -10,7 +10,6 @@
         width: 250px;
         height: 50px;
         box-sizing: border-box;
-        overflow: hidden;
         user-select: none;
       }
 
@@ -38,6 +37,16 @@
         font-size: 30px;
         padding-left: 20px;
         box-sizing: border-box;
+      }
+
+      .slider-clip
+      {
+        position: absolute;
+        top: 0;
+        width: 250px;
+        height: 50px;
+        overflow: hidden;
+        transition: transform .4s;
       }
 
       .slide-box
@@ -120,29 +129,39 @@
       {
         color: #4ea27c;
       }
+
+      :host(.carrier) .main-slider,:host(.surface) .main-slider,:host(.transport) .main-slider
+      {
+        transform: translateY(23px);
+        padding-left: 10px;
+      }
     </style>
 
-    <div class="slider">
-      <div class="box slide-box">
-        <div class="box top-box normal">
-          [[fleetText]] ‣
+    <div class="slider-clip main-slider">
+      <div class="slider">
+        <div class="box slide-box">
+          <div class="box top-box normal">
+            [[fleetText]] ‣
+          </div>
+
+          <div class="box top-box resupply">
+            RESUPPLY ‣
+          </div>
+
+          <div class="box top-box morale">
+            [[min]]:[[sec]] ‣
+          </div>
         </div>
 
-        <div class="box top-box resupply">
-          RESUPPLY ‣
+        <div class="box slide-box sortie">
+          SORTIE ‣
         </div>
-
-        <div class="box top-box morale">
-          [[min]]:[[sec]] ‣
-        </div>
-      </div>
-
-      <div class="box slide-box sortie">
-        SORTIE ‣
       </div>
     </div>
 
-    <img class="main-face" src="[[face]]">
+    <div class="slider-clip">
+      <img class="main-face" src="[[face]]">
+    </div>
 
   </template>
 
