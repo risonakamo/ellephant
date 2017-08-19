@@ -400,23 +400,7 @@ function expBoxEvents()
     var slider=document.querySelector(".fleet-slider");
     _expFleets.forEach((x,i)=>{
         x.addEventListener("click",(e)=>{
-            if (x.classList.contains("selected"))
-            {
-                return;
-            }
-
-            slider.style.transform=`translateY(-${(360*i)+360}px)`;
-
-            x.classList.add("selected");
-
-            _mFleet.classList.remove("selected");
-            for (var y=0;y<3;y++)
-            {
-                if (y!=i)
-                {
-                    _expFleets[y].classList.remove("selected");
-                }
-            }
+            viewer.switchFleet(i+1);
         });
 
         x.addEventListener("complete",(e)=>{
@@ -425,19 +409,7 @@ function expBoxEvents()
     });
 
     _mFleet.addEventListener("click",(e)=>{
-        if (_mFleet.classList.contains("selected"))
-        {
-            return;
-        }
-
-        slider.style.transform=`translateY(0px)`;
-
-        _mFleet.classList.add("selected");
-
-        for (var x=0;x<3;x++)
-        {
-            _expFleets[x].classList.remove("selected");
-        }
+        viewer.switchFleet(0);
     });
 
     // for (var x=0;x<3;x++)
