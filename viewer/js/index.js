@@ -411,13 +411,6 @@ function expBoxEvents()
     _mFleet.addEventListener("click",(e)=>{
         viewer.switchFleet(0);
     });
-
-    // for (var x=0;x<3;x++)
-    // {
-    //     _expFleets[x].addEventListener("click",(e)=>{
-    //         slider.style.transform=`translateY(-${350*x}px)`;
-    //     });
-    // }
 }
 
 function updateFleetSupply(fleet,resupply)

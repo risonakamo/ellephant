@@ -12,15 +12,42 @@
         border-bottom: 1px solid #e7e7e5;
       }
 
-      .air-power
+      div
       {
+        display: inline-block;
+      }
+
+      .air-power div
+      {
+        height: 30px;
+        vertical-align: top;
+      }
+
+      .ap-info
+      {
+        line-height: 30px;
+        margin-right: 15px;
         font-size: 15px;
+      }
+
+      .a-icon
+      {
+        box-sizing: border-box;
+        padding-top: 2px;
       }
     </style>
 
     <div>
       <div class="air-power">
-        [[airPowerMin]],[[airPowerMax]] [[los]]
+        <div class="ap-info fpow">
+          <div class="a-icon"><img src="../supply/fpow.png"></div>
+          [[airPowerMin]],[[airPowerMax]]
+        </div>
+
+        <div class="ap-info los">
+          <div class="a-icon"><img src="../supply/los.png"></div>
+          [[los]]
+        </div>
       </div>
     </div>
 
