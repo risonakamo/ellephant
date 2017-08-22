@@ -243,7 +243,7 @@
         this.completed=1;
 
         this.dispatchEvent(new CustomEvent("complete"));
-        viewer.notify(`Expedition ${this.expNum} completed`)
+        viewer.notify(`${this.expNum} completed`,"");
       }
 
       clearExpedition()
