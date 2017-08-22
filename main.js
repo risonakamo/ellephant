@@ -117,11 +117,6 @@ function ipcs()
         app.relaunch({args:[".",_apiLink]});
         windowClose();
     });
-
-    ticon=new Tray(`${__dirname}/supply/dev.png`);
-    ipcMain.on("viewerNotification",(e,res)=>{
-        ticon.displayBalloon({icon:`${__dirname}/supply/dev.png`,title:"ellephant",content:"abc"});
-    });
 }
 
 function viewerEvents()

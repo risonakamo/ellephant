@@ -456,9 +456,9 @@ class _viewerHtml
     }
 
     //string msg: content field of popup
-    notify(msg)
+    notify(title,body)
     {
-        ipcRenderer.send("viewerNotification",msg);
+        var a=new Notification(title,{body:body});
     }
 
     //0=normal
