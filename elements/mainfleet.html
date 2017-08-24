@@ -185,6 +185,7 @@
         function timer: timer variable to clearTimeout on
         int moraleVal: number representing max missing morale of fleet
         int repairFlag
+        int combined
 
         string fleetText: "MAIN FLEET" or "COMBINED"
       */
@@ -233,7 +234,11 @@
           }
 
           this.classList.add("normal");
-          _expFleets[0].classList.remove("sortie");
+
+          if (_expFleets && _expFleets[0])
+          {
+            _expFleets[0].classList.remove("sortie");
+          }
           break;
 
           case 1:
@@ -243,7 +248,12 @@
           case 2:
           this.classList.add("sortie");
           this.inSortie=1;
-          _expFleets[0].classList.add("sortie"); //should probably make this neater somehow
+
+          if (this.combined)
+          {
+            _expFleets[0].classList.add("sortie"); //should probably make this neater somehow
+          }
+
           break;
         }
       }
@@ -253,6 +263,7 @@
         if (state>0)
         {
           this.fleetText="COMBINED";
+          this.combined=1;
 
           switch (state)
           {
@@ -273,6 +284,7 @@
         else
         {
           this.fleetText="MAIN FLEET";
+          this.combined=0;
           this.classList.remove("carrier","surface","transport");
         }
       }

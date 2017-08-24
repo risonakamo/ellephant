@@ -455,10 +455,16 @@ class _viewerHtml
         });
     }
 
-    //string msg: content field of popup
-    notify(title,body)
+    //string title,body
+    //int image: 0=expedition complete image
+    notify(title,body,image)
     {
-        var a=new Notification(title,{body:body});
+        if (image==0)
+        {
+            image="../icons/expcomplete.png";
+        }
+
+        var a=new Notification(title,{body:body,icon:image});
     }
 
     //0=normal
