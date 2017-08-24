@@ -395,7 +395,7 @@ class _viewerHtml
             this.loaderLog("api ships loaded.");
 
             _apiAllEquip={};
-            for (var x=0;x<=228;x++)
+            for (var x=0;x<=247;x++)
             {
                 _apiAllEquip[res.api_data.api_mst_slotitem[x].api_sortno]=res.api_data.api_mst_slotitem[x];
             }

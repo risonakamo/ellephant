@@ -233,6 +233,7 @@
           }
 
           this.classList.add("normal");
+          _expFleets[0].classList.remove("sortie");
           break;
 
           case 1:
@@ -242,6 +243,7 @@
           case 2:
           this.classList.add("sortie");
           this.inSortie=1;
+          _expFleets[0].classList.add("sortie"); //should probably make this neater somehow
           break;
         }
       }

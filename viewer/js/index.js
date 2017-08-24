@@ -14,7 +14,7 @@ var fleetstat;
 var _expFleets; //array
 var _fleetShips; //array
 var _mFleet; //mainfleet
-var _combineBox;
+var _combineBox; //element
 
 //array of arrays of ids of currently loaded fleetships and pvp opponents
 //can be used to reload a fleetship
@@ -499,8 +499,6 @@ function equipExchange(data)
 
     var fleet=shipfind[0];
     shipfind=(6*shipfind[0])+shipfind[1];
-
-    console.log(_fleetShips[shipfind]);
 
     if (shipfind<6 || (_combinedState>0 && shipfind<12))
     {
