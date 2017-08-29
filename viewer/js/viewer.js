@@ -464,7 +464,8 @@ class _viewerHtml
             image="../icons/expcomplete.png";
         }
 
-        var a=new Notification(title,{body:body,icon:image});
+        var a=new Notification(title,{body:body,icon:image,tag:"viewerNotify",renotify:true});
+        console.log("notified");
     }
 
     //0=normal
