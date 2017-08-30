@@ -9,6 +9,7 @@ var apiData=new _apiData;
 var viewer;
 var repair;
 var fleetstat;
+var shiplists;
 
 //html element globals
 var _expFleets; //array
@@ -43,6 +44,7 @@ function main()
     viewer= new _viewerHtml;
     repair=new _repair;
     fleetstat= new _fleetstat;
+    shiplists=new _shiplists;
 
     _expFleets=document.querySelectorAll("exp-fleet");
     _fleetShips=document.querySelectorAll("fleet-ship");

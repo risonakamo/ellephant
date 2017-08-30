@@ -173,7 +173,7 @@ function setupGameWindow(args)
 {
     _apiLink=args;
 
-    var winops={width:800,height:480,useContentSize:true,webPreferences:{plugins:true}};
+    var winops={width:800,height:480,title:"ellephant - game",useContentSize:true,webPreferences:{plugins:true}};
 
     if (_windowLocations.game)
     {

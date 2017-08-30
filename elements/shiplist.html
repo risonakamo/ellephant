@@ -6,7 +6,6 @@
       :host
       {
         display: inline-block;
-        margin: 20px;
       }
 
       div
@@ -20,9 +19,10 @@
         height: 70px;
       }
 
-      .entry img
+      .entry .face-img
       {
         height: 70px;
+        background-color: rgba(94,102,104,.2);
       }
 
       .repair-info
@@ -30,12 +30,14 @@
         height: 70px;
         width: 140px;
         text-align: center;
+        margin-left: 5px;
       }
 
       .repair-time
       {
+        height: 30px;
         font-size: 20px;
-        margin: 16px 0 1px 0;
+        margin: 12px 0 1px 0;
       }
 
       .hp-bar
@@ -154,54 +156,53 @@
         border-style: none;
       }
 
-      .equipment
+      #equipment
       {
         height: 70px;
-        width: 70px;
-        margin-left: 5px;
+        width: 60px;
+        padding-top: 5px;
+        box-sizing: border-box;
+        margin: 0 10px 0 8px;
       }
 
-      .equipment .slot
+      #equipment .slot
       {
-        width: 35px;
-        height: 35px;
+        width: 30px;
+        height: 30px;
       }
 
       .slot img
       {
-        width: 35px;
+        width: 30px;
         height: auto;
       }
     </style>
 
     <div class="entry">
-      <img src="../face/306.png">
+      <img class="face-img" src="[[face]]">
 
       <div class="repair-info">
         <div class="repair-time">
-          07:11:01
+          [[repairTime]]
         </div>
 
         <div class="hp-bar">
-          <div class="hp-bar-inner" style="width:20%"></div>
+          <div class="hp-bar-inner" style="width:[[hpPercent]]%"></div>
         </div>
       </div>
 
       <div class="hp">
         <div class="hp-box top">
-          12
+          [[hp]]
         </div>
 
         <div class="hp-box bottom">
-          12
+          [[maxHp]]
         </div>
       </div>
 
-      <div class="equipment">
-        <div class="slot"><img src="../equipment/2.png"></div>
-        <div class="slot"><img src="../equipment/2.png"></div>
-        <div class="slot"><img src="../equipment/2.png"></div>
-        <div class="slot"><img src="../equipment/2.png"></div>
+      <div id="equipment">
+
       </div>
     </div>
 
@@ -215,11 +216,113 @@
         return "ship-list";
       }
 
+      /*
+        --- bind variables ---
+        int hp
+        int maxHp
+        float? hpPercent
+        string repairTime
+        string face
+
+        --- variables ---
+        int rtime: ms repair time
+
+        --- public functions ---
+        void loadShip(object ship)
+
+        --- private functions ---
+        void setHpColour()
+        void calcRepairString()
+        void loadEquips(int-array equips)
+      */
       static get properties()
       {
         return {
 
         };
+      }
+
+      constructor(ship)
+      {
+        super();
+        this.savedShip=ship;
+      }
+
+      ready()
+      {
+        super.ready();
+
+        if (this.savedShip)
+        {
+          this.loadShip(this.savedShip);
+        }
+      }
+
+      //given singular player ship object
+      loadShip(ship)
+      {
+        this.hp=ship.api_nowhp;
+        this.maxHp=ship.api_maxhp;
+
+        this.hpPercent=(this.hp/this.maxHp)*100;
+        this.setHpColour();
+
+        this.rtime=ship.api_ndock_time;
+        this.calcRepairString();
+
+        this.face=genFaceFile(ship);
+
+        this.loadEquips(ship.api_slot);
+      }
+
+      setHpColour()
+      {
+        if (this.hpPercent<=25)
+        {
+          this.classList.add("red");
+        }
+
+        else if (this.hpPercent<=50)
+        {
+          this.classList.add("orange");
+        }
+
+        else if (this.hpPercent<=75)
+        {
+          this.classList.add("yellow");
+        }
+      }
+
+      calcRepairString()
+      {
+        var rstring={};
+        rstring.sec=Math.floor((this.rtime/1000)%60);
+        rstring.min=Math.floor((this.rtime/60000)%60);
+        rstring.hour=Math.floor((this.rtime/3600000)%24);
+
+        for (var x in rstring)
+        {
+          if (rstring[x]<10)
+          {
+            rstring[x]="0"+rstring[x];
+          }
+        }
+
+        this.repairTime=`${rstring.hour}:${rstring.min}:${rstring.sec}`;
+      }
+
+      //requires int slot array from ship object
+      loadEquips(equips)
+      {
+        for (var x=0;x<5;x++)
+        {
+          if (equips[x]==-1)
+          {
+            return;
+          }
+
+          this.$["equipment"].insertAdjacentHTML("beforeend",`<div class="slot"><img src="../equipment/${_apiAllEquip[_apiEquip[equips[x]].api_slotitem_id].api_type[3]}.png"></div>`);
+        }
       }
     }
 
