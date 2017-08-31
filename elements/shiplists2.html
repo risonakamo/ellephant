@@ -1,0 +1,53 @@
+<link rel="import" href="../polymer/polymer/polymer-element.html">
+
+<dom-module id="ship-lists">
+  <template>
+    <style>
+      :host
+      {
+        display: inline-block;
+        font-size: 0;
+      }
+
+      .menu-entry
+      {
+        display: inline-block;
+        height: 50px;
+        line-height: 50px;
+        font-size: 30px;
+        padding: 0 15px 0 15px;
+        cursor: pointer;
+      }
+
+      .menu-entry:hover span
+      {
+        border-bottom: 3px solid white;
+      }
+    </style>
+
+    <div class="menu">
+      <div class="menu-entry"><span>REPAIR<span></div>
+      <div class="menu-entry"><span>SOMETHING ELSE</span></div>
+    </div>
+
+  </template>
+
+  <script>
+    class shipLists extends Polymer.Element
+    {
+      static get is()
+      {
+        return "ship-lists";
+      }
+
+      static get properties()
+      {
+        return {
+
+        };
+      }
+    }
+
+    customElements.define(shipLists.is,shipLists);
+  </script>
+</dom-module>

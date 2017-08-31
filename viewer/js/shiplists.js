@@ -1,3 +1,10 @@
+/*
+    --- variables ---
+    element repairlist: div container to insert repairLists
+
+    --- functions ---
+    void loadRepairLists(): fill repairlist element with repair lists
+*/
 class _shiplists
 {
     constructor()
