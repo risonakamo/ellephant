@@ -35,7 +35,7 @@ class _shiplists
         var newsl;
         for (var x=0,l=repairable.length;x<l;x++)
         {
-            newsl=new shipList(repairable[x]);
+            newsl=new repairList(repairable[x]);
 
             this.repairlist.appendChild(newsl);
         }

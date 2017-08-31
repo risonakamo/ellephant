@@ -1,6 +1,6 @@
 <link rel="import" href="../polymer/polymer/polymer-element.html">
 
-<dom-module id="ship-list">
+<dom-module id="repair-list">
   <template>
     <style>
       :host
@@ -209,11 +209,11 @@
   </template>
 
   <script>
-    class shipList extends Polymer.Element
+    class repairList extends Polymer.Element
     {
       static get is()
       {
-        return "ship-list";
+        return "repair-list";
       }
 
       /*
@@ -326,6 +326,6 @@
       }
     }
 
-    customElements.define(shipList.is,shipList);
+    customElements.define(repairList.is,repairList);
   </script>
 </dom-module>
