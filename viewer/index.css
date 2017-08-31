@@ -222,6 +222,11 @@ exp-fleet:hover,m-fleet:hover
     background-color: rgba(107,135,139,.05);
 }
 
+.expedition .selected.sortie
+{
+    border-color: #e50018;
+}
+
 .combined-box
 {
     position: absolute;
@@ -287,7 +292,7 @@ exp-fleet:hover,m-fleet:hover
     border-bottom: 1px solid #6e4f53;
 }
 
-.tabs.sortie .tab.selected
+.tabs.sortie .tab.selected,.tabs.sortie .tab.selected:hover
 {
     background-color: #e50018;
 }
