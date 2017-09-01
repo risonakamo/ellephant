@@ -1,4 +1,5 @@
 <link rel="import" href="../polymer/polymer/polymer-element.html">
+<link rel="import" href="../elements/repairlist.html">
 
 <dom-module id="ship-lists">
   <template>
@@ -7,6 +8,11 @@
       {
         display: inline-block;
         font-size: 0;
+      }
+
+      .menu
+      {
+        padding-left: 10px;
       }
 
       .menu-entry
@@ -19,15 +25,27 @@
         cursor: pointer;
       }
 
-      .menu-entry:hover span
+      .menu-entry:hover span,.menu-entry.selected span
       {
         border-bottom: 3px solid white;
+      }
+
+      .list-page
+      {
+        height: 450px;
+        overflow: auto;
       }
     </style>
 
     <div class="menu">
-      <div class="menu-entry"><span>REPAIR<span></div>
+      <div class="menu-entry" on-click="loadRepairLists"><span>REPAIR<span></div>
       <div class="menu-entry"><span>SOMETHING ELSE</span></div>
+    </div>
+
+    <div class="list-contain">
+      <div class="list-page" id="repairlists">
+
+      </div>
     </div>
 
   </template>
@@ -45,6 +63,42 @@
         return {
 
         };
+      }
+
+      loadRepairLists()
+      {
+        var repairable=[];
+        for (var x in _apiShip)
+        {
+          if (_apiShip[x].api_ndock_time)
+          {
+            repairable.push(_apiShip[x]);
+          }
+        }
+
+        repairable.sort((a,b)=>{
+          if (a.api_ndock_time>b.api_ndock_time)
+          {
+            return -1;
+          }
+
+          if (a.api_ndock_time<b.api_ndock_time)
+          {
+            return 1;
+          }
+
+          return 0;
+        });
+
+        // console.log(repairable);
+
+        var newsl;
+        for (var x=0,l=repairable.length;x<l;x++)
+        {
+          newsl=new repairList(repairable[x]);
+
+          this.$["repairlists"].appendChild(newsl);
+        }
       }
     }
 
