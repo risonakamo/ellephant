@@ -6,6 +6,7 @@
       :host
       {
         display: inline-block;
+        cursor: default;
       }
 
       div
@@ -17,12 +18,24 @@
       .entry
       {
         height: 70px;
+        transition: background-color .3s;
+      }
+
+      :host(:hover) .entry
+      {
+        background-color: rgba(50,51,43,.2);
       }
 
       .entry .face-img
       {
         height: 70px;
         background-color: rgba(94,102,104,.2);
+        transition: background-color .3s;
+      }
+
+      :host(:hover) .entry .face-img
+      {
+        background-color: rgba(94,102,104,.5);
       }
 
       .repair-info
@@ -33,11 +46,40 @@
         margin-left: 5px;
       }
 
-      .repair-time
+      .info-slider
       {
+        position: relative;
+        width: 100%;
         height: 30px;
-        font-size: 20px;
         margin: 12px 0 1px 0;
+      }
+
+      .info-slider .box
+      {
+        position: absolute;
+        left: 0;
+        right: 0;
+        margin: auto;
+        height: 30px;
+        line-height: 30px;
+        font-size: 20px;
+        transition: opacity .3s;
+      }
+
+      .info-slider .name
+      {
+        font-size: 15px;
+        opacity: 0;
+      }
+
+      :host(:hover) .repair-time
+      {
+        opacity: 0;
+      }
+
+      :host(:hover) .info-slider .name
+      {
+        opacity: 1;
       }
 
       .hp-bar
@@ -182,8 +224,14 @@
       <img class="face-img" src="[[face]]">
 
       <div class="repair-info">
-        <div class="repair-time">
-          [[repairTime]]
+        <div class="info-slider">
+          <div class="box repair-time">
+            [[repairTime]]
+          </div>
+
+          <div class="box name">
+            [[name]]
+          </div>
         </div>
 
         <div class="hp-bar">
@@ -280,6 +328,7 @@
         this.calcRepairString();
 
         this.face=genFaceFile(ship);
+        this.name=_apiAllShip[ship.api_sortno].api_name
 
         this.loadEquips(ship.api_slot);
       }
