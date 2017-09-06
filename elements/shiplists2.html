@@ -74,6 +74,17 @@
         };
       }
 
+      constructor()
+      {
+        super();
+      }
+
+      ready()
+      {
+        super.ready();
+        this.repairlists=[];
+      }
+
       loadRepairLists()
       {
         var repairable=[];
@@ -99,13 +110,52 @@
           return 0;
         });
 
-        var newsl;
-        for (var x=0,l=repairable.length;x<l;x++)
-        {
-          newsl=new repairList(repairable[x]);
+        var reuse=repairable.length-this.repairlists.length;
 
-          this.$["repairlists"].appendChild(newsl);
+        if (reuse>=0)
+        {
+          reuse=this.repairlists.length;
         }
+
+        else if (reuse<0)
+        {
+          reuse=repairable.length;
+        }
+
+        //reuse repair boxes
+        for (var x=0;x<reuse;x++)
+        {
+          this.repairlists[x].loadShip(repairable[x]);
+        }
+
+        if (reuse>0)
+        {
+          reuse-=1;
+        }
+
+        //more new repairables than there are repair boxes
+        if (repairable.length>this.repairlists.length)
+        {
+          var newsl;
+          for (var x=reuse,l=repairable.length;x<l;x++)
+          {
+            newsl=new repairList(repairable[x]);
+
+            this.repairlists.push(newsl);
+            this.$["repairlists"].appendChild(newsl);
+          }
+        }
+
+        else if (repairable.length<this.repairlists.length)
+        {
+          for (var x=reuse,l=this.repairlists.length;x<l;x++)
+          {
+            this.repairlists[x].parentNode.removeChild(this.repairlists[x]);
+          }
+
+          this.repairlists=this.repairlists.slice(0,reuse);
+        }
+
       }
     }
 
