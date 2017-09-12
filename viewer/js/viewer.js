@@ -387,7 +387,7 @@ class _viewerHtml
 
             //getting ship info. change loop number when new ships are added
             //or shifted around
-            for (var x=0;x<=482;x++)
+            for (var x=0;x<=497;x++)
             {
                 _apiAllShip[res.api_data.api_mst_ship[x].api_sortno]=res.api_data.api_mst_ship[x];
                 _apiIdtoSort[res.api_data.api_mst_ship[x].api_id]=res.api_data.api_mst_ship[x].api_sortno;
@@ -395,7 +395,7 @@ class _viewerHtml
             this.loaderLog("api ships loaded.");
 
             _apiAllEquip={};
-            for (var x=0;x<=247;x++)
+            for (var x=0;x<=249;x++)
             {
                 _apiAllEquip[res.api_data.api_mst_slotitem[x].api_sortno]=res.api_data.api_mst_slotitem[x];
             }
