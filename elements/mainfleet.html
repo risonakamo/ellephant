@@ -184,6 +184,7 @@
         int currentState
         function timer: timer variable to clearTimeout on
         int moraleVal: number representing max missing morale of fleet
+        int oldMoraleVal
         int repairFlag
         int combined
 
@@ -194,6 +195,13 @@
         return {
 
         };
+      }
+
+      constructor()
+      {
+        super();
+        this.moraleVal=0;
+        this.oldMoraleVal=0;
       }
 
       ready()
@@ -330,17 +338,20 @@
 
       loadMorale()
       {
-        if (this.moraleVal<10)
+        if (this.moraleVal>this.oldMoraleVal)
         {
-          this.min="0"+this.moraleVal;
-        }
+          if (this.moraleVal<10)
+          {
+            this.min="0"+this.moraleVal;
+          }
 
-        else
-        {
-          this.min=this.moraleVal;
-        }
+          else
+          {
+            this.min=this.moraleVal;
+          }
 
-        this.sec="00";
+          this.sec="00";
+        }
 
         if (!this.timer)
         {
