@@ -88,6 +88,8 @@
       loadRepairLists()
       {
         var repairable=[];
+
+        //add all ships with above 0 repair time
         for (var x in _apiShip)
         {
           if (_apiShip[x].api_ndock_time)
@@ -96,6 +98,7 @@
           }
         }
 
+        //sort repairable ships
         repairable.sort((a,b)=>{
           if (a.api_ndock_time>b.api_ndock_time)
           {
@@ -110,24 +113,29 @@
           return 0;
         });
 
+        //reuse value = repairable ships-number of current repairlists
         var reuse=repairable.length-this.repairlists.length;
 
+        //if reuse is above 0, there are more ships than reusable loadRepairLists
+        //set reuse to number of repair lists
         if (reuse>=0)
         {
           reuse=this.repairlists.length;
         }
 
+        //else there are more repairlists, set reusable to number of ships
         else if (reuse<0)
         {
           reuse=repairable.length;
         }
 
-        //reuse repair boxes
+        //reuse repair boxes for number of lists or number of ships
         for (var x=0;x<reuse;x++)
         {
           this.repairlists[x].loadShip(repairable[x]);
         }
 
+        //adjust reuse to index it left off
         if (reuse>0)
         {
           reuse-=1;
@@ -155,7 +163,6 @@
 
           this.repairlists=this.repairlists.slice(0,reuse);
         }
-
       }
     }
 
