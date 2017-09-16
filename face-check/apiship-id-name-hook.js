@@ -4,7 +4,12 @@ function parseShipIds(data)
     var res={};
     for (var x=0,l=data.length;x<=l;x++)
     {
-        if (data[x].api_yomi=="-")
+        // if (data[x].api_yomi=="-")
+        // {
+        //     break;
+        // }
+
+        if (data[x].api_sortno==undefined)
         {
             break;
         }
