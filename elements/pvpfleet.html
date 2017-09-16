@@ -265,7 +265,7 @@
         return "pvp-fleet";
       }
 
-      /*private variables
+      /*--- private variables ---
         name: string of enemy name
         rank: enemy level
         shipFaces: array of shipface img elements
@@ -305,11 +305,14 @@
       fleetLoad(data)
       {
         this.loaded=1;
+        console.log("hey");
 
+        var end=5;
         for (var x=0;x<6;x++)
         {
           if (data[x].api_id<0)
           {
+            end=x;
             break;
           }
 
@@ -322,21 +325,23 @@
         }
 
         this.$["unload-sign"].classList.add("hidden");
-        this.animateIn(0);
+        this.animateIn(0,end);
       }
 
-      animateIn(index)
+      //animate in ship from given index to end index (non inclusive)
+      animateIn(index,end)
       {
-        this.ships[index].classList.remove("unloaded");
-
-        if (index>=5)
+        if (index>=end)
         {
           return;
         }
 
-        setTimeout(()=>{this.animateIn(index+1)},70);
+        this.ships[index].classList.remove("unloaded");
+
+        setTimeout(()=>{this.animateIn(index+1,end)},70);
       }
 
+      //animate out ships from given index to end
       animateOut(index)
       {
         this.ships[index].classList.add("unloaded");
