@@ -307,7 +307,7 @@
         this.loaded=1;
         console.log("hey");
 
-        var end=5;
+        var end=6;
         for (var x=0;x<6;x++)
         {
           if (data[x].api_id<0)
@@ -328,7 +328,7 @@
         this.animateIn(0,end);
       }
 
-      //animate in ship from given index to end index (non inclusive)
+      //animate in ship from given index to end index (inclusive)
       animateIn(index,end)
       {
         if (index>=end)
