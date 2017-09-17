@@ -285,7 +285,7 @@ function updateFleetShip(ships,fleetContain)
                 resupply=1;
             }
 
-            //save lowest morale difference from 49
+            //save max fatigue (difference from 49)
             if (49-_fleetShips[fleetContain].morale>maxFatigue)
             {
                 maxFatigue=49-_fleetShips[fleetContain].morale;
@@ -306,8 +306,9 @@ function updateFleetShip(ships,fleetContain)
     //if first fleet, do morale actions
     if (fleetNumber==0)
     {
-        _mFleet.oldMoraleVal=parseInt(_mFleet.moraleVal);
+        _mFleet.oldMoraleVal=_mFleet.moraleVal;
         _mFleet.moraleVal=maxFatigue;
+
         fleetstat.fleetstat.airPowerMin=fleetAirPower[0];
         fleetstat.fleetstat.airPowerMax=fleetAirPower[1];
         fleetstat.fleetstat.los=(los-Math.ceil(.4*apiData.portLevel)).toFixed(3);

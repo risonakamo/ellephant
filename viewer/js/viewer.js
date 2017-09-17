@@ -69,6 +69,7 @@ class _viewerHtml
             setTimeout(()=>{
                 inputWrap.parentNode.removeChild(inputWrap);
                 that.viewer.classList.remove("collapse-dim");
+                that.escMenu.classList.remove("collapse-dim");
             },501);
 
             that.keyControl();

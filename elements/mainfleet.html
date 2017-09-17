@@ -183,7 +183,7 @@
         int min,sec
         int currentState
         function timer: timer variable to clearTimeout on
-        int moraleVal: number representing max missing morale of fleet
+        int moraleVal: number representing max missing morale of fleet, so actually fatigue
         int oldMoraleVal
         int repairFlag
         int combined
@@ -338,7 +338,8 @@
 
       loadMorale()
       {
-        if (this.moraleVal>this.oldMoraleVal)
+        console.log("new:",this.moraleVal,"old:",this.oldMoraleVal);
+        if (this.moraleVal!=this.oldMoraleVal)
         {
           if (this.moraleVal<10)
           {
