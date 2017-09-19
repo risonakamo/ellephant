@@ -386,26 +386,41 @@ class _viewerHtml
             _apiAllShip={};
             _apiIdtoSort={};
 
-            //getting ship info. change loop number when new ships are added
-            //or shifted around
-            for (var x=0;x<=497;x++)
+            var x=0;
+            while (1)
             {
+                if (res.api_data.api_mst_ship[x].api_sortno==undefined)
+                {
+                    break;
+                }
+
                 _apiAllShip[res.api_data.api_mst_ship[x].api_sortno]=res.api_data.api_mst_ship[x];
                 _apiIdtoSort[res.api_data.api_mst_ship[x].api_id]=res.api_data.api_mst_ship[x].api_sortno;
+                x++;
             }
+
             this.loaderLog("api ships loaded.");
 
             _apiAllEquip={};
-            for (var x=0;x<=249;x++)
+
+            x=0;
+            while (1)
             {
+                if (!res.api_data.api_mst_slotitem[x].api_sortno)
+                {
+                    break;
+                }
+
                 _apiAllEquip[res.api_data.api_mst_slotitem[x].api_sortno]=res.api_data.api_mst_slotitem[x];
+                x++;
             }
+
             this.loaderLog("api equipment loaded.");
 
             _apiAllExpedition=res.api_data.api_mst_mission;
 
-            _apistart_ready=1;
             this.loaderLog("api start ready.");
+            _apistart_ready=1;
         });
     }
 

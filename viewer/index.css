@@ -432,6 +432,7 @@ resource-box
     left: 0;
     background-color: rgba(37,37,37,0.67);
     z-index: -20;
+    overflow: hidden;
 }
 
 .esc-menu.show
