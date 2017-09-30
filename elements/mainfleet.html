@@ -339,7 +339,7 @@
       loadMorale()
       {
         console.log("new:",this.moraleVal,"old:",this.oldMoraleVal);
-        if (this.moraleVal!=this.oldMoraleVal)
+        if (this.moraleVal!=this.oldMoraleVal || (this.min==undefined || this.sec==undefined))
         {
           if (this.moraleVal<10)
           {
@@ -356,6 +356,7 @@
 
         if (!this.timer)
         {
+          console.log(this.min,this.sec);
           this.timer=setInterval(()=>{this.updateTime()},1000);
         }
 

@@ -325,9 +325,10 @@
 
         this.$["unload-sign"].classList.add("hidden");
         this.animateIn(0,end);
+        this.animateOut(end);
       }
 
-      //animate in ship from given index to end index (inclusive)
+      //animate in ship from given index to end index (non-inclusive)
       animateIn(index,end)
       {
         if (index>=end)
@@ -343,12 +344,12 @@
       //animate out ships from given index to end
       animateOut(index)
       {
-        this.ships[index].classList.add("unloaded");
-
-        if (index>=5)
+        if (index>=6)
         {
           return;
         }
+
+        this.ships[index].classList.add("unloaded");
 
         setTimeout(()=>{this.animateOut(index+1)},70);
       }
