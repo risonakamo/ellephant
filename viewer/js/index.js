@@ -35,6 +35,7 @@ var _apiIdtoSort; //sorted by api_id, data is api_sort_no usable for apiAllShip
 
 //please move this somewhere else...
 var _combinedState;
+var _remodelDelay;
 
 function main()
 {
@@ -446,6 +447,14 @@ function deckUpdate(data)
 function equipUpdate(data)
 {
     _apiShip[data.api_ship_data[0].api_id]=data.api_ship_data[0];
+
+    //if a remodel occured, don't update anything because there
+    //will be missing equipment.
+    if (_remodelDelay)
+    {
+        _remodelDelay=0;
+        return;
+    }
 
     var shipfind=findShip(data.api_ship_data[0].api_id);
 
