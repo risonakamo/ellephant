@@ -10,7 +10,8 @@ void portUpdate(); //handles port object
 void expeditionUpdate(array data); //expedition elements
 void chargeUpdate(object data); //charge object
 void deckUpdate(object data); //update after a sortie battle given the ship_deck api data
-void equipUpdate(object data); //handles ship3 api object for equipment loadout updates
+void equipUpdate(object data); //give ship object to update ship in fleet if there
+                               //used mainly for ship3 event and equipment changes
 void equipExchange(object data); //handles equipment exchange api event
 void setCombined(int state,bool postChange);
 

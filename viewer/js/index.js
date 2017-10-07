@@ -444,9 +444,11 @@ function deckUpdate(data)
     }
 }
 
+//requires ship object (object that has all ship stats and api_id directly in it)
+//for ship3 its going to be (ship3 response)api_data.api_ship_data[0]
 function equipUpdate(data)
 {
-    _apiShip[data.api_ship_data[0].api_id]=data.api_ship_data[0];
+    _apiShip[data.api_id]=data;
 
     //if a remodel occured, don't update anything because there
     //will be missing equipment.
@@ -456,7 +458,7 @@ function equipUpdate(data)
         return;
     }
 
-    var shipfind=findShip(data.api_ship_data[0].api_id);
+    var shipfind=findShip(data.api_id);
 
     if (shipfind[0]<0)
     {
@@ -471,7 +473,7 @@ function equipUpdate(data)
         fleetstat.equipChangeRemove(_fleetShips[shipfind],fleet);
     }
 
-    _fleetShips[shipfind].loadShip(data.api_ship_data[0]);
+    _fleetShips[shipfind].loadShip(data);
 
     if (shipfind<6 || (_combinedState>0 && shipfind<12))
     {

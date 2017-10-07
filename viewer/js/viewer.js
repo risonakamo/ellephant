@@ -274,7 +274,7 @@ class _viewerHtml
         });
 
         ipcRenderer.on("shipEquip",(e,res)=>{
-            equipUpdate(res.api_data);
+            equipUpdate(res.api_data.api_ship_data[0]);
         });
 
         ipcRenderer.on("equipExchange",(e,res)=>{
@@ -381,6 +381,11 @@ class _viewerHtml
             {
                 updateFleetShip(_fleetShipIds[x],x);
             }
+        });
+
+        ipcRenderer.on("slotSwitch",(e,res)=>{
+            equipUpdate(res.api_data.api_ship_data.api_set_ship);
+            equipUpdate(res.api_data.api_ship_data.api_unset_ship);
         });
 
         ipcRenderer.once("requireinfo",(e,res)=>{

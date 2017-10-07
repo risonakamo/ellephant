@@ -297,6 +297,11 @@ function setupGameWindow(args)
             {
                 setTimeout(()=>{receiveArb(par,"allSlot")},500);
             }
+
+            else if (par.response.url=="http://203.104.209.39/kcsapi/api_req_kaisou/slot_deprive")
+            {
+                setTimeout(()=>{receiveArb(par,"slotSwitch")},500);
+            }
         }
 
         else if (method=="Network.requestWillBeSent")
