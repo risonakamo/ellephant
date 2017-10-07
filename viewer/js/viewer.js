@@ -367,12 +367,24 @@ class _viewerHtml
             setCombined(parseInt(parsePost(res).api_combined_type),1);
         });
 
-        ipcRenderer.once("requireinfo",(e,res)=>{
-            _apiEquip={};
-            for (var x=0,l=res.api_data.api_slot_item.length;x<l;x++)
+        ipcRenderer.on("shipRemodel",(e,res)=>{
+            _remodelDelay=1;
+        });
+
+        ipcRenderer.on("allSlot",(e,res)=>{
+            this.loadAllSlot(res.api_data);
+
+            resource.resourceBox.equips=res.api_data.api_slot_item.length;
+
+            //update all fleetships
+            for (var x=0;x<4;x++)
             {
-                _apiEquip[res.api_data.api_slot_item[x].api_id]=res.api_data.api_slot_item[x];
+                updateFleetShip(_fleetShipIds[x],x);
             }
+        });
+
+        ipcRenderer.once("requireinfo",(e,res)=>{
+            this.loadAllSlot(res.api_data.api_slot_item);
 
             construction.loadKdock(res.api_data.api_kdock);
 
@@ -578,5 +590,17 @@ class _viewerHtml
         }
 
         this.currentFleet=fleet;
+    }
+
+    //requires slot item array: array of equipement OBJECTS
+    //for slot_item event or require_info first-time all equipment
+    //load, where the array is api_slot_item
+    loadAllSlot(data)
+    {
+        _apiEquip={};
+        for (var x=0,l=data.length;x<l;x++)
+        {
+            _apiEquip[data[x].api_id]=data[x];
+        }
     }
 }
