@@ -374,7 +374,7 @@ class _viewerHtml
         ipcRenderer.on("allSlot",(e,res)=>{
             this.loadAllSlot(res.api_data);
 
-            resource.resourceBox.equips=res.api_data.api_slot_item.length;
+            // resource.resourceBox.equips=res.api_data.api_slot_item.length;
 
             //update all fleetships
             for (var x=0;x<4;x++)
