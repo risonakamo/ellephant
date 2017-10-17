@@ -15,6 +15,7 @@ class _viewerHtml
         this.loadLog=this.loading.querySelector(".log");
 
         this.escMenu=document.querySelector(".esc-menu");
+        this.muted=0;
 
         this.setupInput();
         this.setupTabs();
@@ -443,20 +444,19 @@ class _viewerHtml
 
     setupEscMenu()
     {
-        var menuItems=this.escMenu.firstElementChild.children;
-        var muted=0;
+        this.menuItems=this.escMenu.firstElementChild.children;
 
         //resume button
-        menuItems[0].addEventListener("click",(e)=>{
+        this.menuItems[0].addEventListener("click",(e)=>{
             this.escMenu.classList.remove("show");
         });
 
         //resize button
-        menuItems[1].addEventListener("click",(e)=>{
+        this.menuItems[1].addEventListener("click",(e)=>{
             ipcRenderer.send("optionCommand","resize");
         });
 
-        menuItems[2].addEventListener("click",(e)=>{
+        this.menuItems[2].addEventListener("click",(e)=>{
             for (var x=0;x<3;x++)
             {
                 _expFleets[x].classList.toggle("min");
@@ -466,24 +466,12 @@ class _viewerHtml
         });
 
         //mute
-        menuItems[3].addEventListener("click",(e)=>{
-            ipcRenderer.send("optionCommand","mute");
-
-            if (muted==0)
-            {
-                menuItems[3].innerHTML="UNMUTE";
-                muted=1;
-            }
-
-            else
-            {
-                menuItems[3].innerHTML="MUTE";
-                muted=0;
-            }
+        this.menuItems[3].addEventListener("click",(e)=>{
+            this.toggleMute();
         });
 
         //quit
-        menuItems[4].addEventListener("click",(e)=>{
+        this.menuItems[4].addEventListener("click",(e)=>{
             ipcRenderer.send("optionCommand","exit");
         });
     }
@@ -609,5 +597,22 @@ class _viewerHtml
         }
 
         resource.resourceBox.equips=data.length;
+    }
+
+    toggleMute()
+    {
+        ipcRenderer.send("optionCommand","mute");
+
+        if (this.muted==0)
+        {
+            this.menuItems[3].innerHTML="UNMUTE";
+            this.muted=1;
+        }
+
+        else
+        {
+            this.menuItems[3].innerHTML="MUTE";
+            this.muted=0;
+        }
     }
 }

@@ -14,6 +14,7 @@ element loading;
 element loadLog;
 
 element escMenu;
+int muted;
 
 /*--- one times ---*/
 void ipcReceivers(); //main process listeners
@@ -31,3 +32,4 @@ void tabState(int state); //change tab state colours
 int checkExpComplete(); //returns 1 if there is a completed exp waiting, 0 otherwise
 void switchFleet(int fleet); //switch to specified fleet, reuqires index value of fleet
 void loadAllSlot(object-array data); //load all equip items given an array
+void toggleMute();
