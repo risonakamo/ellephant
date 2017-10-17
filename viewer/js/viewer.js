@@ -393,7 +393,7 @@ class _viewerHtml
 
             construction.loadKdock(res.api_data.api_kdock);
 
-            resource.resourceBox.equips=res.api_data.api_slot_item.length;
+            // resource.resourceBox.equips=res.api_data.api_slot_item.length;
             this.loaderLog("require info ready.");
         });
 
@@ -607,5 +607,7 @@ class _viewerHtml
         {
             _apiEquip[data[x].api_id]=data[x];
         }
+
+        resource.resourceBox.equips=data.length;
     }
 }
