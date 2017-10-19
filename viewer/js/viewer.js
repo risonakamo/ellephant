@@ -58,7 +58,7 @@ class _viewerHtml
         var that=this;
 
         ipcRenderer.on("cmdArgs",(e,res)=>{
-            urlBox.value=res;
+            urlBox.value=res[2];
         });
         ipcRenderer.send("requestCmdArgs");;
 

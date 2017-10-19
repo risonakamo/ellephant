@@ -57,7 +57,7 @@ function ipcs()
     ipcMain.on("requestCmdArgs",(e,res)=>{
         if (process.argv.length>=3)
         {
-            e.sender.send("cmdArgs",process.argv[2]);
+            e.sender.send("cmdArgs",process.argv);
         }
     });
 
