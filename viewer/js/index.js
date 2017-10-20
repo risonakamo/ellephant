@@ -30,7 +30,6 @@ var _apiEquip; //equipment of player
 var _apistart_ready;
 var _apiAllShip; //sorted by sort_no
 var _apiAllEquip;
-var _apiAllExpedition;
 var _apiIdtoSort; //sorted by api_id, data is api_sort_no usable for apiAllShip
 
 //please move this somewhere else...
@@ -339,7 +338,7 @@ function expeditionUpdate(data)
         _expFleets[x-1].loadExp({
             expNum:data[x].api_mission[1],
             timeComplete:data[x].api_mission[2],
-            maxTime:_apiAllExpedition[data[x].api_mission[1]-1].api_time
+            maxTime:apiData.apiAllExpedition[data[x].api_mission[1]].api_time
         });
 
         if (_expFleets[x-1].completed==1)

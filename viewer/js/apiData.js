@@ -10,7 +10,7 @@ class _apiData
         --- api Alls ---
         apiAllShip: all ship information sorted by api_sortno
         apiAllEquip: equipment data sorted by ???
-        apiAllExpedition: expedition data sorted by ???
+        apiAllExpedition: expedition data sorted by api_id
 
         apiIdtoSort: convert an api_id (used for images) to sortno (used by apiAllShip)
     */

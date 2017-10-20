@@ -435,7 +435,11 @@ class _viewerHtml
 
             this.loaderLog("api equipment loaded.");
 
-            _apiAllExpedition=res.api_data.api_mst_mission;
+            apiData.apiAllExpedition={};
+            for (var x=0,l=res.api_data.api_mst_mission.length;x<l;x++)
+            {
+                apiData.apiAllExpedition[res.api_data.api_mst_mission[x].api_id]=res.api_data.api_mst_mission[x];
+            }
 
             this.loaderLog("api start ready.");
             _apistart_ready=1;
