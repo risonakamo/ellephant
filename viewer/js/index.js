@@ -303,7 +303,7 @@ function updateFleetShip(ships,fleetContain)
         fleetContain++;
     }
 
-    //if first fleet, do morale actions
+    //if first fleet, actions
     if (fleetNumber==0)
     {
         _mFleet.oldMoraleVal=_mFleet.moraleVal;
